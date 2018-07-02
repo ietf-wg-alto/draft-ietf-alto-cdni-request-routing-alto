@@ -1,0 +1,1080 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<!DOCTYPE rfc SYSTEM "http://http://tools.ietf.org/tools/templates/rfc2629.dtd">
+<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+<?rfc toc="yes"?>
+<?rfc iprnotified="no" ?>
+<?rfc symrefs="yes"?>
+<?rfc compact="yes" ?>
+<?rfc subcompact="no" ?>
+<rfc category="std"
+     docName="draft-ietf-alto-cdni-request-routing-alto-01"
+     ipr="trust200902">
+  <front>
+    <title abbrev="CDNI FCI using ALTO">Content Delivery Network Interconnection (CDNI) Request Routing:
+      CDNI Footprint and Capabilities Advertisement using ALTO</title>
+
+    <author initials="J." surname="Seedorf" fullname="Jan Seedorf">
+      <organization abbrev="HFT Stuttgart - Univ. of Applied Sciences">HFT Stuttgart - Univ. of Applied Sciences</organization>
+      <address>
+        <postal>
+               <street>Schellingstrasse 24</street>
+               <city>Stuttgart</city>
+               <code>70174</code>
+               <country>Germany</country>
+        </postal>
+        <phone>+49-0711-8926-2801</phone>
+        <email>jan.seedorf@hft-stuttgart.de</email>
+      </address>
+    </author>
+
+    <author initials="Y." surname="Yang" fullname="Y.R. Yang">
+         <organization abbrev="Tongji/Yale">Tongji/Yale University</organization>
+         <address>
+            <postal>
+               <street>51 Prospect Street</street>
+               <city>New Haven, CT</city>
+               <code>06511</code>
+               <country>United States of America</country>
+            </postal>
+            <email>yry@cs.yale.edu</email>
+            <uri>http://www.cs.yale.edu/~yry/</uri>
+         </address>
+    </author>
+
+    <author initials="K." surname="Ma" fullname="Kevin J. Ma">
+      <organization abbrev="Ericsson">Ericsson</organization>
+      <address>
+        <postal>
+               <street>43 Nagog Park</street>
+               <city>Acton, MA</city>
+               <code>01720</code>
+               <country>United States of America</country>
+        </postal>
+        <phone>+1-978-844-5100</phone>
+        <email>kevin.j.ma@ericsson.com</email>
+      </address>
+    </author>
+
+    <author fullname="Jon Peterson" initials="J." surname="Peterson">
+      <organization abbrev="Neustar">NeuStar</organization>
+      <address>
+        <postal>
+          <street>1800 Sutter St Suite 570</street>
+          <code>94520</code>
+          <city>Concord, CA</city>
+          <country>United States of America</country>
+        </postal>
+        <phone/>
+        <facsimile/>
+        <email>jon.peterson@neustar.biz</email>
+      </address>
+    </author>
+
+    <author initials="X." surname="Lin" fullname="X.S. Lin">
+         <organization abbrev="Tongji">Tongji University</organization>
+         <address>
+            <postal>
+               <street>4800 Cao'an Hwy</street>
+               <city>Shanghai</city>
+               <code>201804</code>
+               <country>China</country>
+            </postal>
+            <email>x.shawn.lin@gamil.com</email>
+         </address>
+    </author>
+    <date />
+
+    <area>TSV Area</area>
+
+    <workgroup>CDNI</workgroup>
+    <keyword>ALTO</keyword>
+    <keyword>CDNi</keyword>
+
+    <abstract>
+      <t>The Content Delivery Networks Interconnection (CDNI) WG is
+        defining a set of protocols to inter-connect CDNs, to achieve multiple goals such as extending the reach of a given CDN to areas that are not covered by that particular CDN. One component that is needed to achieve the goal of CDNI is the CDNI Request Routing Footprint &amp; Capabilities Advertisement interface (FCI) [RFC7336]. [RFC8008] has defined precisely the semantics of FCI and provided guidelines on the FCI protocol, but the exact protocol is explicitly outside the scope of that document. In this document, we define an FCI protocol using the Application Layer Traffic Optimization (ALTO) protocol.
+      </t>
+    </abstract>
+
+  </front>
+
+  <middle>
+
+    <section anchor="intro" title="Introduction">
+      <t>Many Network Service Providers (NSPs) are currently considering or have already started to deploy Content Delivery Networks (CDNs) within their networks. As a consequence of this development, there is a need for interconnecting these local CDNs. Content Delivery Networks Interconnection (CDNI) has the goal of standardizing protocols to enable such interconnection of CDNs <xref target="RFC6707" pageno="false" format="default"/>.</t>
+
+      <t>The CDNI problem statement <xref target="RFC6707" pageno="false" format="default"/> defines four interfaces to be standardized within the IETF for CDN interconnection:
+        <list style="symbols">
+               <t>CDNI Request Routing Interface</t>
+               <t>CDNI Metadata Interface</t>
+               <t>CDNI Logging Interface</t>
+               <t>CDNI Control Interface</t>
+        </list>
+      </t>
+
+      <t>The main purpose of the CDNI Request Routing Interface is described in <xref target="RFC6707" pageno="false" format="default"/> as follows: "The CDNI Request Routing interface enables a Request Routing function in an Upstream CDN to query a Request Routing function in a Downstream CDN to determine if the Downstream CDN is able (and willing) to accept the delegated Content Request.  It also allows the Downstream CDN to control what should be returned to the User Agent in the redirection message by the upstream Request Routing function." On a high level, the scope of the CDNI Request Routing Interface, therefore, contains two main tasks:
+      <list style="symbols">
+        <t>determining if the downstream CDN (dCDN) is willing to accept a delegated content request;</t>
+        <t>redirecting the content request coming from an upstream CDN (uCDN) to the proper entry point or entity in the downstream CDN.</t>
+      </list>
+      </t>
+
+      <t>Correspondingly, the request routing interface is broadly divided into two functionalities:
+      <list style="symbols">
+        <t>CDNI FCI: the advertisement from a dCDN to a uCDN or a query from a uCDN to a dCDN for the uCDN to decide whether to redirect particular user requests to that dCDN;</t>
+        <t>CDNI RI: the synchronous operation of actually redirecting a user request.</t>
+      </list>
+      </t>
+
+      <t>This document focuses solely on CDNI FCI, with a goal to specify a new Application Layer Traffic Optimization (ALTO) <xref target="RFC7285" pageno="false" format="default"/> service called 'CDNI FCI Map Service', to transport and update CDNI FCI JSON objects, which are defined in a separate document in <xref target="RFC8008"/>.
+      </t>
+
+      <t>Throughout this document, we use the terminology for CDNI defined in <xref target="RFC6707" pageno="false" format="default"/> and <xref target="RFC8008" pageno="false" format="default"/>.
+        </t>
+    </section>
+
+    <section anchor="background" title="Background">
+      <t>The design of CDNI FCI transport using ALTO depends on understanding of both FCI semantics and ALTO. Hence, we start with a review of both.
+      </t>
+
+      <section title="Semantics of FCI Advertisement" anchor="bgSemantics">
+        <t>The CDNI document on "Footprint and Capabilities Semantics" <xref target="RFC8008"/> defines the semantics for the CDNI FCI. It thus provides guidance on what Footprint and Capabilities mean in a CDNI context and how a protocol solution should in principle look like. The definitions in [RFC8008] depend on [RFC8006]. Here we briefly summarize key related points of [RFC8008] and [RFC8006]. For a detailed discussion, the reader is referred to the RFCs.
+        </t>
+
+        <t><list style="symbols">
+          <t>Footprint and capabilities are tied together and cannot be interpreted independently from each other. In such cases, i.e. where capabilities must be expressed on a per footprint basis, it may be beneficial to combine footprint and capabilities advertisement. [RFC8008] integrates footprint and capabilities with an approach of "capabilities with footprint restrictions".</t>
+
+          <t>Given that a large part of Footprint and Capabilities Advertisement will actually happen in contractual agreements, the semantics of CDNI Footprint and Capabilities advertisement refer to answering the following question: what exactly still needs to be advertised by the CDNI FCI? For instance, updates about temporal failures of part of a footprint can be useful information to convey via the CDNI request routing interface. Such information would provide updates on information previously agreed in contracts between the participating CDNs. In other words, the CDNI FCI is a means for a dCDN to provide changes/updates regarding a footprint and/or capabilities it has prior agreed to serve in a contract with a uCDN. Hence, server push and incremental encoding will be necessary techniques.</t>
+
+          <t>Multiple types of footprints are defined in <xref target="RFC8006"/>:
+            <list style="symbols">
+              <t>List of ISO Country Codes</t>
+              <t>List of AS numbers</t>
+              <t>Set of IP-prefixes</t>
+            </list>
+          A 'set of IP-prefixes' must be able to contain full IP addresses, i.e., a /32 for IPv4 and a /128 for IPv6, and also IP prefixes with an arbitrary prefix length. There must also be support for multiple IP address versions, i.e., IPv4 and IPv6, in such a footprint.
+          </t>
+
+          <t>For all of these mandatory-to-implement footprint types, footprints can be viewed as constraints for delegating requests to a dCDN: A dCDN footprint advertisement tells the uCDN the limitations for delegating a request to the dCDN. For IP prefixes or ASN(s), the footprint signals to the uCDN that it should consider the dCDN a candidate only if the IP address of the request routing source falls within the prefix set (or ASN, respectively). The CDNI specifications do not define how a given uCDN determines what address ranges are in a particular ASN. Similarly, for country codes a uCDN should only consider the dCDN a candidate if it covers the country of the request routing source. The CDNI specifications do not define how a given uCDN determines the country of the request routing source. Multiple footprint constraints are additive, i.e. the advertisement of different types of footprint narrows the dCDN candidacy cumulatively.
+          </t>
+
+          <t>The following capabilities are defined as 'base' capabilities, i.e. ones that are needed in any case and therefore constitute mandatory capabilities to be supported by the CDNI FCI:
+          <list style="symbols">
+            <t>Delivery Protocol (e.g., HTTP vs. RTMP)</t>
+            <t>Acquisition Protocol (for acquiring content from a uCDN)</t>
+            <t>Redirection Mode (e.g., DNS Redirection vs. HTTP Redirection as discussed in <xref target="RFC7336" pageno="false" format="default"/>)</t>
+            <t>Capabilities related to CDNI Logging (e.g., supported logging mechanisms)</t>
+            <t>Capabilities related to CDNI Metadata (e.g., authorization
+            algorithms or support for proprietary vendor metadata)</t>
+          </list>
+          </t>
+        </list></t>
+      </section> <!-- Background on semantics -->
+
+      <section anchor="bgALTO" title="ALTO Background and Benefits">
+        <t>Application Layer Traffic Optimization (ALTO) <xref target="RFC7285" pageno="false" format="default"/> is an approach for guiding the resource provider selection process in distributed applications that can choose among several candidate resources providers to retrieve a given resource. By conveying network layer (topology) information, an ALTO server can provide important information to "guide" the resource provider selection process in distributed applications. Usually, it is assumed that an ALTO server conveys information these applications cannot measure themselves <xref target="RFC5693" pageno="false" format="default"/>.
+        </t>
+
+        <t>
+         Originally, ALTO was motivated by the huge amount of cross-ISP traffic generated by P2P applications <xref target="RFC5693" pageno="false" format="default"/>. Recently, however, ALTO is also being considered for improving the request routing in CDNs <xref target="I-D.jenkins-alto-cdn-use-cases"/>. In this context, it has also been proposed to use ALTO for selecting an entry-point in a downstream NSP's network (see section 3.4 "CDN delivering Over-The-Top of a NSP's network" in <xref target="I-D.jenkins-alto-cdn-use-cases"/>). Also, the CDNI problem statement explicitly mentions ALTO as a candidate protocol for "actual algorithms for selection of CDN or Surrogate by Request-Routing systems" <xref target="RFC6707" pageno="false" format="default"/>.
+        </t>
+
+        <t>The following reasons make ALTO a suitable candidate protocol for downstream CDN selection as part of CDNI request routing and in particular for an FCI protocol:</t>
+
+        <t><list style="symbols">
+          <t>CDN request routing is done at the application layer. ALTO is a protocol specifically designed to improve application layer traffic (and application layer connections among hosts on the Internet) by providing additional information to applications that these applications could not easily retrieve themselves. For CDNI, this is exactly the case: a uCDN wants to improve application layer CDN request routing by using dedicated information (provided by a dCDN) that the uCDN could not easily obtain otherwise.</t>
+
+          <t>The semantics of an ALTO network map are an exact match for the needed information to convey a footprint by a downstream CDN, in particular if such a footprint is being expressed by IP-prefix ranges.</t>
+          <t>Security: ALTO maps can be signed and hence provide inherent integrity protection (see <xref target="security"/>).</t>
+
+          <t>RESTful-Design: The ALTO protocol has undergone extensive revisions in order to provide a RESTful design regarding the client-server interaction specified by the protocol. A CDNI FCI interface based on ALTO would inherit this RESTful design.</t>
+
+          <t>Error-handling: The ALTO protocol has undergone extensive revisions in order to provide sophisticated error-handling, in particular regarding unexpected cases. A CDNI FCI interface based on ALTO would inherit this thought-through and mature error-handling.</t>
+
+          <t>Filtered network map: The ALTO Map Filtering Service (see <xref target="RFC7285" pageno="false" format="default"/> for details) would allow a uCDN to query only for parts of an ALTO map.
+          </t>
+
+          <t>Server-initiated Notifications and Incremental Updates: In case the footprint or the capabilities of a downstream CDN change abruptly (i.e. unexpectedly from the perspective of an upstream CDN), server-initiated  notifications would enable a dCDN to directly inform an upstream CDN about such changes. Consider the case where - due to failure - part of the footprint of the dCDN is not functioning, i.e. the CDN cannot serve content to such clients with reasonable QoS. Without server-initiated notifications, the uCDN might still use a very recent network and cost map from dCDN, and therefore redirect request to dCDN which it cannot serve. Similarly, the possibility for incremental updates would enable efficient conveyance of the aforementioned (or similar) status changes by the dCDN to the uCDN. The newest design of ALTO supports server pushed incremental updates <xref target="I-D.ietf-alto-incr-update-sse"/>. </t>
+
+          <t>Content Availability on Hosts: A dCDN might want to express CDN capabilities in terms of certain content types (e.g. codecs/formats, or content from certain content providers). The new endpoint property for ALTO would enable a dCDN to make available such information to an upstream CDN. This would enable a uCDN to determine if a given dCDN actually has the capabilities for a given request with respect to the type of content requested.</t>
+
+          <t>Resource Availability on Hosts or Links: The capabilities on links (e.g. maximum bandwidth) or caches (e.g. average load) might be useful information for an upstream CDN for optimized downstream CDN selection. For instance, if a uCDN receives a streaming request for content with a certain bitrate, it needs to know if it is likely that a dCDN can fulfill such stringent application-level requirements (i.e. can be expected to have enough consistent bandwidth) before it redirects the request. In general, if ALTO could convey such information via new endpoint properties, it would enable more sophisticated means for downstream CDN selection with ALTO.</t>
+        </list></t>
+        <!--
+        <t>Why ALTO cannot be the request routing protocol itself ...
+        </t>
+        -->
+      </section> <!-- ALTO background -->
+
+     <!--
+    <section anchor="designcons" title="Assumptions and High-Level Design Considerations">
+      <t>In this section we list some assumptions and design issues to be considered when using ALTO for the CDNI Footprint and Capabilities Advertisement interface. See <xref target="RFC8008"/> for detailed discussions on FCI </t>
+
+      <section anchor="general" title="General Assumptions and Considerations">
+
+        <t>Below we list some general assumptions and considerations:
+
+        <list style="symbols">
+          <t>As explicitly being out-of-scope for CDNI <xref target="RFC6707" pageno="false" format="default"/>, it is assumed that ingestion of content or acquiring content across CDNs is not part of request routing as considered within CDNI standardization work. The focus of using ALTO (as considered in this document) is hence on request routing only, assuming that the content (desired by the end user) is available in the downstream CDN (uor can be acqired by the downstream CDN by some means).
+          </t>
+
+          <t>Federation Model: "Footprint and Capabilities Advertisement" and in general CDN request routing depends on the federation model among the CDN providers. Designing a suitable solution thus depends on whether a solution is needed for different settings, where CDNs consist of both NSP CDNs (serving individual ASes) and general, traditional CDNs (such as Akamai). We assume that CDNI is not designed for a setting where only NSP CDNs each serve a single AS only.</t>
+
+          <t>In this document, it is assumed that the upstream CDN (uCDN) makes the decision on selecting a downstream CDN, based on information that each downstream CDN has made available to the upstream CDN. Further, we assume that in principle more than one dCDN may be suitable for a given end-user request (i.e. different dCDNs may claim "overlapping" footprints). The uCDN hence potentially has to select among several candidate downstream CDNs for a given end user request.
+          </t>
+
+          <t>It is not clear what kind(s) of business, contract, and operational relationships two peering CDNs may form. For the Internet, we see provider-customer and peering as two main relations; providers may use different charging models (e.g., 95-percentile, total volume) and may provide different SLAs. Given such unknown characteristics of CDN peering business agreements, we should design the protocol to support as much diverse potential business and operational models as possible.</t>
+        </list>
+        </t>
+      </section>
+    -->
+
+
+
+    </section> <!-- Background -->
+
+      <!--
+      <section anchor="altoselectionadvantages" title="Advantages of using ALTO as the CDNI FCI protocol"> -->
+
+
+         <!--
+         <section anchor="altoCDNselection" title="Selection of a Downstream CDN with ALTO">
+
+
+
+         <t>
+         Under the considerations stated in <xref target="designcons"/>, ALTO can help the upstream CDN provider to select a proper downstream CDN provider for a given end user request as follows: Each downstream CDN provider hosts an ALTO server which provides ALTO services which convey CDNI FCI information to an ALTO client at the upstream CDN provider.
+         </t>
+
+
+
+         </section>
+
+
+      </section>
+         -->
+
+    <section anchor="altofciservice" title="CDNI FCI Map">
+
+      <t>
+      The ALTO protocol is based on an ALTO Information Service Framework which consists of several services, where all ALTO services are 'provided through a common transport protocol, messaging structure and encoding, and transaction model' <xref target="RFC7285" pageno="false" format="default"/>. The ALTO protocol specification <xref target="RFC7285" pageno="false" format="default"/> defines several such services, e.g. the ALTO map service.
+      </t>
+
+      <t>
+      This document defines a new ALTO Service called 'CDNI FCI Map Service' which conveys JSON objects of media type 'application/cdni'. This media type and JSON object format is defined in <xref target="RFC8006"/> and <xref target="RFC8008"/>; this document specifies how to transport such JSON objects via the ALTO protocol with the ALTO 'CDNI FCI Map Service'.
+      </t>
+
+      <section anchor="encoding" title="Server Response Encoding">
+
+      <section title="Media Type">
+        <t>
+  		    The media type of the CDNI FCI Map is 'application/cdni'.
+        </t>
+      </section>
+
+      <section anchor="meta" title="Meta Information">
+        <t>
+        The 'meta' field of a FCI response MUST include 'vtag', which is an ALTO Version Tag of the retrieved FCIMapData according to Section 10.3 of <xref target="RFC7285" pageno="false" format="default"/>. It thus contains a 'resource-id' attribute, and a 'tag' is an identifier string.
+        </t>
+      </section>
+
+      <section title="Data Information">
+        <t>
+        The data component of a CDNI FCI resource is named 'cdni-fcimap' which is a JSON object defined by [RFC8008]. This JSON object is derived from ResponseEntityBase as specified in Section 8.4 of the ALTO protocol <xref target="RFC7285" pageno="false" format="default"/>.
+        </t>
+      </section>
+
+    </section>
+
+
+    <section anchor="errors" title="Protocol Errors">
+      <t>
+		    Protocol errors are handled as specified in Section 8.5 of the ALTO protocol <xref target="RFC7285" pageno="false" format="default"/>.
+      </t>
+    </section>
+
+    <section anchor="example" title="Examples">
+      <section anchor="basicexample" title="Basic Example">
+        <t>
+	       The following example shows an CDNI FCI response as in [RFC8008], however with meta-information as defined in <xref target="meta"/> of this document.
+
+		    <figure align="left">
+              <artwork align="left"><![CDATA[
+   GET /fcimap HTTP/1.1
+   Host: alto.example.com
+   Accept: application/cdni,application/alto-error+json
+
+   HTTP/1.1 200 OK
+   Content-Length: 439
+   Content-Type: application/cdni
+   {
+     "meta" : {
+       "vtag": {
+         "resource-id": "my-default-fcimap",
+          "tag": "da65eca2eb7a10ce8b059740b0b2e3f8eb1d4785"
+       }
+     },
+     "cdni-fcimap": {
+       "capabilities": [
+         {
+           "capability-type": "FCI.DeliveryProtocol",
+           "capability-value": {
+             "delivery-protocols": [
+               "http/1.1"
+             ]
+           },
+           "footprints": [
+             <Footprint objects>
+           ]
+         },
+         {
+           "capability-type": "FCI.AcquisitionProtocol",
+           "capability-value": {
+             "acquisition-protocols": [
+               "https/1.1"
+             ]
+           },
+           "footprints": [
+             <Footprint objects>
+           ]
+         }
+       ]
+     }
+   }
+]]></artwork>
+            </figure>
+      </t>
+      </section>
+
+      <section anchor="increxample" title="Incremental FCI Update Example">
+        <t>In this section, we show an uCDN ALTO client's request and the server's immediate response. The first message includes the full CDNI FCI map, and the second message includes a huge change that dCDN will provide the delivery-protocols as http/1.0 to some of the footprints which are not included in delivery-protocols http/1.1's footprints. And the third message is a small change that adds one new footprint object with delivery-protocols including only http/1.1.</t>
+        <figure align="left">
+              <artwork align="left"><![CDATA[
+   POST /updates/fci HTTP/1.1
+   Host: fcialtoupdate.example.com
+   Accept: text/event-stream,application/alto-error+json
+   Content-Type: application/alto-updatestreamparams+json
+   Content-Length: ###
+
+   { "add": {
+       "my-fci-stream": {
+           "resource-id": "my-fci-map"
+       }
+   }
+                ]]></artwork>
+            </figure>
+
+        <figure align="left">
+              <artwork align="left"><![CDATA[
+   HTTP/1.1 200 OK
+   Connection: keep-alive
+   Content-Type: text/event-stream
+   event: application/alto-updatestreamcontrol+json
+   data: {"control-uri":
+   data: "http://fcialtocu.example.com/updates/streams/3141592653589"}
+
+   event: application/cdni,my-fci-stream
+   data: {
+   {
+     "meta" : {
+       "vtag": {
+         "resource-id": "my-default-fcimap",
+          "tag": "da65eca2eb7a10ce8b059740b0b2e3f8eb1d4785"
+       }
+     },
+     "cdni-fcimap": {
+       "capabilities": [
+         {
+           "capability-type": "FCI.DeliveryProtocol",
+           "capability-value": {
+             "delivery-protocols": [
+               "http/1.1"
+             ]
+           },
+           "footprints": [
+             <Footprint objects>
+           ]
+         },
+         {
+           "capability-type": "FCI.AcquisitionProtocol",
+           "capability-value": {
+             "acquisition-protocols": [
+               "https/1.1"
+             ]
+           },
+           "footprints": [
+             <Footprint objects>
+           ]
+         }
+       ]
+     }
+   }   
+   }
+
+   event: application/merge-patch+json,my-fci-stream
+   data: {
+   {
+     "meta": {
+       "vtag": {
+         "tag": "dasdfa10ce8b059740bddsfasd8eb1d47853716"
+       }
+     },
+    {
+      "capability-type": "FCI.DeliveryProtocol",
+        "capability-value": {
+          "delivery-protocols": [
+            "http/1.1"
+          ]
+        },
+        "footprints": [
+             <Footprint objects that are different from footprint objects in delivery-protocols http/1.1>
+        ]
+    }     
+   }
+   }
+
+   event: application/json-patch+json,my-fci-stream
+   data: {
+   [
+     {
+       "op": "replace",
+       "path": "/meta/vtag/tag",
+       "value": "a10ce8b059740b0b2e3f8eb1d4785acd42231bfe"
+     },
+     { "op": "add",
+       "path": "/cdni-fcimap/capabilities/0/footprints/-",
+       "value": "ipv4:192.0.2.0/24"
+     }
+   ]
+   }
+                ]]></artwork>
+            </figure>
+      </section>
+
+      <section anchor="netmapexample" title="FCI Using ALTO Network Map Example">
+        <t>
+          See Section 5.2 of <xref target="I-D.ma-cdni-capabilities"/>.
+        </t>
+      </section>
+
+    </section> <!-- end of examples -->
+
+  </section> <!-- end of design -->
+
+
+  <section anchor="filteredoncapabilities" title="Filtered on Capabilities">
+    <t>
+      A CDNI FCI Map defined in Section 3 is actually a dictionary which key is one CDNI capability and which value is a list of footprints. So it is natural and direct to provide a filtered on capabilities CDNI FCI map by providing additional CDNI capabilities limitation to do the filtering on a corresponding CDNI FCI Map.  
+    </t>
+  	<section anchor="filteredfcimap" title="Filtered CDNI FCI Map">
+  	<t>
+  		This document defines a new service named "Filtered CDNI FCI Map Service". And a filtered CDNI FCI map is a CDNI FCI map for which an ALTO client may supply additional parameters limiting the scope of the resulting CDNI FCI map. The relationship between a filtered CDNI FCI map and a CDNI FCI Map is similar to the relationship between a network/cost map and a filtered network/cost map.
+  	</t>
+<!-- 
+    <section title="Media Type">
+    	<t>
+    		The media type of the filtered CDNI FCI Map is 'application/cdni'.
+    	</t>
+    </section> -->
+<!-- 
+    <section title="HTTP Method">
+        <t>
+        	A filtered CDNI FCI map is requested using the HTTP POST method.
+        </t>
+    </section> -->
+
+    <section title="Accept Input Parameters">
+    	<t>The input parameters for a filtered CDNI FCI map are supplied in the entity body of the POST request. This document specifies the input parameters with a data format indicated by the media type "application/cdni-filter", which is a JSON object of type ReqFilteredCDNIFCIMap, where:</t>
+  		<figure align="left">
+            <artwork align="left"><![CDATA[
+   object {
+       CDNICapabilityObjectType capability-type;
+       CDNICapabilityObjectValue capability-value;
+   } CDNICapabilityObject;
+
+   object {
+       CDNICapabilityObject cdni-capability-objects<0..*>;
+   } ReqFilteredCDNIFCIMap;
+]]>         </artwork>
+        </figure>
+        <t>with fields: </t>
+        <t><list style="hanging">
+            <t hangText="capability-type:">
+            	The same as Base Advertisement Object's capability-type defined in Section 5.1 of <xref target="RFC8008" pageno="false" format="default"/>.
+            </t>
+            <t hangText="capability-value:">
+                The same as Base Advertisement Object's capability-value defined in Section 5.1 of <xref target="RFC8008" pageno="false" format="default"/>.
+            </t>
+            <t hangText="cdni-capability-objects:">
+            	A list of CDNI capability objects defined in Section 5.1 of <xref target="RFC8008" pageno="false" format="default"/> for which footprints are to be returned. If a list is empty, the ALTO server MUST interpret it as the full set of CDNI capability objects currently defined CDNI capability objects. The ALTO server MUST interpret entries appearing in a list multiple times as if they appeared only once. If the "cdni-capability-objects" field is not present, the ALTO server MUST interpret it as containing the full set of currently defined CDNI capability objects.
+ <!--            	If a list is not empty, the ALTO server MUST return Capability Advertisement Objects defined in Section 5 of <xref target="RFC8008" pageno="false" format="default"/> which "capability-type" and "capability-value" are equal to one of element's "capability-type" and "capability-value" in "sep-fci-capabilities" respectively.  -->
+            </t>
+        </list></t>
+
+    </section>
+    <section title="Capabilities">
+    	<t>
+    		None.
+    	</t>
+    </section>
+    <section title="Uses">
+    	<t>
+    		The resource ID of the CDNI FCI map based on which the filtered CDNI FCI map will be filtered.
+    	</t>
+    </section>
+    <section title="Response">
+    	<t>
+    		The format is the same as an unfiltered CDNI FCI map. See <xref target="encoding"/> for the format.
+    	</t>
+    	<t>
+    		The returned CDNI FCI map MUST contain only capability advertisement objects whose CDNI capability objects that have been indicated (implicitly or explicitly) in the input parameters. If the input parameters contain a CDNI capability object that is not currently defined by <xref target="RFC8008" pageno="false" format="default"/>, the ALTO server MUST behave as if the CDNI capability object did not appear in the input parameters.
+    	</t>
+    	<t>
+    		The version tag included in the "vtag" field of the response MUST correspond to the full (unfiltered) CDNI FCI map information resource from which the filtered CDNI FCI map is provided. This ensures that a single, canonical version tag is used independently of any filtering that is requested by an ALTO client.
+    	</t>
+    </section>
+    <section title="Example">
+		    <figure align="left">
+              <artwork align="left"><![CDATA[
+   POST /fcimap/filtered HTTP/1.1
+   HOST: alto.example.com
+   Content-Type: application/cdnifilter+json
+   Accept: application/cdni
+
+   {
+     "cdni-capability-objects": [
+       {
+         "capability-type": "FCI.DeliveryProtocol",
+         "capability-value": {
+           "delivery-protocols": [
+              "http/1.1"
+           ]
+         }
+       }
+     ]
+   }
+]]></artwork>
+            </figure>
+
+		    <figure align="left">
+              <artwork align="left"><![CDATA[
+   HTTP/1.1 200 OK
+   Content-Length: ###
+   Content-Type: application/cdni
+
+   {
+     "meta" : {
+       "vtag": {
+         "resource-id": "my-default-fcimap",
+          "tag": "da65eca2eb7a10ce8b059740b0b2e3f8eb1d4785"
+       }
+     },
+     "cdni-fcimap": {
+       "capabilities": [
+         {
+           "capability-type": "FCI.DeliveryProtocol",
+           "capability-value": {
+             "delivery-protocols": [
+               "http/1.1"
+             ]
+           },
+           "footprints": [
+             <Footprint objects>
+           ]
+         }
+       ]
+     }
+   }
+]]></artwork>
+            </figure>
+    </section>
+  </section>
+ </section>
+
+  <section anchor="fcipropertymap" title="Filter on Footprints">
+    <t>
+      Extensible Property Maps defined in <xref target="I-D.ietf-alto-unified-props-new"/> is used to provide properties for collections of entities such as CIDRs or PIDs. A footprint is used to present a group of endpoints, and CDNI capability can be regarded as the property of a footprint. And two resource types Property Maps and Filtered Property Maps are already well-defined in <xref target="I-D.ietf-alto-unified-props-new"/>. Thus, our design decision here is to use Extensible Property Maps to enabling filter on footprints. 
+    </t>
+    <t>
+      A CDNI FCI property map is a property map in which every entity MUST have the  "cdni-capability-objects" property registered in <xref target="iana"/>. And it builds the inverted index of a CDNI FCI map. The building process consists of two steps: firstly, each footprint object is represented as a set of extensible property map entities in a domain defined in <xref target="I-D.ietf-alto-unified-props-new"/>; secondly, each extensible property map entity is mapped into a list of CDNI capability objects.      
+    </t>
+<!--       A CDNI FCI Property Map defines a mapping from footprint objects to CDNI capability objects. This mapping consists of two steps: first, each footprint object can be represented as an extensible property map entity defined in <xref target="I-D.ietf-alto-unified-props-new"/>; secondly, each extensible property map entity is mapped into a CDNI capability object. -->
+<!--   		CDNI FCI Property Map enables query capabilities of footprints (inverted index of FCI capability objects). -->
+  	<section title="Representing Footprint Objects as Extensible Property Map entities">
+      <t>
+        A footprint object has two properties: footprint-type and footprint-value. A footprint-value is an array of footprint values conforming to the specification associated with the registered footprint type ("ipv4cidr", "ipv6cidr", "asn", and "countrycode"). Since each extensible property map entity has a unique address and each pair of footprint-type and a footprint value determines a unique address, a list of footprint objects can be represented as a set of entities according to their different footprint-type and footprint values. However, <xref target="I-D.ietf-alto-unified-props-new"/> only defines IPv4 Domain and IPv6 Domain which represent footprint-type "ipv4cidr" and "ipv6cidr" respectively. To represent footprint-type "asn" and "countrycode", this document registers two new domains in <xref target="iana"/>.
+      </t>
+      <t>
+        Here gives an example of representing a footprint object as a set of extensible property map entities.
+      </t>
+      <t>
+        {"footprint-type": "ipv4cidr", "footprint-value": ["192.0.2.0/24", "198.51.100.0/24"]} --> "ipv4:192.168.2.0/24", "ipv4:198.51.100.0/24"
+      </t>
+  		<section title="ASN Domain">
+  			<t>
+  			    This document specifies a new domain in addition to the ones in <xref target="I-D.ietf-alto-unified-props-new"/>. ASN is the abbreviation of Autonomous System Number.
+  		    </t>
+  		    <section title="Domain Name">
+  		    	<t>
+  		    		asn
+  		    	</t>
+  		    </section>
+  		    <section title="Domain-Specific Entity Addresses" anchor="asn-entity-address">
+  		    	<t>
+  		             The entity address of asn domain is encoded as a string consisting of the characters "as" (in lowercase) followed by the ASN <xref target="RFC6793" pageno="false" format="default"/>.
+  		        </t>
+  		    </section>
+        </section>
+        <section title="COUNTRYCODE Domain">
+        	<t>
+        		This document specifies a new domain in addition to the ones in <xref target="I-D.ietf-alto-unified-props-new"/>.
+        	</t>
+        	<section title="Domain Name">
+        		<t>
+        			countrycode
+        		</t>
+        	</section>
+        	<section title="Domain-Specific Entity Addresses" anchor="countrycode-entity-address">
+        		<t>
+        			The entity address of countrycode domain is encoded as an ISO 3166-1 alpha-2 code <xref target="ISO3166-1"/> in lowercase.
+        		</t>
+        	</section>
+        </section>
+
+     <!--  <section title="Example"> -->
+
+<!--         <t>
+        [{"footprint-type": "ipv6cidr", "footprint-value": ["2001:db8::/32"]}] "ipv6:2001:db8::/32"
+        </t>
+        <t>
+        [{"footprint-type": "asn", "footprint-value": ["as64496"]}]  "asn:as64496"
+        </t>
+        <t>
+        [{"footprint-type": "countrycode", "footprint-value": ["us"]}]  "countrycode:us"
+        </t> -->
+      <!--  </section> -->
+  	</section>
+<!--   	<section title="Media Type">
+  		<t>
+  			The media type of a CDNI FCI Property Map is "application/alto-propmap+json".
+  		</t>
+  	</section>
+  	<section title="Accept Input Parameters">
+  		<t>
+  			None.
+  		</t>
+  	</section> -->
+<!--   	<section title="Media Type">
+  		<t>
+  		    The same as the media type of an ALTO Property Map defined in Section 4.1 of <xref target="I-D.ietf-alto-unified-props-new"/>.
+  		</t>
+  	</section>
+  	<section title="HTTP Method">
+  		<t>
+  			The same as the HTTP method of an ALTO Property Map defined in Section 4.1 of <xref target="I-D.ietf-alto-unified-props-new"/>.
+  		</t>
+  	</section>
+  	<section title="Accept Input Parameters">
+        <t>
+        	None.
+        </t>
+  	</section> -->
+<!--   	<section title="Capabilities">
+  		<t>
+        If the "prop-types" field of an extensible property map includes the "cdni-capability-obejcts" registered in <xref target="iana"/>, this extensible property map can be regarded as a CDNI FCI property map. To be note that currently CDNI capability objects for an entity in ANE domain defined in <xref target="I-D.ietf-alto-unified-props-new"/> is still not clear.
+            For a CDNI FCI property map, the "prop-types" field SHOULD include exactly one "cdni-capability-objects" registered in <xref target="iana"/>. And all elements in "domain-types" SHOULD be "ipv4", "ipv6", "asn" or "coutrycode".
+  	    </t>
+  	</section> -->
+<!--   	<section title="Uses">
+  		<t>
+            If the "uses" field of a extensible property map includes one or more CDNI FCI map resources, this extensible property map can be regarded as a CDNI FCI property map.
+  		</t>
+  	</section> -->
+<!--   	<section title="Response">
+  		<t>
+  		    The same as the response of an ALTO Property Map defined in Section 4.6 of <xref target="I-D.ietf-alto-unified-props-new"/>.
+  	    </t>
+  	</section> -->
+  	<section title="Example">
+      <section title="CDNI FCI Property Map Example">
+		    <figure align="left">
+              <artwork align="left"><![CDATA[
+   GET /propmap/full/cdnifci HTTP/1.1
+   HOST: alto.example.com
+   Accept: application/alto-propmap+json,application/alto-error+json
+]]></artwork>
+            </figure>
+
+		    <figure align="left">
+              <artwork align="left"><![CDATA[
+   HTTP/1.1 200 OK
+   Content-Length: ###
+   Content-Type: application/alto-propmap+json
+
+   {
+     "property-map": {
+       "meta": {
+         "dependent-vtags": [
+           {"resource-id": "my-default-fcimap",
+            "tag": "7915dc0290c2705481c491a2b4ffbec482b3cf62"}
+         ]
+       },
+       "countrycode:us": {
+         "cdni-capabilities-objects": [{"capability-type":,
+                                        "capability-value":}]
+       },
+       "ipv4:192.0.2.0/24": {
+         "cdni-capabilities-objects": [{"capability-type":,
+                                        "capability-value":}]
+       },
+       "ipv4:198.51.100.0/24": {
+         "cdni-capabilities-objects": [{"capability-type":,
+                                        "capability-value":}]
+       },
+       "ipv6:2001:db8::/32": {
+         "cdni-capabilities-objects": [{"capability-type":,
+                                        "capability-value":}]
+       },
+       "asn:as64496": {
+         "cdni-capabilities-objects": [{"capability-type":,
+                                        "capability-value":}]
+       }
+     }
+   }
+]]></artwork>
+            </figure>
+  	</section>
+
+    <section title="Filtered CDNI FCI Property Map Example">
+              <figure align="left">
+              <artwork align="left"><![CDATA[
+   POST /propmap/lookup/cdnicapabilityobject HTTP/1.1
+   HOST: alto.example.com
+   Content-Type: application/alto-propmapparams+json
+   Accept: application/alto-propmap+json,application/alto-error+json
+   Content-Length:
+
+   {
+     "entities": [
+       "ipv4:192.0.2.0/24",
+       "ipv6:2001:db8::/32"
+     ],
+     "properties": [ "cdni-capability-objects", "pid" ]
+   }
+]]></artwork>
+            </figure>
+
+        <figure align="left">
+              <artwork align="left"><![CDATA[
+   HTTP/1.1 200 OK
+   Content-Length: ###
+   Content-Type: application/alto-propmap+json
+
+   {
+     "property-map": {
+       "meta": {
+         "dependent-vtags": [
+            {"resource-id": "my-default-fcimap",
+              "tag": "7915dc0290c2705481c491a2b4ffbec482b3cf62"},
+            {"resource-id": "my-default-networkmap",
+              "tag":"7915dc0290c2705481c491a2b4ffbec482b3cf63"}
+         ]
+       },
+       "countrycode:us": {
+         "cdni-capability-objects": [{"capability-type":,
+                                        "capability-value":}]
+       },
+       "ipv4:192.0.2.0/24": {
+         "cdni-capability-objects": [{"capability-type":,
+                                        "capability-value":}],
+         "pid": "pid1"
+       },
+       "ipv4:198.51.100.0/24": {
+         "cdni-capability-objects": [{"capability-type":,
+                                        "capability-value":}],
+         "pid": "pid2"
+       },
+       "ipv6:2001:db8::/32": {
+         "cdni-capability-objects": [{"capability-type":,
+                                        "capability-value":}],
+          "pid": "pid3"
+       },
+       "asn:as64496": {
+         "cdni-capabilities-objects": [{"capability-type":,
+                                        "capability-value":}]
+       }
+     }
+   }
+]]></artwork>
+            </figure>
+
+    </section>
+
+
+  </section>
+
+  </section> <!--end of Unfied Properties Map for CDNI FCI-->
+
+<!--
+  <section title="Filtered CDNI FCI Property Map">
+    <t>
+      A filtered CDNI FCI property map returns the values of a set of CDNI capbility objects of a set of entities selected by the client.
+    </t>
+   	<section title="Media Type">
+  		<t>
+  		  The same as the media type of an ALTO Filtered Property Map defined in Section 5.1 of <xref target="I-D.ietf-alto-unified-props-new"/>.
+  		</t>
+  	</section>
+  	<section title="HTTP Method">
+  		<t>
+  			The same as the HTTP method of an ALTO Filtered Property Map defined in Section 5.2 of <xref target="I-D.ietf-alto-unified-props-new"/>.
+  		</t>
+  	</section>
+    <section title="Capabilities">
+      <t>
+       If the "prop-types" field of a filtered extensible property map includes the "cdni-capability-obejcts" registered in <xref target="iana"/>, this filtered extensible property map can be regarded as a filtered CDNI FCI property map. To be note that currently CDNI capability objects for an entity in ANE domain defined in <xref target="I-D.ietf-alto-unified-props-new"/> is still not clear.
+             For a filtered CDNI FCI property map, the "prop-types" field MUST include exactly one "cdni-capability-objects" registered in <xref target="iana"/>. And all elements in "domain-types" MUST be "ipv4", "ipv6", "asn" or "coutrycode".
+        </t>
+    </section>
+  	<section title="Accpet Input Parameters">
+        <t>
+          If "properties" field of a request includes the "cdni-capability-objects", this request can be regarded a request to get a filtered CDNI FCI property map.
+           For filtered CDNI FCI property map, "properties" field MUST include exactly one "cdni-capability-objects" registered in <xref target="iana"/>. And "entities" field MUST include at least one entity of IPv4, IPv6, ASN, or COUNTRYCODE domain.
+        </t>
+  	</section>
+   	<section title="Uses">
+  		<t>
+            The same as the uses of an ALTO Filtered Property Map defined in Section 5.5 of <xref target="I-D.ietf-alto-unified-props-new"/>.
+  		</t>
+  	</section>
+  	<section title="Response">
+  		<t>
+  			The same as the response of an ALTO Filtered Property Ma defined in Section 5.6 of <xref target="I-D.ietf-alto-unified-props-new"/>.
+  		</t>
+  	</section>
+  	<section title="Example">
+  				    <figure align="left">
+              <artwork align="left"><![CDATA[
+   POST /propmap/lookup/cdnicapabilityobject HTTP/1.1
+   HOST: alto.example.com
+   Content-Type: application/alto-propmapparams+json
+   Accept: application/alto-propmap+json,application/alto-error+json
+   Content-Length:
+
+   {
+     "entities": [
+       "ipv4:192.0.2.0/24",
+       "ipv6:2001:db8::/32"
+     ],
+     "properties": [ "cdni-capability-objects" ]
+   }
+]]></artwork>
+            </figure>
+
+		    <figure align="left">
+              <artwork align="left"><![CDATA[
+   HTTP/1.1 200 OK
+   Content-Length: ###
+   Content-Type: application/alto-propmap+json
+
+   {
+     "property-map": {
+       "meta": {
+         "dependent-vtags": [
+           {"resource-id": "my-default-fcimap",
+            "tag": "7915dc0290c2705481c491a2b4ffbec482b3cf62"}
+         ]
+       },
+       "countrycode:us": {
+         "cdni-capability-objects": [{"capability-type":,
+                                        "capability-value":}]
+       },
+       "ipv4:192.0.2.0/24": {
+         "cdni-capability-objects": [{"capability-type":,
+                                        "capability-value":}]
+       },
+       "ipv4:198.51.100.0/24": {
+         "cdni-capability-objects": [{"capability-type":,
+                                        "capability-value":}]
+       },
+       "ipv6:2001:db8::/32": {
+         "cdni-capability-objects": [{"capability-type":,
+                                        "capability-value":}]
+       },
+       "asn:as64496": {
+         "cdni-capabilities-objects": [{"capability-type":,
+                                        "capability-value":}]
+       }
+     }
+   }
+]]></artwork>
+            </figure>
+
+  	</section>
+  </section>
+-->
+  <section title="IANA Considerations" anchor="iana">
+      <section title="ALTO Entity Domain Registry">
+    <t>
+      As proposed in Section 9.2 of <xref target="I-D.ietf-alto-unified-props-new"/>,
+      "ALTO Entity Domain Registry" is requested. Besides, two
+      new domain is to be registered, listed in
+      <xref target="tbl:entity-domain"/>.
+    </t>
+    <texttable anchor="tbl:entity-domain" align="center" title="ALTO Entity Domain">
+
+            <ttcol align="left" width="16%">
+              Identifier
+            </ttcol>
+            <ttcol align="left" width="34%">
+              Entity Address Encoding
+            </ttcol>
+            <ttcol align="left" width="34%">
+              Hierarchy &amp; Inheritance
+            </ttcol>
+
+            <c>
+              asn
+            </c>
+            <c>
+              See <xref target="asn-entity-address"/>
+            </c>
+            <c>
+              None
+            </c>
+
+            <c>
+              countrycode
+            </c>
+            <c>
+              See <xref target="countrycode-entity-address"/>
+            </c>
+            <c>
+              None
+            </c>
+
+    </texttable>
+
+      </section>
+      <section title="ALTO CDNI FCI Property Type Registry">
+    <t>
+      The "ALTO CDNI FCI Property Type
+      Registry" is required by the ALTO Entity Domain
+      "asn", "countrycode", "ipv4" and "ipv6", listed in
+      <xref target="tbl:prop-type-register"/>.
+    </t>
+    <texttable anchor="tbl:prop-type-register" align="center" title="ALTO CDNI FCI Property Types">
+
+
+
+
+
+            <ttcol align="left" width="16%">
+              Identifier
+            </ttcol>
+            <ttcol align="left" width="29%">
+              Intended Semantics
+            </ttcol>
+
+            <c>
+              cdni-capability-objects
+            </c>
+            <c>
+              The CDNI capability objects
+            </c>
+
+
+
+    </texttable>
+
+      </section>
+  </section>
+
+  <section anchor="security" title="Security Considerations">
+         <t>One important security consideration is the proper authentication of advertisement information provided by a downstream CDN. The ALTO protocol provides a specification for a signature of ALTO information (see 8.2.2. of <xref target="RFC7285" pageno="false" format="default"/>. ALTO thus provides a proper means for protecting the integrity of FCI information.</t>
+
+         <t>More Security Considerations will be discussed in a future version of this document.</t>
+      </section>
+
+
+
+
+
+
+       <section anchor="ack" title="Acknowledgements">
+      <t>The authors would like to thank Kevin Ma, Daryl Malas, Matt Caulfield and Shenshen Chen for their timely reviews and invaluable comments.</t>
+
+      <t>Jan Seedorf is partially supported by the GreenICN project
+      (GreenICN: Architecture and Applications of Green Information Centric
+      Networking), a research project supported jointly by the European
+      Commission under its 7th Framework Program (contract no. 608518) and
+      the National Institute of Information and Communications Technology
+      (NICT) in Japan (contract no. 167).  The views and conclusions
+      contained herein are those of the authors and should not be
+      interpreted as necessarily representing the official policies or
+      endorsements, either expressed or implied, of the GreenICN project,
+      the European Commission, or NICT.</t>
+    </section>
+
+  </middle>
+
+  <back>
+
+    <references title="Normative References">
+      <?rfc include="reference.RFC.5693.xml" ?>
+      <?rfc include="reference.RFC.6707.xml" ?>
+      <!-- <?rfc include="reference.RFC.6770.xml" ?> -->
+      <?rfc include="reference.RFC.6793.xml" ?>
+      <?rfc include="reference.RFC.7285.xml" ?>
+      <?rfc include="reference.RFC.7336.xml" ?>
+      <!-- <?rfc include="reference.RFC.7337.xml" ?> -->
+      <?rfc include="reference.RFC.8006.xml" ?>
+      <?rfc include="reference.RFC.8008.xml" ?>
+    <reference anchor="ISO3166-1"><front>
+	<title>Codes for the representation of names of countries and their subdivisions -- Part 1: Country codes</title>
+	<author>
+	<organization>The International Organization for Standardization</organization>
+	</author>
+
+	<date year="2013"/>
+	</front>
+
+	<seriesInfo name="ISO" value="3166-1:2013"/>
+	</reference>
+    </references>
+
+
+    <references title="Informative References">
+
+      <!--
+      <reference anchor="I-D.peterson-CDNI-strawman">
+        <front>
+          <title>Content Distribution Network Interconnection (CDNI) Problem Statement</title>
+
+            <author initials="L." surname="Peterson" fullname="L. Peterson">
+              <organization abbrev="Verivue Inc."/>
+            </author>
+            <author initials="J." surname="Hartman" fullname="J. Hartman">
+              <organization abbrev="Verivue Inc."/>
+            </author>
+            <date month="May" year="2011"/>
+        </front>
+        <seriesInfo name="Internet-Draft" value="draft-peterson-CDNI-strawman-01"/>
+      </reference>
+      -->
+
+      <!-- <?rfc include="reference.I-D.marocco-alto-next"?> -->
+      <!-- <?rfc include="reference.I-D.marocco-alto-ws"?> -->
+      <?rfc include="reference.I-D.draft-ietf-alto-incr-update-sse-07.xml"?>
+      <?rfc include="reference.I-D.draft-jenkins-alto-cdn-use-cases-03.xml"?>
+      <?rfc include="reference.I-D.draft-ma-cdni-capabilities-09.xml"?>
+      <?rfc include="reference.I-D.draft-ietf-alto-unified-props-new-00.xml"?>
+      <!-- <?rfc include="reference.I-D.liu-cdni-cost"?> -->
+      <!-- <?rfc include="reference.I-D.ietf-cdni-metadata"?>  -->
+      <!-- <?rfc include="reference.I-D.ietf-cdni-logging"?> -->
+
+    </references>
+
+   </back>
+</rfc>
+

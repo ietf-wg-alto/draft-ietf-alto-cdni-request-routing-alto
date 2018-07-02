@@ -1,0 +1,181 @@
+
+Section 1., paragraph 13:
+
+>    This document focuses solely on CDNI FCI, with a goal to specify a
+>    new Application Layer Traffic Optimization (ALTO) [RFC7285] service
+
+  Application Layer -> Application-Layer
+
+
+Section 2.2., paragraph 1:
+
+>    Application Layer Traffic Optimization (ALTO) [RFC7285] is an
+
+  Application Layer -> Application-Layer
+
+
+Section 3.5., paragraph 1:
+
+>    The resource ID of the resource based on which the CDNI FCI map will
+>    be defined.  For example, if a CDNI FCI map depends on a network map,
+>    the resource ID of the network map MUST be included in "Uses" field.
+
+  Please clarify HOW "a CDNI FCI map depends on a network map" (the
+  usage or semantics). You can just mention that "see Section XXX".
+
+
+Section 3.6., paragraph 1:
+
+>    If a CDNI FCI map does not depend on other resources, the "meta"
+>    field of a CDNI FCI map response MUST include the "vtag" field
+>    defined in Section 10.3 of [RFC7285], which provides the version tag
+>    of the retrieved CDNI FCI map.  If a CDNI FCI map response depends on
+>    a resource such a network map, it MUST include the "dependent-vtags"
+>    field, whose value is a single-element array to indicate the version
+
+  Why single-element array? Please remove this restrict. And please
+  clarify the current defined dependent resource can be only network
+  map, the usage is described in the next section.
+
+
+Section 3.6., paragraph 7:
+
+>    Specifically, a CDNIFCIMapData object is a dictionary map object, and
+
+  dictionary map object -> JSON object
+
+
+Section 3.6., paragraph 8:
+
+>    it includes only one element whose key is "capabilities" and which
+
+  it includes only one property "capabilities" whose ...
+
+
+Section 3.6., paragraph 9:
+
+>    value is an array of CDNIFCIobject objects.  The CDNIFCIObject object
+>    may also contain an optional list of CDNIFCIFootprint objects.  The
+
+  may also -> MAY. Why "also"? Is there anything before "also"?
+
+
+Section 3.6., paragraph 10:
+
+>    FCIFootprint object specifies a "footprint-type" (as defined by the
+>    CDNI Metadata Footprint Types registry, e.g., ipv4cidr, ipv6cidr,
+>    asn, or countrycode [I-D.ietf-cdni-metadata]) which identifies the
+>    contents and encoding of the individual footprint entries contained
+>    in the associated "footprint-value" array.
+
+  Do we really need such a paragraph? It seems to just repeat the
+  same thing as the schema does. Please just describe the semantics
+  and refer RFC8006/RFC8008.
+
+
+Section 3.6., paragraph 11:
+
+>    The "footprints" list MUST NOT contain multiple FCIFootprint objects
+>    of the same type.  Footprint restriction information MAY be specified
+
+  You need to define how to handle the repeated types. "MUST NOT"
+  is not helpful.
+
+
+Section 3.6., paragraph 12:
+
+>    using multiple different footprint-types.  If no footprint
+>    restriction list is specified (or an empty list is specified), it
+>    SHALL be understood that all footprint types MUST be reset to
+
+  SHALL -> MUST. Why "SHALL"? MUST be -> are.
+
+
+Section 4.1., paragraph 1:
+
+>    The ALTO Protocol offers an information service "ALTO map service"
+>    that provides information to ALTO clients in the form of Network Map
+>    and Cost Map [RFC7285].  As an alternative to the explicit definition
+>    of a CDNI Footprint Type (e.g., ipv4cidr, ipv6cidr, as, countrycode),
+>    a reference to an ALTO network map can be used to define an FCI
+
+  Revise this paragraph please. You should not mention the relationship
+  between "ALTO map service" and Network Map. What's the relationship
+  between ALTO CDNI FCI MAP and Network Map?
+
+
+Section 4.1., paragraph 3:
+
+>    The first altonetworkmap entry must be a URI for accessing the ALTO
+>    server that hosts the ALTO network map (as defined in the ALTO
+
+  "MUST be a resource id of an ALTO Network Map resource". And please
+  also revise the corresponding example.
+
+
+Section 5.6., paragraph 2:
+
+>    The returned CDNI FCI map MUST contain only CDNI FCI objects whose
+>    CDNI capability object is the superset of one of CDNI capability
+>    object in "cdni-fci-capabilities".  To be more specific, that a CDNI
+
+  "To be more specific" -> "Specifically"
+
+
+Section 5.6., paragraph 3:
+
+>    capability object A is the superset of another CDNI capability object
+>    B means that these two CDNI capability objects have the same
+>    capability type and mandatory-to-specify properties in capability
+>    value of A MUST include mandatory-to-specify properties in capability
+
+  mandatory-to-specify -> mandatory
+
+
+Section 5.6., paragraph 4:
+
+>    value of B semantically.  For example, if a CDNI FCI capability in
+>    "cdni-fci-capabilities" is Delivery Protocol capability object with
+>    "http/1.1" in its field "delivery-protocols" and the original full
+>    CDNI FCI map has two CDNI FCI objects whose capabilities are Delivery
+>    Protocol capability objects with "http/1.1" and "http/1.1, https/1.1"
+
+  "http/1.1" -> ["http/1.1"] ; "http/1.1, https/1.1" -> ["http/1.1",
+  "https/1.1"]
+
+
+Section 5.6., paragraph 6:
+
+>    The version tag included in the "vtag" field of the response MUST
+>    correspond to the unfiltered CDNI FCI map information resource from
+
+  unfiltered -> full ; delete "information"
+
+
+Section 5.7.1., paragraph 1:
+
+>    This example is filtering on the full CDNI FCI map example in
+
+  delete "on"
+
+
+Section 6., paragraph 1:
+
+>    In this section, we describe how ALTO clients look up properties for
+>    individual footprints.  Our design decision here is to use ALTO
+>    unified property map service to query footprint properties because we
+>    do not want to introduce extra complexity and ALTO unified property
+>    map defined in [I-D.ietf-alto-unified-props-new] is already met the
+
+  is already met -> already meets
+
+
+Section 8., paragraph 1:
+
+>    One important security consideration is the proper authentication of
+>    advertisement information provided by a downstream CDN.  The ALTO
+>    protocol provides a specification for a signature of ALTO information
+>    (see 8.2.2. of [RFC7285].  ALTO thus provides a proper means for
+
+  (see Section 8.2.2 of [RFC7285]). means -> mechanism?
+

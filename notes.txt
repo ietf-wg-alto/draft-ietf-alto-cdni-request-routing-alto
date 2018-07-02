@@ -1,0 +1,77 @@
+capabilities with footprint restrictions
+
+the CDNI FCI is a means for a dCDN to provide changes/updates
+   regarding a footprint it has previously agreed to serve in a contract
+   with a uCDN.
+
+ A Footprint object describes the footprint to which a LocationRule
+   can be applied, e.g., an IPv4 address range or a geographic location.
+
+      Property: footprint-type
+
+         Description: Registered footprint type (see Section 7.2).  The
+         footprint types specified by this document are "ipv4cidr"
+         (IPv4CIDR; see Section 4.3.5), "ipv6cidr" (IPv6CIDR; see
+         Section 4.3.6), "asn" (Autonomous System Number; see
+         Section 4.3.7), and "countrycode" (Country Code; see
+         Section 4.3.8).
+
+         Type: Lowercase string
+
+         Mandatory-to-Specify: Yes.
+
+      Property: footprint-value
+
+         Description: Array of footprint values conforming to the
+         specification associated with the registered footprint type.
+         Footprint values can be simple strings (e.g., IPv4CIDR,
+         IPv6CIDR, ASN, and Country Code); however, other Footprint
+         objects can be defined in the future, along with a more complex
+         encoding (e.g., GPS coordinate tuples).
+
+         Type: Array of footprints
+
+         Mandatory-to-Specify: Yes.
+
+
+
+
+
+
+
+
+Niven-Jenkins, et al.        Standards Track                   [Page 29]
+
+RFC 8006              CDN Interconnection Metadata         December 2016
+
+
+   Example Footprint object describing a footprint covering the USA:
+
+   {
+     "footprint-type": "countrycode",
+     "footprint-value": ["us"]
+   }
+
+   Example Footprint object describing a footprint covering the IP
+   address ranges 192.0.2.0/24 and 198.51.100.0/24:
+
+   {
+     "footprint-type": "ipv4cidr",
+     "footprint-value": ["192.0.2.0/24", "198.51.100.0/24"]
+   }
+
+   Example Footprint object describing a footprint covering the IP
+   address ranges 2001:db8::/32:
+
+   {
+     "footprint-type": "ipv6cidr",
+     "footprint-value": ["2001:db8::/32"]
+   }
+
+   Example Footprint object describing a footprint covering the
+   autonomous system 64496:
+
+   {
+     "footprint-type": "asn",
+     "footprint-value": ["as64496"]
+   }
