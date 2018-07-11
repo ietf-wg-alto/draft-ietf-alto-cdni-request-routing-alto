@@ -1,0 +1,33 @@
+  <section anchor="security" title="Security Considerations">
+  	     <t>
+  	     	Although CDNI FCI Map resource defined in this document is relatively different from other existed resources defined in the base protocol, the Security Considerations of the base protocol (Section 15 of RFC7285) still apply.
+  	     </t>
+         <t>
+          For authenticity and Integrity of ALTO information, an attacker may disguise itself as an ALTO server in a dCDN, and it may provide false capabilities and footprints to an ALTO client in a uCDN by the CDNI FCI map. Such false information may lead a uCDN to select a wrong dCDN to serve user requests or even block uCDNs utilizing some dCDNs in good condition.
+         </t>
+         <t>
+          For potential undesirable guidance from authenticated ALTO information, dCDNs can provide a uCDN with limited capabilities and smaller footprint coverage so that dCDNs can avoid transferring traffic for a uCDN which they should have to transfer.  
+         </t>
+         <t>
+          For confidentiality of ALTO information, an attacker may infer the whole and exact capabilities and footprints of a dCDN by means of pretending it is one of different uCDNs of a dCDN respectively, getting different CDNI FCI maps from a dCDN and combining these maps together.
+         </t>
+         <t>
+          For privacy for ALTO users, querying footprint properties using ALTO unified property may expose network location identifiers (IP addresses or fine-grained PIDs) to the ALTO server in a dCDN. In such case, a dCDN may potentially monitor and analyze user behaviors and communication patterns of uCDNs' customers.
+         </t>
+         <t>
+          For availability of ALTO services, an attacker may get the potential huge full CDNI FCI maps from an ALTO server in a dCDN continuously to run out of bandwidth resources of that ALTO server or may query filtered CDNI FCI services with complex capabilities to run out of computation resources of an ALTO server.
+         </t>
+         <t>
+          Protection Strategies described in RFC 7285 can solve problems mentioned above well. However, the isolation of full CDNI FCI maps should also be considered.
+         </t>
+         <t>
+          <!-- The identification of ALTO clients and ALTO servers is extremely important in CDNI. Because capabilities and footprints are key information for dCDNs and they are key factors influencing the final selection decision of a uCDN. --> 
+          If a dCDN signs agreements with multiple uCDNs, it must isolate full CDNI FCI maps for different dCDNs in that uCDNs will not redirect requests which should not have to served by this dCDN to this dCDN.
+         </t>
+         <t>
+          To avoid this risk, a dCDN may consider generating URIs of different full CDNI FCI maps by hashing its company ID, a uCDN's company ID as well as their agreements. And it needs to avoid expoing all CDNI FCI maps resources in its IRDs.
+         </t>
+<!--          <t>One important security consideration is the proper authentication of advertisement information provided by a downstream CDN. The ALTO protocol provides a specification for a signature of ALTO information (see Section 15 of <xref target="RFC7285" pageno="false" format="default"/>. ALTO thus provides a proper mechanism for protecting the integrity of FCI information.</t>
+
+         <t>More Security Considerations will be discussed in a future version of this document.</t> -->
+      </section>

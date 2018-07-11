@@ -5,19 +5,19 @@
 CDNI                                                          J. Seedorf
 Internet-Draft                 HFT Stuttgart - Univ. of Applied Sciences
 Intended status: Standards Track                                 Y. Yang
-Expires: January 11, 2019                                    Tongji/Yale
+Expires: January 12, 2019                                    Tongji/Yale
                                                                    K. Ma
                                                                 Ericsson
                                                              J. Peterson
                                                                  Neustar
                                                                   X. Lin
                                                                   Tongji
-                                                           July 10, 2018
+                                                           July 11, 2018
 
 
  Content Delivery Network Interconnection (CDNI) Request Routing: CDNI
           Footprint and Capabilities Advertisement using ALTO
-              draft-ietf-alto-cdni-request-routing-alto-03
+              draft-ietf-alto-cdni-request-routing-alto-04
 
 Abstract
 
@@ -47,13 +47,13 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on January 11, 2019.
+   This Internet-Draft will expire on January 12, 2019.
 
 
 
 
 
-Seedorf, et al.         Expires January 11, 2019                [Page 1]
+Seedorf, et al.         Expires January 12, 2019                [Page 1]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -89,7 +89,7 @@ Table of Contents
      3.7.  Examples  . . . . . . . . . . . . . . . . . . . . . . . .  10
        3.7.1.  IRD Example . . . . . . . . . . . . . . . . . . . . .  10
        3.7.2.  Basic Example . . . . . . . . . . . . . . . . . . . .  12
-       3.7.3.  Incremental Updates Example . . . . . . . . . . . . .  13
+       3.7.3.  Incremental Updates Example . . . . . . . . . . . . .  14
    4.  CDNI FCI Map using ALTO Network Map . . . . . . . . . . . . .  15
      4.1.  Introduce Footprint Type: altonetworkmap  . . . . . . . .  15
      4.2.  Examples  . . . . . . . . . . . . . . . . . . . . . . . .  15
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Seedorf, et al.         Expires January 11, 2019                [Page 2]
+Seedorf, et al.         Expires January 12, 2019                [Page 2]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -165,7 +165,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 11, 2019                [Page 3]
+Seedorf, et al.         Expires January 12, 2019                [Page 3]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -221,7 +221,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 11, 2019                [Page 4]
+Seedorf, et al.         Expires January 12, 2019                [Page 4]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -277,7 +277,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 11, 2019                [Page 5]
+Seedorf, et al.         Expires January 12, 2019                [Page 5]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -333,7 +333,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 11, 2019                [Page 6]
+Seedorf, et al.         Expires January 12, 2019                [Page 6]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -389,7 +389,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 11, 2019                [Page 7]
+Seedorf, et al.         Expires January 12, 2019                [Page 7]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -445,7 +445,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 11, 2019                [Page 8]
+Seedorf, et al.         Expires January 12, 2019                [Page 8]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -501,7 +501,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 11, 2019                [Page 9]
+Seedorf, et al.         Expires January 12, 2019                [Page 9]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -510,7 +510,19 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
    BaseAdvertisementObject are well defined in Section 5.1 of [RFC8008].
    BaseAdvertisementObject object consists of capability-type,
    capability-value and footprints.  And footprints are defined in
-   Section 4.2.2.2 of [RFC8006].
+   Section 4.2.2.2 of [RFC8006].  For self-contained, we present the
+   informal encoding of BaseAdvertisementObject below.
+
+       object {
+           JSONString capability-type;
+           JSONValue capability-value;
+           Footprint footprints<0..*>;
+       } BaseAdvertisementObject;
+
+       object {
+           JSONString footprint-type;
+           JSONString footprint-value<1..*>;
+       } Footprint
 
    For each BaseAdvertisementObject, the ALTO client MUST interpret
    footprints appearing multiple times as if they appeared only once.
@@ -542,6 +554,14 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
      Host: alto.example.com
      Accept: application/alto-directory+json,application/alto-error+json
 
+
+
+
+Seedorf, et al.         Expires January 12, 2019               [Page 10]
+
+Internet-Draft             CDNI FCI using ALTO                 July 2018
+
+
    {
      "meta" : { ... },
      "resources": {
@@ -554,14 +574,6 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
          "media-type" : "application/alto-networkmap+json"
        },
        "my-default-cdnifci-map": {
-
-
-
-Seedorf, et al.         Expires January 11, 2019               [Page 10]
-
-Internet-Draft             CDNI FCI using ALTO                 July 2018
-
-
          "uri" : "http://alto.example.com/cdnifcimap",
          "media-type": "application/alto-cdnifcimap+json"
        },
@@ -598,6 +610,14 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
          "media-type" : "text/event-stream",
          "accepts" : "application/alto-updatestreamparams+json",
          "uses" : [
+
+
+
+Seedorf, et al.         Expires January 12, 2019               [Page 11]
+
+Internet-Draft             CDNI FCI using ALTO                 July 2018
+
+
            "my-default-network-map",
            "my-eu-netmap",
            "my-default-cdnifci-map",
@@ -610,14 +630,6 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
              "my-eu-netmap" : "application/json-patch+json",
              "my-default-cdnifci-map" :
              "application/merge-patch+json,application/json-patch+json",
-
-
-
-Seedorf, et al.         Expires January 11, 2019               [Page 11]
-
-Internet-Draft             CDNI FCI using ALTO                 July 2018
-
-
              "my-filtered-cdnifci-map" :
              "application/merge-patch+jso,application/json-patch+json",
              "my-cdnifci-map-with-network-map-footprints" :
@@ -654,6 +666,14 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
    Accept: application/alto-cdnifcimap+json,application/alto-error+json
 
        HTTP/1.1 200 OK
+
+
+
+Seedorf, et al.         Expires January 12, 2019               [Page 12]
+
+Internet-Draft             CDNI FCI using ALTO                 July 2018
+
+
        Content-Length: XXX
        Content-Type: application/alto-cdnifcimap+json
        {
@@ -666,14 +686,6 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
          "cdni-fci-map": {
            "capabilities": [
              {
-
-
-
-Seedorf, et al.         Expires January 11, 2019               [Page 12]
-
-Internet-Draft             CDNI FCI using ALTO                 July 2018
-
-
                "capability-type": "FCI.DeliveryProtocol",
                "capability-value": {
                  "delivery-protocols": [
@@ -711,6 +723,13 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
          }
        }
 
+
+
+Seedorf, et al.         Expires January 12, 2019               [Page 13]
+
+Internet-Draft             CDNI FCI using ALTO                 July 2018
+
+
 3.7.3.  Incremental Updates Example
 
    A benefit of using ALTO to provide CDNI FCI maps is that such maps
@@ -722,14 +741,6 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
      Host: alto.example.com
      Accept: text/event-stream,application/alto-error+json
      Content-Type: application/alto-updatestreamparams+json
-
-
-
-Seedorf, et al.         Expires January 11, 2019               [Page 13]
-
-Internet-Draft             CDNI FCI using ALTO                 July 2018
-
-
      Content-Length: ###
 
      { "add": {
@@ -767,6 +778,14 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
      data:       <Footprint objects that are different from
      data:        footprint objects in delivery-protocols http/1.1>
      data:     ]
+
+
+
+Seedorf, et al.         Expires January 12, 2019               [Page 14]
+
+Internet-Draft             CDNI FCI using ALTO                 July 2018
+
+
      data:   }
      data: }
 
@@ -778,14 +797,6 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
      data:     "value": "a10ce8b059740b0b2e3f8eb1d4785acd42231bfe"
      data:   },
      data:   { "op": "add",
-
-
-
-Seedorf, et al.         Expires January 11, 2019               [Page 14]
-
-Internet-Draft             CDNI FCI using ALTO                 July 2018
-
-
      data:     "path": "/cdni-fci-map/capabilities/0/footprints/-",
      data:     "value": "ipv4:192.0.2.0/24"
      data:   }
@@ -826,18 +837,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-Seedorf, et al.         Expires January 11, 2019               [Page 15]
+Seedorf, et al.         Expires January 12, 2019               [Page 15]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -893,7 +893,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 11, 2019               [Page 16]
+Seedorf, et al.         Expires January 12, 2019               [Page 16]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -949,7 +949,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 11, 2019               [Page 17]
+Seedorf, et al.         Expires January 12, 2019               [Page 17]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1005,7 +1005,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 11, 2019               [Page 18]
+Seedorf, et al.         Expires January 12, 2019               [Page 18]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1061,7 +1061,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 11, 2019               [Page 19]
+Seedorf, et al.         Expires January 12, 2019               [Page 19]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1117,7 +1117,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 11, 2019               [Page 20]
+Seedorf, et al.         Expires January 12, 2019               [Page 20]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1173,7 +1173,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 11, 2019               [Page 21]
+Seedorf, et al.         Expires January 12, 2019               [Page 21]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1229,7 +1229,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 11, 2019               [Page 22]
+Seedorf, et al.         Expires January 12, 2019               [Page 22]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1285,7 +1285,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 11, 2019               [Page 23]
+Seedorf, et al.         Expires January 12, 2019               [Page 23]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1341,7 +1341,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 11, 2019               [Page 24]
+Seedorf, et al.         Expires January 12, 2019               [Page 24]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1397,7 +1397,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 11, 2019               [Page 25]
+Seedorf, et al.         Expires January 12, 2019               [Page 25]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1453,7 +1453,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 11, 2019               [Page 26]
+Seedorf, et al.         Expires January 12, 2019               [Page 26]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1509,7 +1509,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 11, 2019               [Page 27]
+Seedorf, et al.         Expires January 12, 2019               [Page 27]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1565,7 +1565,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 11, 2019               [Page 28]
+Seedorf, et al.         Expires January 12, 2019               [Page 28]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1621,7 +1621,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 11, 2019               [Page 29]
+Seedorf, et al.         Expires January 12, 2019               [Page 29]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1677,7 +1677,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 11, 2019               [Page 30]
+Seedorf, et al.         Expires January 12, 2019               [Page 30]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1733,7 +1733,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 11, 2019               [Page 31]
+Seedorf, et al.         Expires January 12, 2019               [Page 31]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1789,7 +1789,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 11, 2019               [Page 32]
+Seedorf, et al.         Expires January 12, 2019               [Page 32]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1845,7 +1845,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 11, 2019               [Page 33]
+Seedorf, et al.         Expires January 12, 2019               [Page 33]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1901,7 +1901,7 @@ Authors' Addresses
 
 
 
-Seedorf, et al.         Expires January 11, 2019               [Page 34]
+Seedorf, et al.         Expires January 12, 2019               [Page 34]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1935,7 +1935,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
    Email: jon.peterson@neustar.biz
 
 
-   X.S. Lin
+   Xiao Shawn Lin
    Tongji University
    4800 Cao'an Hwy
    Shanghai  201804
@@ -1957,4 +1957,4 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 11, 2019               [Page 35]
+Seedorf, et al.         Expires January 12, 2019               [Page 35]

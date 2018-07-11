@@ -1,0 +1,187 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+
+<!ENTITY introduction   PUBLIC '' "introduction.xml">
+<!ENTITY background     PUBLIC '' "background.xml">
+<!ENTITY cdnifcimap     PUBLIC '' "cdnifcimap.xml">
+<!ENTITY cdnifcinetworkmap     PUBLIC '' "cdnifcinetworkmap.xml">
+<!ENTITY filteredcdnifcimap     PUBLIC '' "filteredcdnifcimap.xml">
+<!ENTITY unifiedpropertymap     PUBLIC '' "unifiedpropertymap.xml">
+<!ENTITY protocolerrors     PUBLIC '' "protocolerrors.xml">
+<!ENTITY iana     PUBLIC '' "iana.xml">
+<!ENTITY securityconsiderations     PUBLIC '' "securityconsiderations.xml">
+<!ENTITY acknowledgments     PUBLIC '' "acknowledgments.xml">
+]>
+
+
+<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+<?rfc toc="yes"?>
+<?rfc iprnotified="no" ?>
+<?rfc symrefs="yes"?>
+<?rfc compact="yes" ?>
+<?rfc subcompact="no" ?>
+<rfc category="std"
+     docName="draft-ietf-alto-cdni-request-routing-alto-04"
+     ipr="trust200902">
+  <front>
+    <title abbrev="CDNI FCI using ALTO">Content Delivery Network Interconnection (CDNI) Request Routing:
+      CDNI Footprint and Capabilities Advertisement using ALTO</title>
+
+    <author initials="J." surname="Seedorf" fullname="Jan Seedorf">
+      <organization abbrev="HFT Stuttgart - Univ. of Applied Sciences">HFT Stuttgart - Univ. of Applied Sciences</organization>
+      <address>
+        <postal>
+               <street>Schellingstrasse 24</street>
+               <city>Stuttgart</city>
+               <code>70174</code>
+               <country>Germany</country>
+        </postal>
+        <phone>+49-0711-8926-2801</phone>
+        <email>jan.seedorf@hft-stuttgart.de</email>
+      </address>
+    </author>
+
+    <author initials="Y." surname="Yang" fullname="Y.R. Yang">
+         <organization abbrev="Tongji/Yale">Tongji/Yale University</organization>
+         <address>
+            <postal>
+               <street>51 Prospect Street</street>
+               <city>New Haven, CT</city>
+               <code>06511</code>
+               <country>United States of America</country>
+            </postal>
+            <email>yry@cs.yale.edu</email>
+            <uri>http://www.cs.yale.edu/~yry/</uri>
+         </address>
+    </author>
+
+    <author initials="K." surname="Ma" fullname="Kevin J. Ma">
+      <organization abbrev="Ericsson">Ericsson</organization>
+      <address>
+        <postal>
+               <street>43 Nagog Park</street>
+               <city>Acton, MA</city>
+               <code>01720</code>
+               <country>United States of America</country>
+        </postal>
+        <phone>+1-978-844-5100</phone>
+        <email>kevin.j.ma@ericsson.com</email>
+      </address>
+    </author>
+
+    <author fullname="Jon Peterson" initials="J." surname="Peterson">
+      <organization abbrev="Neustar">NeuStar</organization>
+      <address>
+        <postal>
+          <street>1800 Sutter St Suite 570</street>
+          <code>94520</code>
+          <city>Concord, CA</city>
+          <country>United States of America</country>
+        </postal>
+        <phone/>
+        <facsimile/>
+        <email>jon.peterson@neustar.biz</email>
+      </address>
+    </author>
+
+    <author initials="X." surname="Lin" fullname="Xiao Shawn Lin">
+         <organization abbrev="Tongji">Tongji University</organization>
+         <address>
+            <postal>
+               <street>4800 Cao'an Hwy</street>
+               <city>Shanghai</city>
+               <code>201804</code>
+               <country>China</country>
+            </postal>
+            <email>x.shawn.lin@gmail.com</email>
+         </address>
+    </author>
+    <date />
+
+    <area>TSV Area</area>
+
+    <workgroup>CDNI</workgroup>
+    <keyword>ALTO</keyword>
+    <keyword>CDNi</keyword>
+
+    <abstract>
+      <t>The Content Delivery Networks Interconnection (CDNI) WG is
+        defining a set of protocols to inter-connect CDNs, to achieve multiple goals such as extending the reach of a given CDN to areas that are not covered by that particular CDN. One component that is needed to achieve the goal of CDNI is the CDNI Request Routing Footprint &amp; Capabilities Advertisement interface (FCI) [RFC7336]. [RFC8008] has defined precisely the semantics of FCI and provided guidelines on the FCI protocol, but the exact protocol is explicitly outside the scope of that document. In this document, we define an FCI protocol using the Application-Layer Traffic Optimization (ALTO) protocol.
+      </t>
+    </abstract>
+
+  </front>
+
+  <middle>
+    &introduction;
+    &background;
+    &cdnifcimap;
+    &cdnifcinetworkmap;
+    &filteredcdnifcimap;
+    &unifiedpropertymap;
+    &protocolerrors;
+    &iana;
+    &securityconsiderations;
+    &acknowledgments;
+
+  </middle>
+
+  <back>
+
+    <references title="Normative References">
+      <?rfc include="reference.RFC.5693.xml" ?>
+      <?rfc include="reference.RFC.6707.xml" ?>
+      <!-- <?rfc include="reference.RFC.6770.xml" ?> -->
+      <?rfc include="reference.RFC.6793.xml" ?>
+      <?rfc include="reference.RFC.7285.xml" ?>
+      <?rfc include="reference.RFC.7336.xml" ?>
+      <!-- <?rfc include="reference.RFC.7337.xml" ?> -->
+      <?rfc include="reference.RFC.8006.xml" ?>
+      <?rfc include="reference.RFC.8008.xml" ?>
+    <reference anchor="ISO3166-1"><front>
+	<title>Codes for the representation of names of countries and their subdivisions -- Part 1: Country codes</title>
+	<author>
+	<organization>The International Organization for Standardization</organization>
+	</author>
+
+	<date year="2013"/>
+	</front>
+
+	<seriesInfo name="ISO" value="3166-1:2013"/>
+	</reference>
+    </references>
+
+
+    <references title="Informative References">
+
+      <!--
+      <reference anchor="I-D.peterson-CDNI-strawman">
+        <front>
+          <title>Content Distribution Network Interconnection (CDNI) Problem Statement</title>
+
+            <author initials="L." surname="Peterson" fullname="L. Peterson">
+              <organization abbrev="Verivue Inc."/>
+            </author>
+            <author initials="J." surname="Hartman" fullname="J. Hartman">
+              <organization abbrev="Verivue Inc."/>
+            </author>
+            <date month="May" year="2011"/>
+        </front>
+        <seriesInfo name="Internet-Draft" value="draft-peterson-CDNI-strawman-01"/>
+      </reference>
+      -->
+
+      <!-- <?rfc include="reference.I-D.marocco-alto-next"?> -->
+      <!-- <?rfc include="reference.I-D.marocco-alto-ws"?> -->
+      <?rfc include="reference.I-D.draft-ietf-alto-incr-update-sse-07.xml"?>
+      <?rfc include="reference.I-D.draft-jenkins-alto-cdn-use-cases-03.xml"?>
+<!--       <?rfc include="reference.I-D.draft-ma-cdni-capabilities-09.xml"?> -->
+      <?rfc include="reference.I-D.draft-ietf-alto-unified-props-new-00.xml"?>
+      <!-- <?rfc include="reference.I-D.liu-cdni-cost"?> -->
+      <!-- <?rfc include="reference.I-D.ietf-cdni-metadata"?>  -->
+      <!-- <?rfc include="reference.I-D.ietf-cdni-logging"?> -->
+
+    </references>
+
+   </back>
+</rfc>

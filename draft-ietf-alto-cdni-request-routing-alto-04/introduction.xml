@@ -1,0 +1,32 @@
+    <section anchor="intro" title="Introduction">
+      <t>Many Network Service Providers (NSPs) are currently considering or have already started to deploy Content Delivery Networks (CDNs) within their networks. As a consequence of this development, there is a need for interconnecting these local CDNs. Content Delivery Networks Interconnection (CDNI) has the goal of standardizing protocols to enable such interconnection of CDNs <xref target="RFC6707" pageno="false" format="default"/>.</t>
+
+      <t>The CDNI problem statement <xref target="RFC6707" pageno="false" format="default"/> defines four interfaces to be standardized within the IETF for CDN interconnection:
+        <list style="symbols">
+               <t>CDNI Request Routing Interface</t>
+               <t>CDNI Metadata Interface</t>
+               <t>CDNI Logging Interface</t>
+               <t>CDNI Control Interface</t>
+        </list>
+      </t>
+
+      <t>The main purpose of the CDNI Request Routing Interface is described in <xref target="RFC6707" pageno="false" format="default"/> as follows: "The CDNI Request Routing interface enables a Request Routing function in an Upstream CDN to query a Request Routing function in a Downstream CDN to determine if the Downstream CDN is able (and willing) to accept the delegated Content Request.  It also allows the Downstream CDN to control what should be returned to the User Agent in the redirection message by the upstream Request Routing function." On a high level, the scope of the CDNI Request Routing Interface, therefore, contains two main tasks:
+      <list style="symbols">
+        <t>determining if the downstream CDN (dCDN) is willing to accept a delegated content request;</t>
+        <t>redirecting the content request coming from an upstream CDN (uCDN) to the proper entry point or entity in the downstream CDN.</t>
+      </list>
+      </t>
+
+      <t>Correspondingly, the request routing interface is broadly divided into two functionalities:
+      <list style="symbols">
+        <t>CDNI Footprint &amp; Capabilities Advertisement interface (FCI): the advertisement from a dCDN to a uCDN or a query from a uCDN to a dCDN for the uCDN to decide whether to redirect particular user requests to that dCDN;</t>
+        <t>CDNI Request Routing Redirection interface (RI): the synchronous operation of actually redirecting a user request.</t>
+      </list>
+      </t>
+
+      <t>This document focuses solely on CDNI FCI, with a goal to specify a new Application-Layer Traffic Optimization (ALTO) <xref target="RFC7285" pageno="false" format="default"/> service called "CDNI FCI Map Service", to transport and update CDNI FCI objects, which are defined in a separate document in <xref target="RFC8008"/> and to describe approaches for filtering CDNI FCI map on capabilities or footprints. 
+      </t>
+
+      <t>Throughout this document, we use the terminology for CDNI defined in <xref target="RFC6707" pageno="false" format="default"/> and <xref target="RFC8008" pageno="false" format="default"/>.
+        </t>
+    </section>

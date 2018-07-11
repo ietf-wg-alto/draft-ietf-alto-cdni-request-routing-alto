@@ -1,0 +1,241 @@
+    <section anchor="upm" title="Query Footprint Properties using ALTO Unified Property Service">
+        <t>
+        	In this section, we describe how ALTO clients look up properties for individual footprints. Our design decision here is to use ALTO unified property map service to query footprint properties because we do not want to introduce extra complexity and ALTO unified property map defined in <xref target="I-D.ietf-alto-unified-props-new"/> already meets the requirement. A footprint is a group of entities, and CDNI capabilities can be regarded as properties of a footprint. Unified property map is used to provide properties for collections of entities such as CIDRs or PIDs. So every footprint can be presented as a set of entities, and we will describe it in details in <xref target="footprinttoentities"/>. In addition, two resource types Property Maps and Filtered Property Maps are already well-defined in <xref target="I-D.ietf-alto-unified-props-new"/>.
+        </t>
+        <t>
+            A unified property map that includes "cdni-fci-capabilities" property registered in <xref target="iana"/> builds the inverted index of a CDNI FCI map. The building process consists of two steps: firstly, each footprint object is represented as a set of unified property map entities in a domain; secondly, each unified property map entity is mapped into a list of property objects including CDNI capabilities.      
+        </t>
+  	    <section title="Representing Footprint Objects as Unified Property Map Entities" anchor="footprinttoentities">
+            <t>
+                A footprint object has two properties: footprint-type and footprint-value. A footprint-value is an array of footprint values conforming to the specification associated with the registered footprint type ("ipv4cidr", "ipv6cidr", "asn", and "countrycode"). Since each unified property map entity has a unique address and each pair of footprint-type and a footprint value determines a group of unique addresses, a footprint object can be represented as a set of entities according to their different footprint-type and footprint values. However, <xref target="I-D.ietf-alto-unified-props-new"/> only defines IPv4 Domain and IPv6 Domain which represent footprint-type "ipv4cidr" and "ipv6cidr" respectively. To represent footprint-type "asn" and "countrycode", this document registers two new domains in <xref target="iana"/>.
+            </t>
+            <t>
+                Here gives an example of representing a footprint object as a set of unified property map entities.
+            </t>
+            <t>
+                {"footprint-type": "ipv4cidr", "footprint-value": ["192.0.2.0/24", "198.51.100.0/24"]} --> "ipv4:192.168.2.0/24", "ipv4:198.51.100.0/24"
+            </t>
+  		    <section title="ASN Domain">
+  			    <t>
+  			        This document specifies a new domain in addition to the ones in <xref target="I-D.ietf-alto-unified-props-new"/>. ASN is the abbreviation of Autonomous System Number.
+  		        </t>
+  		        <section title="Domain Name">
+  		    	    <t>
+  		    		    asn
+  		    	    </t>
+  		        </section>
+  		        <section title="Domain-Specific Entity Addresses" anchor="asn-entity-address">
+  		    	    <t>
+  		                 The entity address of asn domain is encoded as a string consisting of the characters "as" (in lowercase) followed by the ASN <xref target="RFC6793" pageno="false" format="default"/>.
+  		            </t>
+  		        </section>
+  		        <section title="Hierarchy and Inheritance">
+  		        	<t>
+  		        		There is no hierarchy or inheritance for properties associated with ASN.
+  		        	</t>
+  		        </section>
+            </section>
+            <section title="COUNTRYCODE Domain">
+        	    <t>
+        		    This document specifies a new domain in addition to the ones in <xref target="I-D.ietf-alto-unified-props-new"/>.
+        	    </t>
+        	    <section title="Domain Name">
+        		    <t>
+        			    countrycode
+        		    </t>
+        	    </section>
+        	    <section title="Domain-Specific Entity Addresses" anchor="countrycode-entity-address">
+        		    <t>
+        			    The entity address of countrycode domain is encoded as an ISO 3166-1 alpha-2 code <xref target="ISO3166-1"/> in lowercase.
+        		    </t>
+        	    </section>
+        	    <section title="Hierarchy and Inheritance">
+        	    	<t>
+                  There is no hierarchy or inheritance for properties associated with country codes.
+                </t>
+  		        </section>
+            </section>
+  	    </section>
+        <section title="Examples">
+    		<section title="IRD Example">
+    		<t>
+    			We use the same IRD example given by <xref target="IRDexample"/>.
+    		</t> 
+    		</section>
+        	<section title="Property Map Example">
+            <t>
+              This example shows a full unified property map in which entities are footprints and entities' property is "cdni-fci-capabilities".
+            </t>
+   	        		    <figure align="left">
+              <artwork align="left"><![CDATA[
+    GET /propmap/full/cdnifci HTTP/1.1
+    HOST: alto.example.com
+    Accept: application/alto-propmap+json,application/alto-error+json
+]]></artwork>
+            </figure> 
+		    <figure align="left">
+              <artwork align="left"><![CDATA[
+    HTTP/1.1 200 OK
+    Content-Length: ###
+    Content-Type: application/alto-propmap+json
+
+    {
+      "property-map": {
+        "meta": {
+          "dependent-vtags": [
+            {"resource-id": "my-default-cdnifci-map",
+             "tag": "7915dc0290c2705481c491a2b4ffbec482b3cf62"}
+          ]
+        },
+        "countrycode:us": {
+          "cdni-fci-capabilities": [{"capability-type":,
+                                         "capability-value":}]
+        },
+        "ipv4:192.0.2.0/24": {
+          "cdni-fci-capabilities": [{"capability-type":,
+                                         "capability-value":}]
+        },
+        "ipv4:198.51.100.0/24": {
+          "cdni-fci-capabilities": [{"capability-type":,
+                                         "capability-value":}]
+        },
+        "ipv6:2001:db8::/32": {
+          "cdni-fci-capabilities": [{"capability-type":,
+                                         "capability-value":}]
+        },
+        "asn:as64496": {
+          "cdni-fci-capabilities": [{"capability-type":,
+                                         "capability-value":}]
+        }
+      }
+    }
+]]></artwork>
+            </figure>
+        	</section>
+        	<section title="Filtered Property Map Example">
+            <t>
+              In this example, we use filtered property map service to get "pid" and "cdni-fci-capabilities" properties for two footprints "ipv4:192.0.2.0/24" and "ipv6:2001:db8::/32".
+            </t>
+                  <figure align="left">
+              <artwork align="left"><![CDATA[
+   POST /propmap/lookup/cdnifci-pid HTTP/1.1
+   HOST: alto.example.com
+   Content-Type: application/alto-propmapparams+json
+   Accept: application/alto-propmap+json,application/alto-error+json
+   Content-Length:
+
+   {
+     "entities": [
+       "ipv4:192.0.2.0/24",
+       "ipv6:2001:db8::/32"
+     ],
+     "properties": [ "cdni-fci-capabilities", "pid" ]
+   }
+]]></artwork>
+            </figure>
+
+        <figure align="left">
+              <artwork align="left"><![CDATA[
+   HTTP/1.1 200 OK
+   Content-Length: ###
+   Content-Type: application/alto-propmap+json
+
+   {
+     "property-map": {
+       "meta": {
+         "dependent-vtags": [
+            {"resource-id": "my-default-cdnifci-map",
+              "tag": "7915dc0290c2705481c491a2b4ffbec482b3cf62"},
+            {"resource-id": "my-default-networkmap",
+              "tag": "7915dc0290c2705481c491a2b4ffbec482b3cf63"}
+         ]
+       },
+       "ipv4:192.0.2.0/24": {
+         "cdni-fci-capabilities": [{"capability-type":,
+                                        "capability-value":}],
+         "pid": "pid1"
+       },
+       "ipv6:2001:db8::/32": {
+         "cdni-fci-capabilities": [{"capability-type":,
+                                        "capability-value":}],
+          "pid": "pid3"
+       }
+     }
+   }
+]]></artwork>
+            </figure>
+        	</section>
+        	<section title="Incremental Updates Example">
+            <t>
+              In this example, here is a client want to request updates for the properties "cdni-fci-capabilities" and "pid" for two footprints "ipv4:192.0.2.0/24" and "ipv6:2001:db8::/32".
+            </t>
+        <figure align="left">
+              <artwork align="left"><![CDATA[
+   POST /updates/properties HTTP/1.1
+   Host: alto.example.com
+   Accept: text/event-stream,application/alto-error+json
+   Content-Type: application/alto-updatestreamparams+json
+   Content-Length: ###
+
+   { "add": {
+     "property-map-including-capability-property": {
+       "resource-id": "filtered-cdnifci-property-map",
+         "input": {
+           "properties": ["cdni-fci-capabilities", "pid"],
+           "entities": [
+             "ipv4:192.0.2.0/24",
+             "ipv6:2001:db8::/32"
+           ]
+         }
+       }
+   }
+
+   HTTP/1.1 200 OK
+   Connection: keep-alive
+   Content-Type: text/event-stream
+
+   event: application/alto-updatestreamcontrol+json
+   data: {"control-uri":
+   data: "http://alto.example.com/updates/streams/1414213562373"}
+
+   event: application/alto-cdnifcimap+json,my-fci-stream
+   data: { ... full filtered unified property map ... } 
+
+   event: application/merge-patch+json,my-fci-stream
+   data: {
+   data:   "property-map": 
+   data:   {
+   data:     "meta": {
+   data:       "dependent-vtags": [
+   data:         {"resource-id": "my-default-cdnifci-map",
+   data:          "tag": "2beeac8ee23c3dd1e98a73fd30df80ece9fa5627"},
+   data:         {"resource-id": "my-default-networkmap",
+   data:          "tag": "7915dc0290c2705481c491a2b4ffbec482b3cf63"}
+   data:       ]
+   data:     },
+   data:     "ipv4:192.0.2.0/24": 
+   data:     {
+   data:       "cdni-fci-capabilities": 
+   data:         [{"capability-type":,"capability-value":}]
+   data:     }
+   data:   }
+   data: }
+
+   event: application/json-patch+json,my-fci-stream
+   data: {[
+   data: {
+   data:   { "op": "replace",
+   data:       "path": "/meta/dependent-vtags/0/tag",
+   data:       "value": "61b23185a50dc7b334577507e8f00ff8c3b409e4"
+   data:   },
+   data:   { "op": "replace",
+   data:       "path": "/property-map/ipv4:192.0.2.0/124/",
+   data:       "value": "pid5"
+   data:   }
+   data: }
+   data: ]}
+                ]]></artwork>
+            </figure>   
+        	</section>
+        </section>
+    </section>
