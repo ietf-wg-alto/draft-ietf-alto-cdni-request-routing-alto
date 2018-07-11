@@ -33,8 +33,12 @@
     	</section>
     	<section title="Response" anchor="cdnifcimapencoding">
     		<t>
-    			The "meta" field of a CDNI FCI map response MUST include the "vtag" field defined in Section 10.3 of <xref target="RFC7285" pageno="false" format="default"/>, which provides the version tag of the retrieved CDNI FCI map. If a CDNI FCI map response depends on a resource such as a network map, it MUST include the "dependent-vtags" field, whose value is an array to indicate the version tag of the resource used, where the resource is specified in "uses" of the IRD. The current defined dependent resource is only network map, and the usage of it is described in <xref target="cdnifcinetworkmap"/>.
+    			The "meta" field of a CDNI FCI map response MUST include the "vtag" field defined in Section 10.3 of <xref target="RFC7285" pageno="false" format="default"/>. This field provides the version of the retrieved CDNI FCI map.</t>
 
+        <t> 
+          If a CDNI FCI map response depends on a resource such as a network map, it MUST include the "dependent-vtags" field, whose value is an array to indicate the version tags of the resources used, where each resource is specified in "uses" of the IRD. The current defined dependent resource is only network map, and the usage of it is described in <xref target="cdnifcinetworkmap"/>.
+        </t>
+        <t>
     			The data component of an ALTO CDNI FCI map response is named "cdni-fci-map", which is a JSON object of type CDNIFCIMapData:
     		</t>
         <figure align="left">
@@ -49,7 +53,15 @@
                 ]]></artwork>
         </figure>
             <t>
-                Specifically, a CDNIFCIMapData object is a JSON object, and it includes only one property "capabilities" and whose value is an array of BaseAdvertisementObject objects. The syntax and semantics of BaseAdvertisementObject are well defined in Section 5.1 of <xref target="RFC8008" pageno="false" format="default"/>. BaseAdvertisementObject object consists of capability-type, capability-value and footprints. And footprints are defined in Section 4.2.2.2 of <xref target="RFC8006" pageno="false" format="default"/>. For self-contained, we present the informal encoding of BaseAdvertisementObject below.
+              Specifically, a CDNIFCIMapData object is a JSON object that includes only one property named "capabilities", whose value is an array of BaseAdvertisementObject objects. 
+            </t>
+
+            <t>
+              The syntax and semantics of BaseAdvertisementObject are well defined in Section 5.1 of <xref target="RFC8008" pageno="false" format="default"/>. A BaseAdvertisementObject object includes multiple properties, including capability-type, capability-value and footprints, where footprints are defined in Section 4.2.2.2 of <xref target="RFC8006" pageno="false" format="default"/>. 
+            </t>
+
+            <t>
+              To be self-contained, we give a non-normative specification of BaseAdvertisementObject below. As mentioned above, the normative specification of BaseAdvertisementObject is in <xref target="RFC8008" pageno="false" format="default"/>
             </t>
         <figure align="left">
               <artwork align="left"><![CDATA[
@@ -67,10 +79,10 @@
         </figure>
             <t>
 <!--                 The ALTO server MUST interpret footprints appearing multiple times as if they appeared only once. Footprint restriction information MAY be specified using multiple different footprint-types.  -->
-                For each BaseAdvertisementObject, the ALTO client MUST interpret footprints appearing multiple times as if they appeared only once. If no footprint restriction list is specified (or an empty list is specified), the ALTO client MUST understand that all footprint types are reset to the "global" coverage.
+                For each BaseAdvertisementObject, the ALTO client MUST interpret footprints appearing multiple times as if they appeared only once. If no footprint restriction list is specified (or an empty list is specified), the ALTO client MUST understand that all footprint types are reset to the "global" coverage. YRY: revise English of preceding sentence.
             </t>
             <t>
-                Note: Further optimization of BaseAdvertisement objects to effectively provide the advertisement of capabilities with footprint restrictions is certainly possible, however, it is not necessary for the basic interconnection of CDNs. The note here is for completeness, however, the specifics of such mechanisms are outside the scope of this document.            	
+                Note: Further optimization of BaseAdvertisement objects to effectively provide the advertisement of capabilities with footprint restrictions is certainly possible. YRY: Backup with an example. Since such optimizations are not necessary for the basic interconnection of CDNs, the specifics of such mechanisms are outside the scope of this document.
             </t>
 <!--             <t>
             	Capability objects of a given capability type with identical footprint restrictions MUST be combined into a single capability object. And footprints with the same capability type and capability value MUST be combined into a single capability object.
@@ -85,7 +97,10 @@
     	<section title="Examples">
     		<section title="IRD Example" anchor="IRDexample">
     			<t>
-    				Below is an example IRD announcing two network maps, one CDNI FCI map without dependency, one CDNI FCI map depending on a network map, one filtered CDNI FCI map defined in <xref target="filteredcdnifcimap"/>, one unified property map including "cdni-fci-capabilities" as its entities' property, one filtered unified property map including "cdni-fci-capabilities" and "pid" as its entities' properties and two update stream services (one for updating CDNI FCI maps, and the other for updating property maps).
+    				Below is the information resource directory (IRD) of a simple, example ALTO server. The server provides both base ALTO information resources (e.g., network maps) and CDNI FCI information resources (e.g., CDNI FCI map), demonstrating a single, integrated environment. 
+          </t>
+          <t>
+            Specifically, the IRD announces two network maps, one CDNI FCI map without dependency, one CDNI FCI map depending on a network map, one filtered CDNI FCI map to be defined in <xref target="filteredcdnifcimap"/>, one unified property map including "cdni-fci-capabilities" as its entities' property, one filtered unified property map including "cdni-fci-capabilities" and "pid" as its entities' properties, and two update stream services (one for updating CDNI FCI maps, and the other for updating property maps).
     			</t>
 		    <figure align="left">
               <artwork align="left"><![CDATA[
@@ -133,7 +148,7 @@
     "filtered-cdnifci-property-map" : {
       "uri" : "http://alto.example.com/propmap/lookup/cdnifci-pid",
       "media-type" : "application/alto-propmap+json",
-      "accpets" : "application/alto-propmapparams+json",
+      "accepts" : "application/alto-propmapparams+json",
       "capabilities" : {            
         "domain-types" : [ "ipv4", "ipv6", "coutrycode", "asn" ],
         "prop-types" : [ "cdni-fci-capabilities", "pid" ]
@@ -252,7 +267,7 @@ Accept: application/alto-cdnifcimap+json,application/alto-error+json
     		</section>
     		<section title="Incremental Updates Example">
     			<t>
-    				A benefit of using ALTO to provide CDNI FCI maps is that such maps can be updated using ALTO incremental updates. Below is an example that also shows a benefit of using a JSON merge patch to encode a big update and using a JSON patch to encode a small update.
+    				A benefit of using ALTO to provide CDNI FCI maps is that such maps can be updated using ALTO incremental updates. Below is an example that also shows the benefit of having both JSON merge patch and JSON patch to encode updates. YRY: add a couple sentences to go over the example below.
     			</t>
         <figure align="left">
               <artwork align="left"><![CDATA[

@@ -1,4 +1,4 @@
-    <section anchor="upm" title="Query Footprint Properties using ALTO Unified Property Service">
+    <section anchor="unifiedpropertymap" title="Query Footprint Properties using ALTO Unified Property Service">
         <t>
         	In this section, we describe how ALTO clients look up properties for individual footprints. Our design decision here is to use ALTO unified property map service to query footprint properties because we do not want to introduce extra complexity and ALTO unified property map defined in <xref target="I-D.ietf-alto-unified-props-new"/> already meets the requirement. A footprint is a group of entities, and CDNI capabilities can be regarded as properties of a footprint. Unified property map is used to provide properties for collections of entities such as CIDRs or PIDs. So every footprint can be presented as a set of entities, and we will describe it in details in <xref target="footprinttoentities"/>. In addition, two resource types Property Maps and Filtered Property Maps are already well-defined in <xref target="I-D.ietf-alto-unified-props-new"/>.
         </t>
