@@ -1,7 +1,7 @@
     <section title="CDNI FCI Map using ALTO Network Map" anchor="cdnifcinetworkmap">
         <section title="Introduce Footprint Type: altonetworkmap">
         <t>
-        	In addition to the already defined CDNI footprint typs (e.g., ipv4cidr, ipv6cidr, asn, countrycode), ALTO network maps can be a type of FCI footprint. To enable such referencing to ALTO network maps, a new CDNI Footprint Type "altonetworkmap" is defined (see also <xref target="newfootprinttype"/>).
+        	In addition to the already defined CDNI footprint typs (e.g., ipv4cidr, ipv6cidr, asn, countrycode), ALTO network maps can be a type of FCI footprint. To enable such referencing to ALTO network maps, a new CDNI Footprint Type "altonetworkmap" is defined<!--  (see also <xref target="newfootprinttype"/>) -->.
         </t>
         <t>
         	All altonetworkmap entries MUST be of type PIDName (as defined in <xref target="RFC7285" pageno="false" format="default"/>, where PIDName corresponds to a PID in the ALTO network map referenced by the resource ID of the network map listed in "dependent-vtags" field).

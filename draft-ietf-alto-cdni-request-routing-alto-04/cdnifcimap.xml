@@ -28,7 +28,7 @@
     	</section>
     	<section title="Uses">
     		<t>
-    		    The resource ID of the resource based on which the CDNI FCI map will be defined. For example, if a CDNI FCI map depends on a network map, the resource ID of the network map MUST be included in "Uses" field. Please see <xref target="cdnifcinetworkmap"/> for details. If the CDNI FCI map does not depend on any other resources, "Uses" field MUST NOT appear.
+    		    The resource ID of the resource based on which the CDNI FCI map will be defined. For example, if a CDNI FCI map depends on a network map, the resource ID of the network map MUST be included in "uses" field. Please see <xref target="cdnifcinetworkmap"/> for details. If the CDNI FCI map does not depend on any other resources, "uses" field MUST NOT appear.
     		</t>
     	</section>
     	<section title="Response" anchor="cdnifcimapencoding">

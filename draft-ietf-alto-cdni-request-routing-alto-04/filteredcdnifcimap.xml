@@ -50,8 +50,24 @@
         </t>
     	</section>
     	<section title="Response">
+      <t>
+        The response MUST indicate an error, using ALTO protocol error handling specified in Section 8.5 of the ALTO protocol  <xref target="RFC7285" pageno="false" format="default"/>.
+      </t>
+      <t>
+        When a query of a filtered CDNI FCI map includes syntax errors, the ALTO server MUST return an "E_SYNTAX" error.
+      </t>
+      <t>
+        When the syntax of a query is correct, there may be some errors in this query's semantics. The ALTO server MUST return an "E_INVALID_FIELD_VALUE" error in following cases:
+        <list style="symbols">
+        <t>The value of "capability-type" is null;</t>
+        <t>The value of "capability-value" is null;</t>
+        <!-- <t>If a capability in the "cdni-fci-capabilities" only has "capability-type" or only has "capability-value" or the value of "capability-value" is null, these cases belong to E_MISSING_FIELD errors.</t> -->
+        <t>The value of "capability-value" is inconsistent with "capability-type".</t>
+        </list>
+      </t>
     	<t>
-    		The format is the same as an unfiltered CDNI FCI map. See <xref target="cdnifcimapencoding"/> for the format.
+        After a query of filtered CDNI FCI map is correct both in syntax and semantics, the ALTO server will return a filtered CDNI FCI map according to this query.
+    		The format of a filtered CDNI FCI map is the same as an unfiltered CDNI FCI map. See <xref target="cdnifcimapencoding"/> for the format.
     	</t>
     	<t>
     		The returned CDNI FCI map MUST contain only BaseAdvertisementObject objects whose CDNI capability object is the superset of one of CDNI capability object in "cdni-fci-capabilities". Specifically, that a CDNI capability object A is the superset of another CDNI capability object B means that these two CDNI capability objects have the same capability type and mandatory properties in capability value of A MUST include mandatory properties in capability value of B semantically. For example, if a CDNI FCI capability in "cdni-fci-capabilities" is Delivery Protocol capability object with "http/1.1" in its field "delivery-protocols" and the original full CDNI FCI map has two CDNI FCI objects whose capabilities are Delivery Protocol capability objects with ["http/1.1"] and ["http/1.1", "https/1.1"] in their field "delivery-protocols" respectively, both of these two CDNI FCI objects MUST be returned. If the input parameters contain a CDNI capability object that is not currently defined, the ALTO server MUST behave as if the CDNI capability object did not appear in the input parameters. 

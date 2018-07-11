@@ -106,7 +106,7 @@
 
     <abstract>
       <t>The Content Delivery Networks Interconnection (CDNI) WG is
-        defining a set of protocols to inter-connect CDNs, to achieve multiple goals such as extending the reach of a given CDN to areas that are not covered by that particular CDN. One component that is needed to achieve the goal of CDNI is the CDNI Request Routing Footprint &amp; Capabilities Advertisement interface (FCI) [RFC7336]. [RFC8008] has defined precisely the semantics of FCI and provided guidelines on the FCI protocol, but the exact protocol is explicitly outside the scope of that document. In this document, we define an FCI protocol using the Application-Layer Traffic Optimization (ALTO) protocol.
+        defining a set of protocols to interconnect CDNs, to achieve multiple goals such as extending the reach of a given CDN to areas that are not covered by that particular CDN. One component that is needed to achieve the goal of CDNI described in RFC7336 is the CDNI Request Routing Footprint &amp; Capabilities Advertisement interface (FCI). RFC8008 has defined precisely the semantics of FCI and provided guidelines on the FCI protocol, but the exact protocol is explicitly outside the scope of that document. In this document, we define an FCI protocol using the Application-Layer Traffic Optimization (ALTO) protocol.
       </t>
     </abstract>
 
@@ -119,7 +119,7 @@
     &cdnifcinetworkmap;
     &filteredcdnifcimap;
     &unifiedpropertymap;
-    &protocolerrors;
+<!--     &protocolerrors; -->
     &iana;
     &securityconsiderations;
     &acknowledgments;
