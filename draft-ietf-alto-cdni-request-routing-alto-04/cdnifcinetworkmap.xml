@@ -1,11 +1,13 @@
     <section title="CDNI FCI Map using ALTO Network Map" anchor="cdnifcinetworkmap">
         <section title="Network Map Footprint Type: altonetworkmap">
         <t>
-        	In addition to the already defined CDNI footprint types (e.g., ipv4cidr, ipv6cidr, asn, countrycode), ALTO network maps can be a type of FCI footprint. <!--  (see also <xref target="newfootprinttype"/>) -->.
+        	In addition to the already defined CDNI footprint types (e.g., ipv4cidr, ipv6cidr, asn, countrycode), ALTO network maps can be a type of FCI footprint. <!--  (see also <xref target="newfootprinttype"/>) -->
         </t>
         <t>
-        	Specifically, CDNI footprints using ALTO network maps should use a new CDNI Footprint Type called "altonetworkmap". YRY: Did we register? YRY: revise rest of this para, for example specify where dependent-vtags come from; when footprint-type is "altonetworkmap", footprint-value...
-          All altonetworkmap entries MUST be of type PIDName (as defined in <xref target="RFC7285" pageno="false" format="default"/>, where PIDName corresponds to a PID in the ALTO network map referenced by the resource ID of the network map listed in "dependent-vtags" field).
+        	Specifically, CDNI footprints using ALTO network maps should use a new CDNI Footprint Type called "altonetworkmap".
+        </t>
+        <t>
+          "altonetworkmap" footprint type indicates that the corresponding footprint value is a list of PIDNames as defined in <xref target="RFC7285" pageno="false" format="default"/>.  These PIDNames are references of PIDs in a network map resource. Hence a CDNI FCI map with "altonetworkmap" footprints depends on a network map. For such a CDNI FCI map, the "dependent-vtag" field with a reference to a network map it depends on MUST be included in it (see the example in <xref target="networkmapfootprint"/>).
         </t>
         </section>
         <section title="Examples">
@@ -16,7 +18,7 @@
     		</section>
           <section title="ALTO Network Map for CDNI FCI Footprints Example" anchor="networkmapexample">
             <t>
-              Below is an example network map that is referenced by the CDNI FCI map example YRY: give resource ID, in <xref target="networkmapfootprint"/>.
+              Below is an example network map whose resource id is "my-eu-netmap", and this map is referenced by the CDNI FCI map example in <xref target="networkmapfootprint"/>.
             </t>
                       <figure align="left">
            <artwork align="left"><![CDATA[
@@ -106,7 +108,7 @@
           </section>
           <section title="Incremental Updates Example">
             <t>
-              In this example, the ALTO client is interested in changes of "my-cdnifci-map-with-network-map-footprints". And we present two patches here. The first one of it is to change footprints of http/1.1 Delivery Protocol capability, and the second one is to remove "south-france" from the footprints of https/1.1 Delivery Protocol capability.
+              In this example, the ALTO client is interested in changes of "my-cdnifci-map-with-network-map-footprints". Considering two changes, the first one is to change footprints of http/1.1 Delivery Protocol capability, and the second one is to remove "south-france" from the footprints of https/1.1 delivery protocol capability.
             </t>
         <figure align="left">
               <artwork align="left"><![CDATA[

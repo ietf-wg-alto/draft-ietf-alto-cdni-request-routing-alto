@@ -1,30 +1,27 @@
     <section anchor="intro" title="Introduction">
       <t>The ability to interconnect multiple content delivery networks (CDNs) has many benefits, including increased coverage, capability, and reliability. The Content Delivery Networks Interconnection (CDNI) framework  <xref target="RFC6707" pageno="false" format="default"/> defines four interfaces to achieve interconnection of CDNs: (1)
-      the CDNI Request Routing Interface; the CDNI Metadata Interface;
-      the CDNI Logging Interface; and the CDNI Control Interface.
+      the CDNI Request Routing Interface; (2) the CDNI Metadata Interface;
+       (3) the CDNI Logging Interface; and (4) the CDNI Control Interface.
       </t>
 
-      <t>Among the four interfaces, the CDNI Request Routing Interface provides key functions, as specified in <xref target="RFC6707" pageno="false" format="default"/>: "The CDNI Request Routing interface enables a Request Routing function in an Upstream CDN to query a Request Routing function in a Downstream CDN to determine if the Downstream CDN is able (and willing) to accept the delegated Content Request.  It also allows the Downstream CDN to control what should be returned to the User Agent in the redirection message by the upstream Request Routing function." On a high level, the scope of the CDNI Request Routing Interface, therefore, contains two main tasks:
-      <list style="symbols">
-        <t>determining if the downstream CDN (dCDN) is willing to accept a delegated content request;</t>
-        <t>redirecting the content request coming from an upstream CDN (uCDN) to the proper entry point or entity in the downstream CDN.</t>
-      </list>
+      <t>Among the four interfaces, the CDNI Request Routing Interface provides key functions, as specified in <xref target="RFC6707" pageno="false" format="default"/>: "The CDNI Request Routing interface enables a Request Routing function in an Upstream CDN to query a Request Routing function in a Downstream CDN to determine if the Downstream CDN is able (and willing) to accept the delegated Content Request.  It also allows the Downstream CDN to control what should be returned to the User Agent in the redirection message by the upstream Request Routing function." On a high level, the scope of the CDNI Request Routing Interface, therefore, contains two main tasks: (1) determining if the downstream CDN (dCDN) is willing to accept a delegated content request; (2) redirecting the content request coming from an upstream CDN (uCDN) to the proper entry point or entity in the downstream CDN.
       </t>
 
-      <t>Correspondingly, the request routing interface is broadly divided into two functionalities:
-      <list style="symbols">
-        <t>CDNI Footprint &amp; Capabilities Advertisement interface (FCI): an advertisement from a dCDN to a uCDN (push) or a query from a uCDN to a dCDN (pull) so that the uCDN knows whether it can redirect a particular user request to that dCDN;</t>
-        <t>CDNI Request Routing Redirection interface (RI): the synchronous operation of actually redirecting a user request.</t>
-      </list>
+      <t>Correspondingly, the request routing interface is broadly divided into two functionalities: (1) CDNI Footprint &amp; Capabilities Advertisement interface (FCI); (2) CDNI Request Routing Redirection interface (RI). Since this document focuses on the first functionality, CDNI FCI, we will describe it in a more detailed way.
+<!--       <list style="symbols"> -->
+      CDNI FCI is an advertisement from a dCDN to a uCDN (push) or a query from a uCDN to a dCDN (pull) so that the uCDN knows whether it can redirect a particular user request to that dCDN.
+<!--         <t>CDNI Request Routing Redirection interface (RI): the synchronous operation of actually redirecting a user request.</t> -->
+<!--       </list> -->
       </t>
 
-      <t>This document focuses on the first functionality, CDNI FCI. A key component in defining CDNI FCI is defining objects describing the footprints and capabilities of a dCDN. Such objects are already in <xref target="RFC8008"/>. A protocol to transport and update such objects between a uCDN and a dCDN, however, is not defined. Hence, the scope of this document is to define such a protocol by introducing a new Application-Layer Traffic Optimization (ALTO) <xref target="RFC7285" pageno="false" format="default"/> service called "CDNI FCI Map Service".
+      <t><!-- This document focuses on the first functionality, CDNI FCI. --> 
+        A key component in defining CDNI FCI is defining objects describing the footprints and capabilities of a dCDN. Such objects are already in <xref target="RFC8008"/>. A protocol to transport and update such objects between a uCDN and a dCDN, however, is not defined. Hence, the scope of this document is to define such a protocol by introducing a new Application-Layer Traffic Optimization (ALTO) <xref target="RFC7285" pageno="false" format="default"/> service called "CDNI FCI Map Service".
       </t>
 
       <t>There are multiple benefits in using ALTO as a transport protocol, as we discuss in <xref target="bgALTO"/>.</t> 
 
-      <t>The rest of this document is organized as follows. <xref target="background"/> provides non-normative background on both CDNI FCI and ALTO. <xref target="cdnifcimap"/> introduces the most basic service, called CDNI FCI Map, to realize CDNI FCI using ALTO. <xref target="cdnifcinetworkmap"/> demonstrates a key benefit of using ALTO: the ability to integrate CDNI FCI with ALTO network maps, YRY: add a sentence to say the benefits. <xref target="filteredcdnifcimap"/> builds on filtered ALTO maps to introduce filtered CDNI FCI maps using capabilities, YRY: add a sentence to say the benefits. <xref target="unifiedpropertymap"/> further shows a benefit of using ALTO: the ability to query footprint properties using ALTO unified properties. IANA and security considerations are discussed in <xref target="iana"/> and <xref target="security"/> respectively.</t>
+      <t>The rest of this document is organized as follows. <xref target="background"/> provides non-normative background on both CDNI FCI and ALTO. <xref target="cdnifcimap"/> introduces the most basic service, called CDNI FCI Map, to realize CDNI FCI using ALTO. <xref target="cdnifcinetworkmap"/> demonstrates a key benefit of using ALTO: the ability to integrate CDNI FCI with ALTO network maps. Such integration provides a new granularity to describe footprints. <xref target="filteredcdnifcimap"/> builds on filtered ALTO maps to introduce filtered CDNI FCI maps using capabilities so that a uCDN can get footprints with given capabilities instead of getting the full map which can be huge. <xref target="unifiedpropertymap"/> further shows a benefit of using ALTO: the ability to query footprint properties using ALTO unified properties. In this way, a uCDN can effectively fetch capabilities of some footprints in which it is interested. IANA and security considerations are discussed in <xref target="iana"/> and <xref target="security"/> respectively.</t>
 
-      <t>Throughout this document, we use the terminology for CDNI defined in <xref target="unifiedpropertymap"/> <xref target="RFC6707" pageno="false" format="default"/> and <xref target="RFC8008" pageno="false" format="default"/>. YRY ALTO terms from?
+      <t>Throughout this document, we use the terminology for CDNI defined in <xref target="RFC6707" pageno="false" format="default"/>, <xref target="RFC8006" pageno="false" format="default"/>, <xref target="RFC8008" pageno="false" format="default"/> and we use the terminology for ALTO defined in <xref target="RFC7285" pageno="false" format="default"/>, <xref target="I-D.ietf-alto-unified-props-new"/>.
       </t>
     </section>

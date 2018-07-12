@@ -257,7 +257,7 @@ EXAMPLE 2
     		</section>
     		<section title="Basic Example" anchor="fullcdnifcimap">
           <t>
-            In this example, we demonstrate a simple CDNI FCI map; this map does not depend on other resources.
+            In this example, we demonstrate a simple CDNI FCI map; this map does not depend on other resources. There are three BaseAdvertisementObjects in this map and these objects' capabilities are http/1.1 delivery protocol, [http/1.1, https/1.1] delivery protocol and https/1.1 acquisition protocol respectively.
           </t>
 		    <figure align="left">
               <artwork align="left"><![CDATA[
@@ -323,7 +323,10 @@ Accept: application/alto-cdnifcimap+json,application/alto-error+json
     		</section>
     		<section title="Incremental Updates Example">
     			<t>
-    				A benefit of using ALTO to provide CDNI FCI maps is that such maps can be updated using ALTO incremental updates. Below is an example that also shows the benefit of having both JSON merge patch and JSON patch to encode updates. YRY: add a couple sentences to go over the example below.
+    				A benefit of using ALTO to provide CDNI FCI maps is that such maps can be updated using ALTO incremental updates. Below is an example that also shows the benefit of having both JSON merge patch and JSON patch to encode updates.
+          </t>
+          <t>
+          At first, an ALTO client requests the ALTO server updates for "my-default-cdnifci-map", and the ALTO server returns the "control-uri" followed by the full CDNI FCI map. Then when there is a huge change in footprint objects in delivery-protocol http/1.1, the ALTO server uses JSON merge patch to encode the change and sends it to the ALTO client. Later on, the ALTO server notifies the ALTO client that "ipv4:192.0.2.0/24" is added into the footprints in delivery-protocol http/1.1 by sending the change encoded by JSON patch to the ALTO client.
     			</t>
         <figure align="left">
               <artwork align="left"><![CDATA[
@@ -347,10 +350,10 @@ Accept: application/alto-cdnifcimap+json,application/alto-error+json
   data: {"control-uri":
   data: "http://alto.example.com/updates/streams/3141592653589"}
 
-  event: application/alto-cdnifcimap+json,my-fci-stream
+  event: application/alto-cdnifcimap+json,my-default-cdnifci-map
   data: { ... full CDNI FCI map ... } 
 
-  event: application/merge-patch+json,my-fci-stream
+  event: application/merge-patch+json,my-default-cdnifci-map
   data: {
   data:   "meta": {
   data:     "vtag": {
@@ -371,7 +374,7 @@ Accept: application/alto-cdnifcimap+json,application/alto-error+json
   data:   }     
   data: }
 
-  event: application/json-patch+json,my-fci-stream
+  event: application/json-patch+json,my-default-cdnifci-map
   data: [
   data:   {
   data:     "op": "replace",
