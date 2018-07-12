@@ -5,14 +5,14 @@
 CDNI                                                          J. Seedorf
 Internet-Draft                 HFT Stuttgart - Univ. of Applied Sciences
 Intended status: Standards Track                                 Y. Yang
-Expires: January 12, 2019                                    Tongji/Yale
+Expires: January 13, 2019                                    Tongji/Yale
                                                                    K. Ma
                                                                 Ericsson
                                                              J. Peterson
                                                                  Neustar
                                                                   X. Lin
                                                                   Tongji
-                                                           July 11, 2018
+                                                           July 12, 2018
 
 
  Content Delivery Network Interconnection (CDNI) Request Routing: CDNI
@@ -21,16 +21,17 @@ Expires: January 12, 2019                                    Tongji/Yale
 
 Abstract
 
-   The Content Delivery Networks Interconnection (CDNI) WG is defining a
-   set of protocols to interconnect CDNs, to achieve multiple goals such
-   as extending the reach of a given CDN to areas that are not covered
-   by that particular CDN.  One component that is needed to achieve the
-   goal of CDNI described in RFC7336 is the CDNI Request Routing
-   Footprint & Capabilities Advertisement interface (FCI).  RFC8008 has
-   defined precisely the semantics of FCI and provided guidelines on the
-   FCI protocol, but the exact protocol is explicitly outside the scope
-   of that document.  In this document, we define an FCI protocol using
-   the Application-Layer Traffic Optimization (ALTO) protocol.
+   The Content Delivery Networks Interconnection (CDNI) framework
+   [RFC6707] defines a set of protocols to interconnect CDNs, to achieve
+   multiple goals such as extending the reach of a given CDN to areas
+   that are not covered by that particular CDN.  One component that is
+   needed to achieve the goal of CDNI described in [RFC7336] is the CDNI
+   Request Routing Footprint & Capabilities Advertisement interface
+   (FCI).  [RFC8008] defines precisely the semantics of FCI and provides
+   guidelines on the FCI protocol, but the exact protocol is explicitly
+   outside the scope of that document.  In this document, we follow the
+   guidelines to define an FCI protocol using the Application-Layer
+   Traffic Optimization (ALTO) protocol.
 
 Status of This Memo
 
@@ -47,13 +48,12 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on January 12, 2019.
+   This Internet-Draft will expire on January 13, 2019.
 
 
 
 
-
-Seedorf, et al.         Expires January 12, 2019                [Page 1]
+Seedorf, et al.         Expires January 13, 2019                [Page 1]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -77,107 +77,98 @@ Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
    2.  Background  . . . . . . . . . . . . . . . . . . . . . . . . .   4
-     2.1.  Semantics of FCI Advertisement  . . . . . . . . . . . . .   4
+     2.1.  Semantics of FCI Advertisement  . . . . . . . . . . . . .   5
      2.2.  ALTO Background and Benefits  . . . . . . . . . . . . . .   6
    3.  CDNI FCI Map  . . . . . . . . . . . . . . . . . . . . . . . .   8
-     3.1.  Media Type  . . . . . . . . . . . . . . . . . . . . . . .   8
+     3.1.  Media Type  . . . . . . . . . . . . . . . . . . . . . . .   9
      3.2.  HTTP Method . . . . . . . . . . . . . . . . . . . . . . .   9
      3.3.  Accept Input Parameters . . . . . . . . . . . . . . . . .   9
      3.4.  Capabilities  . . . . . . . . . . . . . . . . . . . . . .   9
      3.5.  Uses  . . . . . . . . . . . . . . . . . . . . . . . . . .   9
      3.6.  Response  . . . . . . . . . . . . . . . . . . . . . . . .   9
-     3.7.  Examples  . . . . . . . . . . . . . . . . . . . . . . . .  10
-       3.7.1.  IRD Example . . . . . . . . . . . . . . . . . . . . .  10
-       3.7.2.  Basic Example . . . . . . . . . . . . . . . . . . . .  12
-       3.7.3.  Incremental Updates Example . . . . . . . . . . . . .  14
-   4.  CDNI FCI Map using ALTO Network Map . . . . . . . . . . . . .  15
-     4.1.  Introduce Footprint Type: altonetworkmap  . . . . . . . .  15
-     4.2.  Examples  . . . . . . . . . . . . . . . . . . . . . . . .  15
-       4.2.1.  IRD Example . . . . . . . . . . . . . . . . . . . . .  15
-       4.2.2.  ALTO Network Map for CDNI FCI Footprints Example  . .  15
-       4.2.3.  ALTO Network Map Footprints in CDNI FCI Map . . . . .  16
-       4.2.4.  Incremental Updates Example . . . . . . . . . . . . .  17
-   5.  Filtered CDNI FCI Map using Capabilities  . . . . . . . . . .  19
-     5.1.  Media Type  . . . . . . . . . . . . . . . . . . . . . . .  19
-     5.2.  HTTP Method . . . . . . . . . . . . . . . . . . . . . . .  19
-     5.3.  Accept Input Parameters . . . . . . . . . . . . . . . . .  19
-     5.4.  Capabilities  . . . . . . . . . . . . . . . . . . . . . .  20
-     5.5.  Uses  . . . . . . . . . . . . . . . . . . . . . . . . . .  20
-     5.6.  Response  . . . . . . . . . . . . . . . . . . . . . . . .  20
-     5.7.  Examples  . . . . . . . . . . . . . . . . . . . . . . . .  21
-       5.7.1.  IRD Example . . . . . . . . . . . . . . . . . . . . .  21
+     3.7.  Examples  . . . . . . . . . . . . . . . . . . . . . . . .  12
+       3.7.1.  IRD Example . . . . . . . . . . . . . . . . . . . . .  12
+       3.7.2.  Basic Example . . . . . . . . . . . . . . . . . . . .  14
+       3.7.3.  Incremental Updates Example . . . . . . . . . . . . .  15
+   4.  CDNI FCI Map using ALTO Network Map . . . . . . . . . . . . .  16
+     4.1.  Network Map Footprint Type: altonetworkmap  . . . . . . .  16
+     4.2.  Examples  . . . . . . . . . . . . . . . . . . . . . . . .  17
+       4.2.1.  IRD Example . . . . . . . . . . . . . . . . . . . . .  17
+       4.2.2.  ALTO Network Map for CDNI FCI Footprints Example  . .  17
+       4.2.3.  ALTO Network Map Footprints in CDNI FCI Map . . . . .  18
+       4.2.4.  Incremental Updates Example . . . . . . . . . . . . .  19
+   5.  Filtered CDNI FCI Map using Capabilities  . . . . . . . . . .  20
+     5.1.  Media Type  . . . . . . . . . . . . . . . . . . . . . . .  20
+     5.2.  HTTP Method . . . . . . . . . . . . . . . . . . . . . . .  20
+     5.3.  Accept Input Parameters . . . . . . . . . . . . . . . . .  21
+     5.4.  Capabilities  . . . . . . . . . . . . . . . . . . . . . .  21
+     5.5.  Uses  . . . . . . . . . . . . . . . . . . . . . . . . . .  21
+     5.6.  Response  . . . . . . . . . . . . . . . . . . . . . . . .  22
+     5.7.  Examples  . . . . . . . . . . . . . . . . . . . . . . . .  23
+       5.7.1.  IRD Example . . . . . . . . . . . . . . . . . . . . .  23
 
 
 
-Seedorf, et al.         Expires January 12, 2019                [Page 2]
+Seedorf, et al.         Expires January 13, 2019                [Page 2]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
-       5.7.2.  Basic Example . . . . . . . . . . . . . . . . . . . .  22
-       5.7.3.  Incremental Updates Example . . . . . . . . . . . . .  23
+       5.7.2.  Basic Example . . . . . . . . . . . . . . . . . . . .  23
+       5.7.3.  Incremental Updates Example . . . . . . . . . . . . .  24
    6.  Query Footprint Properties using ALTO Unified Property
-       Service . . . . . . . . . . . . . . . . . . . . . . . . . . .  25
+       Service . . . . . . . . . . . . . . . . . . . . . . . . . . .  26
      6.1.  Representing Footprint Objects as Unified Property Map
-           Entities  . . . . . . . . . . . . . . . . . . . . . . . .  25
-       6.1.1.  ASN Domain  . . . . . . . . . . . . . . . . . . . . .  26
-       6.1.2.  COUNTRYCODE Domain  . . . . . . . . . . . . . . . . .  26
-     6.2.  Examples  . . . . . . . . . . . . . . . . . . . . . . . .  27
-       6.2.1.  IRD Example . . . . . . . . . . . . . . . . . . . . .  27
-       6.2.2.  Property Map Example  . . . . . . . . . . . . . . . .  27
-       6.2.3.  Filtered Property Map Example . . . . . . . . . . . .  28
-       6.2.4.  Incremental Updates Example . . . . . . . . . . . . .  29
-   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  31
-     7.1.  CDNI Metadata Footprint Type Registry . . . . . . . . . .  31
-     7.2.  ALTO Entity Domain Registry . . . . . . . . . . . . . . .  31
-     7.3.  ALTO CDNI FCI Property Type Registry  . . . . . . . . . .  32
-   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  32
-   9.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  33
-   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  33
-     10.1.  Normative References . . . . . . . . . . . . . . . . . .  33
-     10.2.  Informative References . . . . . . . . . . . . . . . . .  34
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  35
+           Entities  . . . . . . . . . . . . . . . . . . . . . . . .  26
+       6.1.1.  ASN Domain  . . . . . . . . . . . . . . . . . . . . .  27
+       6.1.2.  COUNTRYCODE Domain  . . . . . . . . . . . . . . . . .  27
+     6.2.  Examples  . . . . . . . . . . . . . . . . . . . . . . . .  28
+       6.2.1.  IRD Example . . . . . . . . . . . . . . . . . . . . .  28
+       6.2.2.  Property Map Example  . . . . . . . . . . . . . . . .  28
+       6.2.3.  Filtered Property Map Example . . . . . . . . . . . .  29
+       6.2.4.  Incremental Updates Example . . . . . . . . . . . . .  30
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  32
+     7.1.  CDNI Metadata Footprint Type Registry . . . . . . . . . .  32
+     7.2.  ALTO Entity Domain Registry . . . . . . . . . . . . . . .  32
+     7.3.  ALTO CDNI FCI Property Type Registry  . . . . . . . . . .  33
+   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  33
+   9.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  34
+   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  34
+     10.1.  Normative References . . . . . . . . . . . . . . . . . .  34
+     10.2.  Informative References . . . . . . . . . . . . . . . . .  35
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  36
 
 1.  Introduction
 
-   Many Network Service Providers (NSPs) are currently considering or
-   have already started to deploy Content Delivery Networks (CDNs)
-   within their networks.  As a consequence of this development, there
-   is a need for interconnecting these local CDNs.  Content Delivery
-   Networks Interconnection (CDNI) has the goal of standardizing
-   protocols to enable such interconnection of CDNs [RFC6707].
+   The ability to interconnect multiple content delivery networks (CDNs)
+   has many benefits, including increased coverage, capability, and
+   reliability.  The Content Delivery Networks Interconnection (CDNI)
+   framework [RFC6707] defines four interfaces to achieve
+   interconnection of CDNs: (1) the CDNI Request Routing Interface; the
+   CDNI Metadata Interface; the CDNI Logging Interface; and the CDNI
+   Control Interface.
 
-   The CDNI problem statement [RFC6707] defines four interfaces to be
-   standardized within the IETF for CDN interconnection:
-
-   o  CDNI Request Routing Interface
-
-   o  CDNI Metadata Interface
-
-   o  CDNI Logging Interface
-
-   o  CDNI Control Interface
-
-   The main purpose of the CDNI Request Routing Interface is described
-   in [RFC6707] as follows: "The CDNI Request Routing interface enables
-   a Request Routing function in an Upstream CDN to query a Request
-   Routing function in a Downstream CDN to determine if the Downstream
-
-
-
-Seedorf, et al.         Expires January 12, 2019                [Page 3]
-
-Internet-Draft             CDNI FCI using ALTO                 July 2018
-
-
-   CDN is able (and willing) to accept the delegated Content Request.
-   It also allows the Downstream CDN to control what should be returned
-   to the User Agent in the redirection message by the upstream Request
-   Routing function."  On a high level, the scope of the CDNI Request
-   Routing Interface, therefore, contains two main tasks:
+   Among the four interfaces, the CDNI Request Routing Interface
+   provides key functions, as specified in [RFC6707]: "The CDNI Request
+   Routing interface enables a Request Routing function in an Upstream
+   CDN to query a Request Routing function in a Downstream CDN to
+   determine if the Downstream CDN is able (and willing) to accept the
+   delegated Content Request.  It also allows the Downstream CDN to
+   control what should be returned to the User Agent in the redirection
+   message by the upstream Request Routing function."  On a high level,
+   the scope of the CDNI Request Routing Interface, therefore, contains
+   two main tasks:
 
    o  determining if the downstream CDN (dCDN) is willing to accept a
       delegated content request;
+
+
+
+
+Seedorf, et al.         Expires January 13, 2019                [Page 3]
+
+Internet-Draft             CDNI FCI using ALTO                 July 2018
+
 
    o  redirecting the content request coming from an upstream CDN (uCDN)
       to the proper entry point or entity in the downstream CDN.
@@ -185,23 +176,40 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
    Correspondingly, the request routing interface is broadly divided
    into two functionalities:
 
-   o  CDNI Footprint & Capabilities Advertisement interface (FCI): the
-      advertisement from a dCDN to a uCDN or a query from a uCDN to a
-      dCDN for the uCDN to decide whether to redirect particular user
-      requests to that dCDN;
+   o  CDNI Footprint & Capabilities Advertisement interface (FCI): an
+      advertisement from a dCDN to a uCDN (push) or a query from a uCDN
+      to a dCDN (pull) so that the uCDN knows whether it can redirect a
+      particular user request to that dCDN;
 
    o  CDNI Request Routing Redirection interface (RI): the synchronous
       operation of actually redirecting a user request.
 
-   This document focuses solely on CDNI FCI, with a goal to specify a
-   new Application-Layer Traffic Optimization (ALTO) [RFC7285] service
-   called "CDNI FCI Map Service", to transport and update CDNI FCI
-   objects, which are defined in a separate document in [RFC8008] and to
-   describe approaches for filtering CDNI FCI map on capabilities or
-   footprints.
+   This document focuses on the first functionality, CDNI FCI.  A key
+   component in defining CDNI FCI is defining objects describing the
+   footprints and capabilities of a dCDN.  Such objects are already in
+   [RFC8008].  A protocol to transport and update such objects between a
+   uCDN and a dCDN, however, is not defined.  Hence, the scope of this
+   document is to define such a protocol by introducing a new
+   Application-Layer Traffic Optimization (ALTO) [RFC7285] service
+   called "CDNI FCI Map Service".
+
+   There are multiple benefits in using ALTO as a transport protocol, as
+   we discuss in Section 2.2.
+
+   The rest of this document is organized as follows.  Section 2
+   provides non-normative background on both CDNI FCI and ALTO.
+   Section 3 introduces the most basic service, called CDNI FCI Map, to
+   realize CDNI FCI using ALTO.  Section 4 demonstrates a key benefit of
+   using ALTO: the ability to integrate CDNI FCI with ALTO network maps,
+   YRY: add a sentence to say the benefits.  Section 5 builds on
+   filtered ALTO maps to introduce filtered CDNI FCI maps using
+   capabilities, YRY: add a sentence to say the benefits.  Section 6
+   further shows a benefit of using ALTO: the ability to query footprint
+   properties using ALTO unified properties.  IANA and security
+   considerations are discussed in Section 7 and Section 8 respectively.
 
    Throughout this document, we use the terminology for CDNI defined in
-   [RFC6707] and [RFC8008].
+   Section 6 [RFC6707] and [RFC8008].  YRY ALTO terms from?
 
 2.  Background
 
@@ -209,29 +217,30 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
    understanding of both FCI semantics and ALTO.  Hence, we start with a
    review of both.
 
-2.1.  Semantics of FCI Advertisement
-
-   The CDNI document on "Footprint and Capabilities Semantics" [RFC8008]
-   defines the semantics for the CDNI FCI.  It thus provides guidance on
-   what Footprint and Capabilities mean in a CDNI context and how a
-   protocol solution should in principle look like.  The definitions in
-   [RFC8008] depend on [RFC8006].  Here we briefly summarize key related
-   points of [RFC8008] and [RFC8006].  For a detailed discussion, the
-   reader is referred to the RFCs.
 
 
 
-Seedorf, et al.         Expires January 12, 2019                [Page 4]
+
+Seedorf, et al.         Expires January 13, 2019                [Page 4]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
+2.1.  Semantics of FCI Advertisement
+
+   The CDNI document on "Footprint and Capabilities Semantics" [RFC8008]
+   defines the semantics of CDNI FCI, and provides guidance on what
+   Footprint and Capabilities mean in a CDNI context and how a protocol
+   solution should in principle look like.  The definitions in [RFC8008]
+   depend on [RFC8006].  Here we briefly summarize key related points of
+   [RFC8008] and [RFC8006].  For a detailed discussion, the reader is
+   referred to the RFCs.
+
    o  Footprint and capabilities are tied together and cannot be
-      interpreted independently from each other.  In such cases, i.e.,
-      where capabilities must be expressed on a per footprint basis, it
-      may be beneficial to combine footprint and capabilities
-      advertisement.  [RFC8008] integrates footprint and capabilities
-      with an approach of "capabilities with footprint restrictions".
+      interpreted independently from each other.  Hence, capabilities
+      must be expressed on a per footprint basis.  [RFC8008] integrates
+      footprint and capabilities with an approach of "capabilities with
+      footprint restrictions".
 
    o  Given that a large part of Footprint and Capabilities
       Advertisement will actually happen in contractual agreements, the
@@ -243,29 +252,36 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
       information would provide updates on information previously agreed
       in contracts between the participating CDNs.  In other words, the
       CDNI FCI is a means for a dCDN to provide changes/updates
-      regarding a footprint and/or capabilities it has prior agreed to
-      serve in a contract with a uCDN.  Hence, server push and
+      regarding a footprint and/or capabilities that it has prior agreed
+      to serve in a contract with a uCDN.  Hence, server push and
       incremental encoding will be necessary techniques.
 
    o  Multiple types of footprints are defined in [RFC8006]:
 
-      *  List of ISO Country Codes
+      *  List of ISO country codes
 
       *  List of AS numbers
 
       *  Set of IP-prefixes
 
-      A "set of IP-prefixes" must be able to contain full IP addresses,
-      i.e., a /32 for IPv4 and a /128 for IPv6, and also IP prefixes
-      with an arbitrary prefix length.  There must also be support for
-      multiple IP address versions, i.e., IPv4 and IPv6, in such a
-      footprint.
+      A "Set of IP-prefixes" can contain both full IP addresses (i.e., a
+      /32 for IPv4 and a /128 for IPv6) and IP prefixes with an
+      arbitrary prefix length.  There must also be support for multiple
+      IP address versions, i.e., IPv4 and IPv6, in such a footprint.
 
    o  For all of these mandatory-to-implement footprint types,
       footprints can be viewed as constraints for delegating requests to
       a dCDN: A dCDN footprint advertisement tells the uCDN the
       limitations for delegating a request to the dCDN.  For IP prefixes
       or ASN(s), the footprint signals to the uCDN that it should
+
+
+
+Seedorf, et al.         Expires January 13, 2019                [Page 5]
+
+Internet-Draft             CDNI FCI using ALTO                 July 2018
+
+
       consider the dCDN a candidate only if the IP address of the
       request routing source falls within the prefix set (or ASN,
       respectively).  The CDNI specifications do not define how a given
@@ -274,20 +290,12 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
       a candidate if it covers the country of the request routing
       source.  The CDNI specifications do not define how a given uCDN
       determines the country of the request routing source.  Multiple
-
-
-
-Seedorf, et al.         Expires January 12, 2019                [Page 5]
-
-Internet-Draft             CDNI FCI using ALTO                 July 2018
-
-
       footprint constraints are additive, i.e., the advertisement of
       different types of footprint narrows the dCDN candidacy
       cumulatively.
 
-   o  The following capabilities are defined as "base" capabilities,
-      i.e., ones that are needed in any case and therefore constitute
+   o  The following capabilities are defined as "base" capabilities;
+      that is, they are required in all cases and therefore constitute
       mandatory capabilities to be supported by the CDNI FCI:
 
       *  Delivery Protocol (e.g., HTTP vs. RTMP)
@@ -312,31 +320,27 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
    network layer (topology) information, an ALTO server can provide
    important information to "guide" the resource provider selection
    process in distributed applications.  Usually, it is assumed that an
-   ALTO server conveys information these applications cannot measure
-   themselves [RFC5693].
+   ALTO server conveys information that these applications cannot or
+   have difficulty to measure themselves [RFC5693].
 
-   Originally, ALTO was motivated by the huge amount of cross-ISP
-   traffic generated by P2P applications [RFC5693].  Recently, however,
-   ALTO is also being considered for improving the request routing in
-   CDNs [I-D.jenkins-alto-cdn-use-cases].  In this context, it has also
-   been proposed to use ALTO for selecting an entry-point in a
-   downstream NSP's network (see section 3.4 "CDN delivering Over-The-
-   Top of a NSP's network" in [I-D.jenkins-alto-cdn-use-cases]).  Also,
-   the CDNI problem statement explicitly mentions ALTO as a candidate
-   protocol for "actual algorithms for selection of CDN or Surrogate by
-   Request-Routing systems" [RFC6707].
+   Originally, ALTO was motivated by optimizing cross-ISP traffic
+   generated by P2P applications [RFC5693].  Recently, however, ALTO is
+   also being considered for improving the request routing in CDNs
+   [I-D.jenkins-alto-cdn-use-cases].  The CDNI problem statement
+   explicitly mentions ALTO as a candidate protocol for "actual
+   algorithms for selection of CDN or Surrogate by Request-Routing
+   systems" [RFC6707].
+
+
+
+Seedorf, et al.         Expires January 13, 2019                [Page 6]
+
+Internet-Draft             CDNI FCI using ALTO                 July 2018
+
 
    The following reasons make ALTO a suitable candidate protocol for
    downstream CDN selection as part of CDNI request routing and in
    particular for an FCI protocol:
-
-
-
-
-Seedorf, et al.         Expires January 12, 2019                [Page 6]
-
-Internet-Draft             CDNI FCI using ALTO                 July 2018
-
 
    o  CDN request routing is done at the application layer.  ALTO is a
       protocol specifically designed to improve application layer
@@ -382,17 +386,18 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
       notifications, the uCDN might still use a very recent network and
       cost map from dCDN, and therefore redirect requests to dCDN which
       it cannot serve.  Similarly, the possibility for incremental
+
+
+
+Seedorf, et al.         Expires January 13, 2019                [Page 7]
+
+Internet-Draft             CDNI FCI using ALTO                 July 2018
+
+
       updates would enable efficient conveyance of the aforementioned
       (or similar) status changes by the dCDN to the uCDN.  The newest
       design of ALTO supports server pushed incremental updates
       [I-D.ietf-alto-incr-update-sse].
-
-
-
-Seedorf, et al.         Expires January 12, 2019                [Page 7]
-
-Internet-Draft             CDNI FCI using ALTO                 July 2018
-
 
    o  Content Availability on Hosts: A dCDN might want to express CDN
       capabilities in terms of certain content types (e.g., codecs/
@@ -435,20 +440,20 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
    structure for Cost Map specification in Section 11.2.3 of [RFC7285]
    when specifying cost maps.
 
+
+
+
+
+
+Seedorf, et al.         Expires January 13, 2019                [Page 8]
+
+Internet-Draft             CDNI FCI using ALTO                 July 2018
+
+
 3.1.  Media Type
 
    The media type of the CDNI FCI Map is "application/alto-
    cdnifcimap+json".
-
-
-
-
-
-
-Seedorf, et al.         Expires January 12, 2019                [Page 8]
-
-Internet-Draft             CDNI FCI using ALTO                 July 2018
-
 
 3.2.  HTTP Method
 
@@ -473,15 +478,18 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 3.6.  Response
 
    The "meta" field of a CDNI FCI map response MUST include the "vtag"
-   field defined in Section 10.3 of [RFC7285], which provides the
-   version tag of the retrieved CDNI FCI map.  If a CDNI FCI map
-   response depends on a resource such as a network map, it MUST include
-   the "dependent-vtags" field, whose value is an array to indicate the
-   version tag of the resource used, where the resource is specified in
-   "uses" of the IRD.  The current defined dependent resource is only
-   network map, and the usage of it is described in Section 4.  The data
-   component of an ALTO CDNI FCI map response is named "cdni-fci-map",
-   which is a JSON object of type CDNIFCIMapData:
+   field defined in Section 10.3 of [RFC7285].  This field provides the
+   version of the retrieved CDNI FCI map.
+
+   If a CDNI FCI map response depends on a resource such as a network
+   map, it MUST include the "dependent-vtags" field, whose value is an
+   array to indicate the version tags of the resources used, where each
+   resource is specified in "uses" of the IRD.  The current defined
+   dependent resource is only network map, and the usage of it is
+   described in Section 4.
+
+   The data component of an ALTO CDNI FCI map response is named "cdni-
+   fci-map", which is a JSON object of type CDNIFCIMapData:
 
        object {
            CDNIFCIMapData cdni-fci-map;
@@ -491,23 +499,26 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
            BaseAdvertisementObject capabilities<1..*>;
        } CDNIFCIMapData
 
-   Specifically, a CDNIFCIMapData object is a JSON object, and it
-   includes only one property "capabilities" and whose value is an array
-   of BaseAdvertisementObject objects.  The syntax and semantics of
-   BaseAdvertisementObject are well defined in Section 5.1 of [RFC8008].
-   BaseAdvertisementObject object consists of capability-type,
-   capability-value and footprints.  And footprints are defined in
 
 
-
-
-Seedorf, et al.         Expires January 12, 2019                [Page 9]
+Seedorf, et al.         Expires January 13, 2019                [Page 9]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
-   Section 4.2.2.2 of [RFC8006].  For self-contained, we present the
-   informal encoding of BaseAdvertisementObject below.
+   Specifically, a CDNIFCIMapData object is a JSON object that includes
+   only one property named "capabilities", whose value is an array of
+   BaseAdvertisementObject objects.
+
+   The syntax and semantics of BaseAdvertisementObject are well defined
+   in Section 5.1 of [RFC8008].  A BaseAdvertisementObject object
+   includes multiple properties, including capability-type, capability-
+   value and footprints, where footprints are defined in Section 4.2.2.2
+   of [RFC8006].
+
+   To be self-contained, we give a non-normative specification of
+   BaseAdvertisementObject below.  As mentioned above, the normative
+   specification of BaseAdvertisementObject is in [RFC8008]
 
        object {
            JSONString capability-type;
@@ -522,29 +533,108 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
    For each BaseAdvertisementObject, the ALTO client MUST interpret
    footprints appearing multiple times as if they appeared only once.
-   If no footprint restriction list is specified (or an empty list is
-   specified), the ALTO client MUST understand that all footprint types
-   are reset to the "global" coverage.
+   If footprints in a BaseAdvertisementObject is null or empty or not
+   appearing, the ALTO client MUST understand that the capabilities in
+   this BaseAdvertisementObject have the "global" coverage.
 
    Note: Further optimization of BaseAdvertisement objects to
    effectively provide the advertisement of capabilities with footprint
-   restrictions is certainly possible, however, it is not necessary for
-   the basic interconnection of CDNs.  The note here is for
-   completeness, however, the specifics of such mechanisms are outside
+   restrictions is certainly possible.  For example, these two examples
+   below both describe that the dCDN can provide capabilities
+   ["http/1.1", "https/1.1"] for the same footprints.  However, the
+   latter one is smaller in its size.
+
+   EXAMPLE 1
+      {
+         "meta" : {...},
+         "cdni-fci-map": {
+           "capabilities": [
+             {
+               "capability-type": "FCI.DeliveryProtocol",
+               "capability-value": {
+                 "delivery-protocols": [
+                   "http/1.1"
+
+
+
+Seedorf, et al.         Expires January 13, 2019               [Page 10]
+
+Internet-Draft             CDNI FCI using ALTO                 July 2018
+
+
+                 ]
+               },
+               "footprints": [
+                 <Footprint objects>
+               ]
+             },
+             {
+               "capability-type": "FCI.DeliveryProtocol",
+               "capability-value": {
+                 "delivery-protocols": [
+                   "https/1.1"
+                 ]
+               },
+               "footprints": [
+                 <Footprint objects>
+               ]
+             }
+           ]
+         }
+       }
+
+   EXAMPLE 2
+      {
+         "meta" : {...},
+         "cdni-fci-map": {
+           "capabilities": [
+             {
+               "capability-type": "FCI.DeliveryProtocol",
+               "capability-value": {
+                 "delivery-protocols": [
+                   "https/1.1",
+                   "http/1.1"
+                 ]
+               },
+               "footprints": [
+                 <Footprint objects>
+               ]
+             }
+           ]
+         }
+       }
+
+   Since such optimizations are not necessary for the basic
+   interconnection of CDNs, the specifics of such mechanisms are outside
    the scope of this document.
+
+
+
+
+
+
+Seedorf, et al.         Expires January 13, 2019               [Page 11]
+
+Internet-Draft             CDNI FCI using ALTO                 July 2018
+
 
 3.7.  Examples
 
 3.7.1.  IRD Example
 
-   Below is an example IRD announcing two network maps, one CDNI FCI map
+   Below is the information resource directory (IRD) of a simple,
+   example ALTO server.  The server provides both base ALTO information
+   resources (e.g., network maps) and CDNI FCI information resources
+   (e.g., CDNI FCI map), demonstrating a single, integrated environment.
+
+   Specifically, the IRD announces two network maps, one CDNI FCI map
    without dependency, one CDNI FCI map depending on a network map, one
-   filtered CDNI FCI map defined in Section 5, one unified property map
-   including "cdni-fci-capabilities" as its entities' property, one
-   filtered unified property map including "cdni-fci-capabilities" and
-   "pid" as its entities' properties and two update stream services (one
-   for updating CDNI FCI maps, and the other for updating property
-   maps).
+   filtered CDNI FCI map to be defined in Section 5, one unified
+   property map including "cdni-fci-capabilities" as its entities'
+   property, one filtered unified property map including "cdni-fci-
+   capabilities" and "pid" as its entities' properties, and two update
+   stream services (one for updating CDNI FCI maps, and the other for
+   updating property maps).
 
      GET /directory HTTP/1.1
      Host: alto.example.com
@@ -554,14 +644,6 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
      "meta" : { ... },
      "resources": {
        "my-default-network-map": {
-
-
-
-Seedorf, et al.         Expires January 12, 2019               [Page 10]
-
-Internet-Draft             CDNI FCI using ALTO                 July 2018
-
-
          "uri" : "http://alto.example.com/networkmap",
          "media-type" : "application/alto-networkmap+json"
        },
@@ -584,6 +666,14 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
          "media-type" : "application/alto-cdnifcimap+json",
          "uses" : [ "my-eu-netmap" ]
        },
+
+
+
+Seedorf, et al.         Expires January 13, 2019               [Page 12]
+
+Internet-Draft             CDNI FCI using ALTO                 July 2018
+
+
        "cdnifci-property-map" : {
          "uri" : "http://alto.example.com/propmap/full/cdnifci",
          "media-type" : "application/alto-propmap+json",
@@ -595,7 +685,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
        "filtered-cdnifci-property-map" : {
          "uri" : "http://alto.example.com/propmap/lookup/cdnifci-pid",
          "media-type" : "application/alto-propmap+json",
-         "accpets" : "application/alto-propmapparams+json",
+         "accepts" : "application/alto-propmapparams+json",
          "capabilities" : {
            "domain-types" : [ "ipv4", "ipv6", "coutrycode", "asn" ],
            "prop-types" : [ "cdni-fci-capabilities", "pid" ]
@@ -610,14 +700,6 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
            "my-eu-netmap",
            "my-default-cdnifci-map",
            "my-filtered-cdnifci-map"
-
-
-
-Seedorf, et al.         Expires January 12, 2019               [Page 11]
-
-Internet-Draft             CDNI FCI using ALTO                 July 2018
-
-
            "my-cdnifci-map-with-network-map-footprints"
          ],
          "capabilities" : {
@@ -640,6 +722,14 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
            "cdnifci-property-map",
            "filtered-cdnifci-property-map"
          ],
+
+
+
+Seedorf, et al.         Expires January 13, 2019               [Page 13]
+
+Internet-Draft             CDNI FCI using ALTO                 July 2018
+
+
          "capabilities" : {
            "incremental-change-media-types": {
              "cdnifci-property-map" :
@@ -666,14 +756,6 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
        Content-Type: application/alto-cdnifcimap+json
        {
          "meta" : {
-
-
-
-Seedorf, et al.         Expires January 12, 2019               [Page 12]
-
-Internet-Draft             CDNI FCI using ALTO                 July 2018
-
-
            "vtag": {
              "resource-id": "my-default-cdnifci-map",
              "tag": "da65eca2eb7a10ce8b059740b0b2e3f8eb1d4785"
@@ -696,6 +778,14 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
                "capability-type": "FCI.DeliveryProtocol",
                "capability-value": {
                  "delivery-protocols": [
+
+
+
+Seedorf, et al.         Expires January 13, 2019               [Page 14]
+
+Internet-Draft             CDNI FCI using ALTO                 July 2018
+
+
                    "https/1.1",
                    "http/1.1"
                  ]
@@ -719,23 +809,13 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
          }
        }
 
-
-
-
-
-
-
-Seedorf, et al.         Expires January 12, 2019               [Page 13]
-
-Internet-Draft             CDNI FCI using ALTO                 July 2018
-
-
 3.7.3.  Incremental Updates Example
 
    A benefit of using ALTO to provide CDNI FCI maps is that such maps
    can be updated using ALTO incremental updates.  Below is an example
-   that also shows a benefit of using a JSON merge patch to encode a big
-   update and using a JSON patch to encode a small update.
+   that also shows the benefit of having both JSON merge patch and JSON
+   patch to encode updates.  YRY: add a couple sentences to go over the
+   example below.
 
      POST /updates/cdnifcimaps HTTP/1.1
      Host: alto.example.com
@@ -754,6 +834,14 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
      Content-Type: text/event-stream
 
      event: application/alto-updatestreamcontrol+json
+
+
+
+Seedorf, et al.         Expires January 13, 2019               [Page 15]
+
+Internet-Draft             CDNI FCI using ALTO                 July 2018
+
+
      data: {"control-uri":
      data: "http://alto.example.com/updates/streams/3141592653589"}
 
@@ -778,14 +866,6 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
      data:       <Footprint objects that are different from
      data:        footprint objects in delivery-protocols http/1.1>
      data:     ]
-
-
-
-Seedorf, et al.         Expires January 12, 2019               [Page 14]
-
-Internet-Draft             CDNI FCI using ALTO                 July 2018
-
-
      data:   }
      data: }
 
@@ -804,43 +884,43 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 4.  CDNI FCI Map using ALTO Network Map
 
-4.1.  Introduce Footprint Type: altonetworkmap
+4.1.  Network Map Footprint Type: altonetworkmap
 
-   In addition to the already defined CDNI footprint typs (e.g.,
+   In addition to the already defined CDNI footprint types (e.g.,
    ipv4cidr, ipv6cidr, asn, countrycode), ALTO network maps can be a
-   type of FCI footprint.  To enable such referencing to ALTO network
-   maps, a new CDNI Footprint Type "altonetworkmap" is defined.
+   type of FCI footprint. .
 
-   All altonetworkmap entries MUST be of type PIDName (as defined in
-   [RFC7285], where PIDName corresponds to a PID in the ALTO network map
-   referenced by the resource ID of the network map listed in
-   "dependent-vtags" field).
+
+
+
+Seedorf, et al.         Expires January 13, 2019               [Page 16]
+
+Internet-Draft             CDNI FCI using ALTO                 July 2018
+
+
+   Specifically, CDNI footprints using ALTO network maps should use a
+   new CDNI Footprint Type called "altonetworkmap".  YRY: Did we
+   register?  YRY: revise rest of this para, for example specify where
+   dependent-vtags come from; when footprint-type is "altonetworkmap",
+   footprint-value...  All altonetworkmap entries MUST be of type
+   PIDName (as defined in [RFC7285], where PIDName corresponds to a PID
+   in the ALTO network map referenced by the resource ID of the network
+   map listed in "dependent-vtags" field).
 
 4.2.  Examples
 
 4.2.1.  IRD Example
 
-   We use the same IRD example given by Section 3.7.1.
+   We use the same IRD example given in Section 3.7.1.
 
 4.2.2.  ALTO Network Map for CDNI FCI Footprints Example
 
    Below is an example network map that is referenced by the CDNI FCI
-   map example in Section 4.2.3
+   map example YRY: give resource ID, in Section 4.2.3.
 
     GET /networkmap HTTP/1.1
     Host: http://alto.example.com/myeunetmap
     Accept: application/alto-networkmap+json,application/alto-error+json
-
-
-
-
-
-
-
-Seedorf, et al.         Expires January 12, 2019               [Page 15]
-
-Internet-Draft             CDNI FCI using ALTO                 July 2018
-
 
        HTTP/1.1 200 OK
        Content-Length: XXX
@@ -864,6 +944,16 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
          }
        }
 
+
+
+
+
+
+Seedorf, et al.         Expires January 13, 2019               [Page 17]
+
+Internet-Draft             CDNI FCI using ALTO                 July 2018
+
+
 4.2.3.  ALTO Network Map Footprints in CDNI FCI Map
 
    In this example, we show a CDNI FCI map that depends on a network map
@@ -872,31 +962,6 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
     GET /networkcdnifcimap HTTP/1.1
     Host: alto.example.com
     Accept: application/alto-cdnifcimap+json,application/alto-error+json
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Seedorf, et al.         Expires January 12, 2019               [Page 16]
-
-Internet-Draft             CDNI FCI using ALTO                 July 2018
-
 
        HTTP/1.1 200 OK
        Content-Length: 618
@@ -936,6 +1001,15 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
          }
        }
 
+
+
+
+
+Seedorf, et al.         Expires January 13, 2019               [Page 18]
+
+Internet-Draft             CDNI FCI using ALTO                 July 2018
+
+
 4.2.4.  Incremental Updates Example
 
    In this example, the ALTO client is interested in changes of "my-
@@ -946,14 +1020,6 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
    capability.
 
      POST /updates/cdnifcimaps HTTP/1.1
-
-
-
-Seedorf, et al.         Expires January 12, 2019               [Page 17]
-
-Internet-Draft             CDNI FCI using ALTO                 July 2018
-
-
      Host: alto.example.com
      Accept: text/event-stream,application/alto-error+json
      Content-Type: application/alto-updatestreamparams+json
@@ -992,6 +1058,14 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
      data:   {
      data:     "capability-type": "FCI.DeliveryProtocol",
      data:     "capability-value": {
+
+
+
+Seedorf, et al.         Expires January 13, 2019               [Page 19]
+
+Internet-Draft             CDNI FCI using ALTO                 July 2018
+
+
      data:       "delivery-protocols": [
      data:         "http/1.1"
      data:       ]
@@ -1002,13 +1076,6 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
      data:     ]
      data:   }
      data: }
-
-
-
-Seedorf, et al.         Expires January 12, 2019               [Page 18]
-
-Internet-Draft             CDNI FCI using ALTO                 July 2018
-
 
      event: application/json-patch+json,my-fci-stream
      data: [
@@ -1026,14 +1093,13 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 5.  Filtered CDNI FCI Map using Capabilities
 
    This document defines a new service named "Filtered CDNI FCI Map
-   Service".  The semantic of a Filtered CDNI FCI Map is that given some
-   capabilities, which footprints have at least one of these
-   capabilities.  And a filtered CDNI FCI map is a CDNI FCI map for
-   which an ALTO client may supply additional capabilities to limit the
-   scope of the resulting CDNI FCI map.  The relationship between a
-   filtered CDNI FCI map and a CDNI FCI Map is similar to the
-   relationship between a filtered network/cost map and a network/cost
-   map.
+   Service".  Specifically, a filtered CDNI FCI map allows a client to
+   filter a CDNI FCI map using an client-given set of capabilities.  For
+   each entry of the CDNI FCI map, only if the entry contains at least
+   one of the client-given capabilities will it be returned to the
+   client.  The relationship between a filtered CDNI FCI map and a CDNI
+   FCI map is similar to the relationship between a filtered network/
+   cost map and a network/cost map.
 
 5.1.  Media Type
 
@@ -1044,27 +1110,25 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
    A filtered CDNI FCI map is requested using the HTTP POST method.
 
+
+
+
+
+
+
+
+Seedorf, et al.         Expires January 13, 2019               [Page 20]
+
+Internet-Draft             CDNI FCI using ALTO                 July 2018
+
+
 5.3.  Accept Input Parameters
 
    The input parameters for a filtered CDNI FCI map are supplied in the
    entity body of the POST request.  This document specifies the input
    parameters with a data format indicated by the media type
-   "application/alto-cdni-filter", which is a JSON object of type
-   ReqFilteredCDNIFCIMap, where:
-
-
-
-
-
-
-
-
-
-
-Seedorf, et al.         Expires January 12, 2019               [Page 19]
-
-Internet-Draft             CDNI FCI using ALTO                 July 2018
-
+   "application/alto-cdni-filter", YRY: cdni or include fci? which is a
+   JSON object of type ReqFilteredCDNIFCIMap, where:
 
       object {
           JSONString capability-type;
@@ -1105,26 +1169,27 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
    The resource ID of the CDNI FCI map based on which the filtering is
    performed.
 
-5.6.  Response
-
-   The response MUST indicate an error, using ALTO protocol error
-   handling specified in Section 8.5 of the ALTO protocol [RFC7285].
-
-   When a query of a filtered CDNI FCI map includes syntax errors, the
-   ALTO server MUST return an "E_SYNTAX" error.
 
 
 
 
-
-Seedorf, et al.         Expires January 12, 2019               [Page 20]
+Seedorf, et al.         Expires January 13, 2019               [Page 21]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
-   When the syntax of a query is correct, there may be some errors in
-   this query's semantics.  The ALTO server MUST return an
-   "E_INVALID_FIELD_VALUE" error in following cases:
+5.6.  Response
+
+   The response MUST indicate an error, using ALTO protocol error
+   handling specified in Section 8.5 of the ALTO protocol [RFC7285], if
+   the request is invalid.
+
+   Specifically, a request is invalid ... YRY When a query of a filtered
+   CDNI FCI map includes syntax errors, the ALTO server MUST return an
+   "E_SYNTAX" error.
+
+   A request with no syntax error can still be invalid, in the following
+   cases: YRY: re-read UP error cases.
 
    o  The value of "capability-type" is null;
 
@@ -1133,29 +1198,27 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
    o  The value of "capability-value" is inconsistent with "capability-
       type".
 
-   After a query of filtered CDNI FCI map is correct both in syntax and
-   semantics, the ALTO server will return a filtered CDNI FCI map
-   according to this query.  The format of a filtered CDNI FCI map is
-   the same as an unfiltered CDNI FCI map.  See Section 3.6 for the
-   format.
+   The ALTO server return a filtered CDNI FCI map for a valid request.
+   The format of a filtered CDNI FCI map is the same as an unfiltered
+   CDNI FCI map.  See Section 3.6 for the format.
 
-   The returned CDNI FCI map MUST contain only BaseAdvertisementObject
-   objects whose CDNI capability object is the superset of one of CDNI
-   capability object in "cdni-fci-capabilities".  Specifically, that a
-   CDNI capability object A is the superset of another CDNI capability
-   object B means that these two CDNI capability objects have the same
-   capability type and mandatory properties in capability value of A
-   MUST include mandatory properties in capability value of B
-   semantically.  For example, if a CDNI FCI capability in "cdni-fci-
-   capabilities" is Delivery Protocol capability object with "http/1.1"
-   in its field "delivery-protocols" and the original full CDNI FCI map
-   has two CDNI FCI objects whose capabilities are Delivery Protocol
-   capability objects with ["http/1.1"] and ["http/1.1", "https/1.1"] in
-   their field "delivery-protocols" respectively, both of these two CDNI
-   FCI objects MUST be returned.  If the input parameters contain a CDNI
-   capability object that is not currently defined, the ALTO server MUST
-   behave as if the CDNI capability object did not appear in the input
-   parameters.
+   YRY: need to make cleaner.  The returned CDNI FCI map MUST contain
+   only BaseAdvertisementObject objects whose CDNI capability object is
+   the superset of one of CDNI capability object in "cdni-fci-
+   capabilities".  Specifically, that a CDNI capability object A is the
+   superset of another CDNI capability object B means that these two
+   CDNI capability objects have the same capability type and mandatory
+   properties in capability value of A MUST include mandatory properties
+   in capability value of B semantically.  For example, if a CDNI FCI
+   capability in "cdni-fci-capabilities" is Delivery Protocol capability
+   object with "http/1.1" in its field "delivery-protocols" and the
+   original full CDNI FCI map has two CDNI FCI objects whose
+   capabilities are Delivery Protocol capability objects with
+   ["http/1.1"] and ["http/1.1", "https/1.1"] in their field "delivery-
+   protocols" respectively, both of these two CDNI FCI objects MUST be
+   returned.  If the input parameters contain a CDNI capability object
+   that is not currently defined, the ALTO server MUST behave as if the
+   CDNI capability object did not appear in the input parameters.
 
    The version tag included in the "vtag" field of the response MUST
    correspond to the full CDNI FCI map resource from which the filtered
@@ -1163,25 +1226,24 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
    version tag is used independently of any filtering that is requested
    by an ALTO client.
 
+
+
+
+Seedorf, et al.         Expires January 13, 2019               [Page 22]
+
+Internet-Draft             CDNI FCI using ALTO                 July 2018
+
+
 5.7.  Examples
 
 5.7.1.  IRD Example
 
    We use the same IRD example by Section 3.7.1.
 
-
-
-
-
-Seedorf, et al.         Expires January 12, 2019               [Page 21]
-
-Internet-Draft             CDNI FCI using ALTO                 July 2018
-
-
 5.7.2.  Basic Example
 
-   This example is filtering the full CDNI FCI map example in
-   Section 3.7.2.
+   This example filters the full CDNI FCI map in Section 3.7.2 by
+   selecting only YRY fix.
 
       POST /cdnifcimap/filtered HTTP/1.1
       HOST: alto.example.com
@@ -1223,13 +1285,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-
-
-
-
-
-
-Seedorf, et al.         Expires January 12, 2019               [Page 22]
+Seedorf, et al.         Expires January 13, 2019               [Page 23]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1285,7 +1341,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 12, 2019               [Page 23]
+Seedorf, et al.         Expires January 13, 2019               [Page 24]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1341,7 +1397,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 12, 2019               [Page 24]
+Seedorf, et al.         Expires January 13, 2019               [Page 25]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1397,7 +1453,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 12, 2019               [Page 25]
+Seedorf, et al.         Expires January 13, 2019               [Page 26]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1453,7 +1509,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 12, 2019               [Page 26]
+Seedorf, et al.         Expires January 13, 2019               [Page 27]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1509,7 +1565,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 12, 2019               [Page 27]
+Seedorf, et al.         Expires January 13, 2019               [Page 28]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1565,7 +1621,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 12, 2019               [Page 28]
+Seedorf, et al.         Expires January 13, 2019               [Page 29]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1621,7 +1677,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 12, 2019               [Page 29]
+Seedorf, et al.         Expires January 13, 2019               [Page 30]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1677,7 +1733,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 12, 2019               [Page 30]
+Seedorf, et al.         Expires January 13, 2019               [Page 31]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1733,7 +1789,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 12, 2019               [Page 31]
+Seedorf, et al.         Expires January 13, 2019               [Page 32]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1789,7 +1845,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 12, 2019               [Page 32]
+Seedorf, et al.         Expires January 13, 2019               [Page 33]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1845,7 +1901,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 12, 2019               [Page 33]
+Seedorf, et al.         Expires January 13, 2019               [Page 34]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1901,7 +1957,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 12, 2019               [Page 34]
+Seedorf, et al.         Expires January 13, 2019               [Page 35]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -1957,7 +2013,7 @@ Authors' Addresses
 
 
 
-Seedorf, et al.         Expires January 12, 2019               [Page 35]
+Seedorf, et al.         Expires January 13, 2019               [Page 36]
 
 Internet-Draft             CDNI FCI using ALTO                 July 2018
 
@@ -2013,4 +2069,4 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
 
 
-Seedorf, et al.         Expires January 12, 2019               [Page 36]
+Seedorf, et al.         Expires January 13, 2019               [Page 37]

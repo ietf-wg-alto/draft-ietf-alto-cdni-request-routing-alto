@@ -78,11 +78,67 @@
                 ]]></artwork>
         </figure>
             <t>
-<!--                 The ALTO server MUST interpret footprints appearing multiple times as if they appeared only once. Footprint restriction information MAY be specified using multiple different footprint-types.  -->
-                For each BaseAdvertisementObject, the ALTO client MUST interpret footprints appearing multiple times as if they appeared only once. If no footprint restriction list is specified (or an empty list is specified), the ALTO client MUST understand that all footprint types are reset to the "global" coverage. YRY: revise English of preceding sentence.
+                For each BaseAdvertisementObject, the ALTO client MUST interpret footprints appearing multiple times as if they appeared only once. If footprints in a BaseAdvertisementObject is null or empty or not appearing, the ALTO client MUST understand that the capabilities in this BaseAdvertisementObject have the "global" coverage.
             </t>
             <t>
-                Note: Further optimization of BaseAdvertisement objects to effectively provide the advertisement of capabilities with footprint restrictions is certainly possible. YRY: Backup with an example. Since such optimizations are not necessary for the basic interconnection of CDNs, the specifics of such mechanisms are outside the scope of this document.
+                Note: Further optimization of BaseAdvertisement objects to effectively provide the advertisement of capabilities with footprint restrictions is certainly possible. For example, these two examples below both describe that the dCDN can provide capabilities ["http/1.1", "https/1.1"] for the same footprints. However, the latter one is smaller in its size.
+        <figure align="left">
+              <artwork align="left"><![CDATA[
+EXAMPLE 1
+   {
+      "meta" : {...},
+      "cdni-fci-map": {
+        "capabilities": [
+          {
+            "capability-type": "FCI.DeliveryProtocol",
+            "capability-value": {
+              "delivery-protocols": [
+                "http/1.1"
+              ]
+            },
+            "footprints": [
+              <Footprint objects>
+            ]
+          },
+          {
+            "capability-type": "FCI.DeliveryProtocol",
+            "capability-value": {
+              "delivery-protocols": [
+                "https/1.1"
+              ]
+            },
+            "footprints": [
+              <Footprint objects>
+            ]
+          }
+        ]
+      }
+    }
+
+EXAMPLE 2
+   {
+      "meta" : {...},
+      "cdni-fci-map": {
+        "capabilities": [
+          {
+            "capability-type": "FCI.DeliveryProtocol",
+            "capability-value": {
+              "delivery-protocols": [
+                "https/1.1",
+                "http/1.1"
+              ]
+            },
+            "footprints": [
+              <Footprint objects>
+            ]
+          }
+        ]
+      }
+    }
+]]></artwork>
+            </figure>  
+
+                Since such optimizations are not necessary for the basic interconnection of CDNs, the specifics of such mechanisms are outside the scope of this document.
             </t>
 <!--             <t>
             	Capability objects of a given capability type with identical footprint restrictions MUST be combined into a single capability object. And footprints with the same capability type and capability value MUST be combined into a single capability object.
