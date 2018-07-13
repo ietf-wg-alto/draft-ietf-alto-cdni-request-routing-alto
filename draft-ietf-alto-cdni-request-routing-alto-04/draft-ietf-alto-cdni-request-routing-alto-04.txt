@@ -398,7 +398,6 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
       information available to an upstream CDN.  This would enable a
       uCDN to determine if a given dCDN actually has the capabilities
       for a given request with respect to the type of content requested.
-      Please see Section 4
 
    o  Resource Availability on Hosts or Links: The capabilities on links
       (e.g. maximum bandwidth) or caches (e.g. average load) might be
@@ -439,6 +438,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
 
    The media type of the CDNI FCI Map is "application/alto-
    cdnifcimap+json".
+
 
 
 
@@ -1163,7 +1163,7 @@ Internet-Draft             CDNI FCI using ALTO                 July 2018
    The input parameters for a filtered CDNI FCI map are supplied in the
    entity body of the POST request.  This document specifies the input
    parameters with a data format indicated by the media type
-   "application/alto-cdnifcifilter" which is a JSON object of type
+   "application/alto-cdnifcifilter+json" which is a JSON object of type
    ReqFilteredCDNIFCIMap, where:
 
 

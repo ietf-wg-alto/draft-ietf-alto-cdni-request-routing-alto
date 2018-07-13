@@ -13,7 +13,7 @@
         </t>
     	</section>
     	<section title="Accept Input Parameters">
-    	<t>The input parameters for a filtered CDNI FCI map are supplied in the entity body of the POST request. This document specifies the input parameters with a data format indicated by the media type "application/alto-cdnifcifilter" which is a JSON object of type ReqFilteredCDNIFCIMap, where:</t>
+    	<t>The input parameters for a filtered CDNI FCI map are supplied in the entity body of the POST request. This document specifies the input parameters with a data format indicated by the media type "application/alto-cdnifcifilter+json" which is a JSON object of type ReqFilteredCDNIFCIMap, where:</t>
   		<figure align="left">
             <artwork align="left"><![CDATA[
    object {
