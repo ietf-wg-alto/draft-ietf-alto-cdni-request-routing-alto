@@ -14,7 +14,7 @@
     		<section title="IRD Example">
     		<t>
     			We use the same IRD example given in <xref target="IRDexample"/>.
-    		</t> 
+    		</t>
     		</section>
           <section title="ALTO Network Map for CDNI FCI Footprints Example" anchor="networkmapexample">
             <t>
@@ -26,30 +26,30 @@
  Host: http://alto.example.com/myeunetmap
  Accept: application/alto-networkmap+json,application/alto-error+json
 ]]></artwork>
-            </figure>               
+            </figure>
                       <figure align="left">
               <artwork align="left"><![CDATA[
-    HTTP/1.1 200 OK
-    Content-Length: XXX
-    Content-Type: application/alto-networkmap+json
+ HTTP/1.1 200 OK
+ Content-Length: XXX
+ Content-Type: application/alto-networkmap+json
 
-    {
-      "meta" : {
-        "vtag": [
-          {"resource-id": "my-eu-netmap",
-           "tag": "3ee2cb7e8d63d9fab71b9b34cbf764436315542e"
-          }
-        ]
-      },
-      "network-map" : {
-        "south-france" : {
-          "ipv4" : [ "192.0.2.0/24", "198.51.100.0/25" ]
-        },
-        "germany" : {
-          "ipv4" : [ "192.0.3.0/24"]
-        }
-      }
-    }
+ {
+   "meta" : {
+     "vtag": [
+       {"resource-id": "my-eu-netmap",
+        "tag": "3ee2cb7e8d63d9fab71b9b34cbf764436315542e"
+       }
+     ]
+   },
+   "network-map" : {
+     "south-france" : {
+       "ipv4" : [ "192.0.2.0/24", "198.51.100.0/25" ]
+     },
+     "germany" : {
+       "ipv4" : [ "192.0.3.0/24"]
+     }
+   }
+ }
 ]]></artwork>
             </figure>
           </section>
@@ -63,48 +63,47 @@
  Host: alto.example.com
  Accept: application/alto-cdnifcimap+json,application/alto-error+json
 ]]></artwork>
-            </figure> 
+            </figure>
         <figure align="left">
               <artwork align="left"><![CDATA[
-    HTTP/1.1 200 OK
-    Content-Length: 618
-    Content-Type: application/alto-cdnifcimap+json
+ HTTP/1.1 200 OK
+ Content-Length: 618
+ Content-Type: application/alto-cdnifcimap+json
 
-    {
-      "meta" : {
-        "dependent-vtags" : [
-          {
-            "resource-id": "my-eu-netmap",
-            "tag": "3ee2cb7e8d63d9fab71b9b34cbf764436315542e"
-          }
-        ]
-      },
-      "cdni-fci-map": {
-        "capabilities": [
-          { "capability-type": "FCI.DeliveryProtocol",
-            "capability-value": [
-              "http/1.1"
-            ]
-          },
-          { "capability-type": "FCI.DeliveryProtocol",
-            "capability-value": [
-            "values": [
-              "https/1.1"
-            ],
-            "footprints": [
-              { "footprint-type": "altonetworkmap",
-                "footprint-value": [
-                  "germany",
-                  "south-france"
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    }
+ {
+   "meta" : {
+     "dependent-vtags" : [
+       {
+         "resource-id": "my-eu-netmap",
+         "tag": "3ee2cb7e8d63d9fab71b9b34cbf764436315542e"
+       }
+     ]
+   },
+   "cdni-fci-map": {
+     "capabilities": [
+       { "capability-type": "FCI.DeliveryProtocol",
+         "capability-value": [
+           "http/1.1"
+         ]
+       },
+       { "capability-type": "FCI.DeliveryProtocol",
+         "capability-value": [
+           "https/1.1"
+         ],
+         "footprints": [
+           { "footprint-type": "altonetworkmap",
+             "footprint-value": [
+               "germany",
+               "south-france"
+             ]
+           }
+         ]
+       }
+     ]
+   }
+ }
 ]]></artwork>
-            </figure> 
+            </figure>
           </section>
           <section title="Incremental Updates Example">
             <t>
@@ -133,7 +132,7 @@
   data: "http://alto.example.com/updates/streams/3141592653590"}
 
   event: application/alto-cdnifcimap+json,my-fci-stream
-  data: { ... full CDNI FCI map ... } 
+  data: { ... full CDNI FCI map ... }
 
   event: application/merge-patch+json,my-fci-stream
   data: {
@@ -143,7 +142,7 @@
   data:        "resource-id": "my-eu-netmap",
   data:        "tag": "3ee2cb7e8d63d9fab71b9b34cbf764436315542e"
   data:      }
-  data:     ],  
+  data:     ],
   data:     "vtag": {
   data:       "tag": "dasdfa10ce8b059740bddsfasd8eb1d47853716"
   data:     }
@@ -156,10 +155,10 @@
   data:       ]
   data:     },
   data:     "footprints": [
-  data:       <Footprint objects that are different from 
+  data:       <Footprint objects that are different from
   data:        footprint objects in delivery-protocols http/1.1>
   data:     ]
-  data:   }     
+  data:   }
   data: }
 
   event: application/json-patch+json,my-fci-stream
@@ -175,7 +174,7 @@
   data:   }
   data: ]
                 ]]></artwork>
-            </figure>  
+            </figure>
           </section>
         </section>
     </section>

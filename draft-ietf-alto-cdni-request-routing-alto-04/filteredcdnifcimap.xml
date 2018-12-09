@@ -67,7 +67,7 @@
     		The format of a filtered CDNI FCI map is the same as an unfiltered CDNI FCI map. See <xref target="cdnifcimapencoding"/> for the format.
     	</t>
     	<t>
-    		The returned CDNI FCI map MUST contain only BaseAdvertisementObject objects whose CDNI capability object is the superset of one of CDNI capability object in "cdni-fci-capabilities". 
+    		The returned CDNI FCI map MUST contain only BaseAdvertisementObject objects whose CDNI capability object is the superset of one of CDNI capability object in "cdni-fci-capabilities".
 
         Specifically, that a CDNI capability object A is the superset of another CDNI capability object B means that these two CDNI capability objects have the same capability type and mandatory properties in capability value of A MUST include mandatory properties in capability value of B semantically. See <xref target="filtercdnifcimapexample"/> for a concrete example.
       </t>
@@ -80,7 +80,7 @@
     		<section title="IRD Example">
     		<t>
     			We use the same IRD example by <xref target="IRDexample"/>.
-    		</t> 
+    		</t>
     		</section>
     		<section title="Basic Example" anchor="filtercdnifcimapexample">
     			<t>
@@ -88,66 +88,62 @@
     			</t>
 		    <figure align="left">
               <artwork align="left"><![CDATA[
-   POST /cdnifcimap/filtered HTTP/1.1
-   HOST: alto.example.com
-   Content-Type: application/cdnifilter+json
-   Accept: application/alto-cdnifcimap+json
+  POST /cdnifcimap/filtered HTTP/1.1
+  HOST: alto.example.com
+  Content-Type: application/cdnifilter+json
+  Accept: application/alto-cdnifcimap+json
 
-   {
-     "cdni-fci-capabilities": [
-       {
-         "capability-type": "FCI.DeliveryProtocol",
-         "capability-value": {
-           "delivery-protocols": [
-              "http/1.1"
-           ]
-         }
-       }
-     ]
-   }
-]]></artwork>
-            </figure>
-
-		    <figure align="left">
-              <artwork align="left"><![CDATA[
-    HTTP/1.1 200 OK
-    Content-Length: XXX
-    Content-Type: application/alto-cdnifcimap+json
-    {
-      "meta" : {
-        "vtag": {
-          "resource-id": "my-default-cdnifci-map",
-          "tag": "da65eca2eb7a10ce8b059740b0b2e3f8eb1d4785"
+  {
+    "cdni-fci-capabilities": [
+      {
+        "capability-type": "FCI.DeliveryProtocol",
+        "capability-value": {
+          "delivery-protocols": [
+            "http/1.1"
+          ]
         }
-      },
-      "cdni-fci-map": {
-        "capabilities": [
-          {
-            "capability-type": "FCI.DeliveryProtocol",
-            "capability-value": {
-              "delivery-protocols": [
-                "http/1.1"
-              ]
-            },
-            "footprints": [
-              <Footprint objects>
+      }
+    ]
+  }
+
+  HTTP/1.1 200 OK
+  Content-Length: XXX
+  Content-Type: application/alto-cdnifcimap+json
+  {
+    "meta" : {
+      "vtag": {
+        "resource-id": "my-default-cdnifci-map",
+        "tag": "da65eca2eb7a10ce8b059740b0b2e3f8eb1d4785"
+      }
+    },
+    "cdni-fci-map": {
+      "capabilities": [
+        {
+          "capability-type": "FCI.DeliveryProtocol",
+          "capability-value": {
+            "delivery-protocols": [
+              "http/1.1"
             ]
           },
-          {
-            "capability-type": "FCI.DeliveryProtocol",
-            "capability-value": {
-              "delivery-protocols": [
-                "https/1.1",
-                "http/1.1"
-              ]
-            },
-            "footprints": [
-              <Footprint objects>
+          "footprints": [
+            <Footprint objects>
+          ]
+        },
+        {
+          "capability-type": "FCI.DeliveryProtocol",
+          "capability-value": {
+            "delivery-protocols": [
+              "https/1.1",
+              "http/1.1"
             ]
-          }
-        ]
-      }
+          },
+          "footprints": [
+            <Footprint objects>
+          ]
+        }
+      ]
     }
+  }
 ]]></artwork>
             </figure>
     		</section>
@@ -176,7 +172,7 @@
                 ]
               }
             }
-          ]                
+          ]
         }
       }
     }
@@ -191,7 +187,7 @@
   data: "http://alto.example.com/updates/streams/3141592653590"}
 
   event: application/alto-cdnifcimap+json,my-fci-stream
-  data: { ... full filtered CDNI FCI map ... } 
+  data: { ... full filtered CDNI FCI map ... }
 
   event: application/merge-patch+json,my-fci-stream
   data: {
@@ -208,10 +204,10 @@
   data:       ]
   data:     },
   data:     "footprints": [
-  data:       <Footprint objects that are different from 
+  data:       <Footprint objects that are different from
   data:        footprint objects in delivery-protocols http/1.1>
   data:     ]
-  data:   }     
+  data:   }
   data: }
 
   event: application/json-patch+json,my-fci-stream
@@ -227,8 +223,7 @@
   data:   }
   data: ]
                 ]]></artwork>
-            </figure>         
+            </figure>
     		</section>
     	</section>
     </section>
-
