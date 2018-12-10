@@ -1,10 +1,16 @@
     <section anchor="unifiedpropertymap" title="Query Footprint Properties using ALTO Unified Property Service">
         <t>
-        	In this section, we describe how ALTO clients look up properties for individual footprints. Our design decision here is to use ALTO unified property map service to query footprint properties because we do not want to introduce extra complexity and ALTO unified property map defined in <xref target="I-D.ietf-alto-unified-props-new"/> already meets the requirement. A footprint is a group of entities, and CDNI capabilities can be regarded as properties of a footprint. Unified property map is used to provide properties for collections of entities such as CIDRs or PIDs. So every footprint can be presented as a set of entities, and we will describe it in details in <xref target="footprinttoentities"/>. In addition, two resource types Property Maps and Filtered Property Maps are already well-defined in <xref target="I-D.ietf-alto-unified-props-new"/>.
+        	Above sections describe how a uCDN can get the whole capabilities and footprints from dCDNs and how a uCDN can get the footprints of given capabilities. But there is another important case which is how a uCDN can get properties (i.e., capabilities) of given footprints.
         </t>
         <t>
-            A unified property map that includes "cdni-fci-capabilities" property registered in <xref target="iana"/> builds the inverted index of a CDNI FCI map. The building process consists of two steps: firstly, each footprint object is represented as a set of unified property map entities in a domain; secondly, each unified property map entity is mapped into a list of property objects including CDNI capabilities.      
+        The most natrual way to solve this problem is to use ALTO unified property map defined in <xref target="I-D.ietf-alto-unified-props-new"/> since footprints can be easily presented as groups of entities and Filtered Property Maps are already well-defined. In this section, we describe how ALTO clients look up properties for individual footprints. We firstly describe how to represent footprint objects as unified property map entities, and then we provide examples of the full property map, the filtered property map and the incremental updates.<!-- Our design decision here is to use ALTO unified property map service to query footprint properties because we do not want to introduce extra complexity and ALTO unified property map defined in <xref target="I-D.ietf-alto-unified-props-new"/> already meets the requirement.  -->
         </t>
+<!--         <t>
+          A footprint is a group of entities, and CDNI capabilities can be regarded as properties of a footprint. Unified property map is used to provide properties for collections of entities such as CIDRs or PIDs. So every footprint can be presented as a set of entities, and we will describe it in details in <xref target="footprinttoentities"/>. In addition, two resource types Property Maps and Filtered Property Maps are already well-defined in <xref target="I-D.ietf-alto-unified-props-new"/>.
+        </t> -->
+<!--         <t>
+            A unified property map that includes "cdni-fci-capabilities" property registered in <xref target="iana"/> builds the inverted index of a CDNI FCI map. The building process consists of two steps: firstly, each footprint object is represented as a set of unified property map entities in a domain; secondly, each unified property map entity is mapped into a list of property objects including CDNI capabilities.
+        </t> -->
   	    <section title="Representing Footprint Objects as Unified Property Map Entities" anchor="footprinttoentities">
             <t>
                 A footprint object has two properties: footprint-type and footprint-value. A footprint-value is an array of footprint values conforming to the specification associated with the registered footprint type ("ipv4cidr", "ipv6cidr", "asn", and "countrycode"). Since each unified property map entity has a unique address and each pair of footprint-type and a footprint value determines a group of unique addresses, a footprint object can be represented as a set of entities according to their different footprint-type and footprint values. However, <xref target="I-D.ietf-alto-unified-props-new"/> only defines IPv4 Domain and IPv6 Domain which represent footprint-type "ipv4cidr" and "ipv6cidr" respectively. To represent footprint-type "asn" and "countrycode", this document registers two new domains in <xref target="iana"/>.
@@ -13,7 +19,8 @@
                 Here gives an example of representing a footprint object as a set of unified property map entities.
             </t>
             <t>
-                {"footprint-type": "ipv4cidr", "footprint-value": ["192.0.2.0/24", "198.51.100.0/24"]} --> "ipv4:192.168.2.0/24", "ipv4:198.51.100.0/24"
+              {"footprint-type": "ipv4cidr", "footprint-value": ["192.0.2.0/24", "198.51.100.0/24"]}
+              --> "ipv4:192.168.2.0/24", "ipv4:198.51.100.0/24"
             </t>
   		    <section title="ASN Domain">
   			    <t>
@@ -60,7 +67,7 @@
     		<section title="IRD Example">
     		<t>
     			We use the same IRD example given by <xref target="IRDexample"/>.
-    		</t> 
+    		</t>
     		</section>
         	<section title="Property Map Example">
             <t>
@@ -71,10 +78,7 @@
     GET /propmap/full/cdnifci HTTP/1.1
     HOST: alto.example.com
     Accept: application/alto-propmap+json,application/alto-error+json
-]]></artwork>
-            </figure> 
-		    <figure align="left">
-              <artwork align="left"><![CDATA[
+
     HTTP/1.1 200 OK
     Content-Length: ###
     Content-Type: application/alto-propmap+json
@@ -199,11 +203,11 @@
    data: "http://alto.example.com/updates/streams/1414213562373"}
 
    event: application/alto-cdnifcimap+json,my-fci-stream
-   data: { ... full filtered unified property map ... } 
+   data: { ... full filtered unified property map ... }
 
    event: application/merge-patch+json,my-fci-stream
    data: {
-   data:   "property-map": 
+   data:   "property-map":
    data:   {
    data:     "meta": {
    data:       "dependent-vtags": [
@@ -213,9 +217,9 @@
    data:          "tag": "7915dc0290c2705481c491a2b4ffbec482b3cf63"}
    data:       ]
    data:     },
-   data:     "ipv4:192.0.2.0/24": 
+   data:     "ipv4:192.0.2.0/24":
    data:     {
-   data:       "cdni-fci-capabilities": 
+   data:       "cdni-fci-capabilities":
    data:         [{"capability-type":,"capability-value":}]
    data:     }
    data:   }
@@ -235,7 +239,7 @@
    data: }
    data: ]}
                 ]]></artwork>
-            </figure>   
+            </figure>
         	</section>
         </section>
     </section>

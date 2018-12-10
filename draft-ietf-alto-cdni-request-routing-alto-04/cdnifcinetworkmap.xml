@@ -1,22 +1,24 @@
     <section title="CDNI FCI Map using ALTO Network Map" anchor="cdnifcinetworkmap">
         <section title="Network Map Footprint Type: altonetworkmap">
         <t>
-        	In addition to the already defined CDNI footprint types (e.g., ipv4cidr, ipv6cidr, asn, countrycode), ALTO network maps can be a type of FCI footprint. <!--  (see also <xref target="newfootprinttype"/>) -->.
+        	In addition to the already defined CDNI footprint types (e.g., ipv4cidr, ipv6cidr, asn, countrycode), ALTO network maps can be a type of FCI footprint. <!--  (see also <xref target="newfootprinttype"/>) -->
         </t>
         <t>
-        	Specifically, CDNI footprints using ALTO network maps should use a new CDNI Footprint Type called "altonetworkmap". YRY: Did we register? YRY: revise rest of this para, for example specify where dependent-vtags come from; when footprint-type is "altonetworkmap", footprint-value...
-          All altonetworkmap entries MUST be of type PIDName (as defined in <xref target="RFC7285" pageno="false" format="default"/>, where PIDName corresponds to a PID in the ALTO network map referenced by the resource ID of the network map listed in "dependent-vtags" field).
+        	Specifically, CDNI footprints using ALTO network maps should use a new CDNI Footprint Type called "altonetworkmap".
+        </t>
+        <t>
+          "altonetworkmap" footprint type indicates that the corresponding footprint value is a list of PIDNames as defined in <xref target="RFC7285" pageno="false" format="default"/>.  These PIDNames are references of PIDs in a network map resource. Hence a CDNI FCI map with "altonetworkmap" footprints depends on a network map. For such a CDNI FCI map, the "dependent-vtag" field with a reference to a network map it depends on MUST be included in it (see the example in <xref target="networkmapfootprint"/>).
         </t>
         </section>
         <section title="Examples">
     		<section title="IRD Example">
     		<t>
     			We use the same IRD example given in <xref target="IRDexample"/>.
-    		</t> 
+    		</t>
     		</section>
           <section title="ALTO Network Map for CDNI FCI Footprints Example" anchor="networkmapexample">
             <t>
-              Below is an example network map that is referenced by the CDNI FCI map example YRY: give resource ID, in <xref target="networkmapfootprint"/>.
+              Below is an example network map whose resource id is "my-eu-netmap", and this map is referenced by the CDNI FCI map example in <xref target="networkmapfootprint"/>.
             </t>
                       <figure align="left">
            <artwork align="left"><![CDATA[
@@ -24,30 +26,30 @@
  Host: http://alto.example.com/myeunetmap
  Accept: application/alto-networkmap+json,application/alto-error+json
 ]]></artwork>
-            </figure>               
+            </figure>
                       <figure align="left">
               <artwork align="left"><![CDATA[
-    HTTP/1.1 200 OK
-    Content-Length: XXX
-    Content-Type: application/alto-networkmap+json
+ HTTP/1.1 200 OK
+ Content-Length: XXX
+ Content-Type: application/alto-networkmap+json
 
-    {
-      "meta" : {
-        "vtag": [
-          {"resource-id": "my-eu-netmap",
-           "tag": "3ee2cb7e8d63d9fab71b9b34cbf764436315542e"
-          }
-        ]
-      },
-      "network-map" : {
-        "south-france" : {
-          "ipv4" : [ "192.0.2.0/24", "198.51.100.0/25" ]
-        },
-        "germany" : {
-          "ipv4" : [ "192.0.3.0/24"]
-        }
-      }
-    }
+ {
+   "meta" : {
+     "vtag": [
+       {"resource-id": "my-eu-netmap",
+        "tag": "3ee2cb7e8d63d9fab71b9b34cbf764436315542e"
+       }
+     ]
+   },
+   "network-map" : {
+     "south-france" : {
+       "ipv4" : [ "192.0.2.0/24", "198.51.100.0/25" ]
+     },
+     "germany" : {
+       "ipv4" : [ "192.0.3.0/24"]
+     }
+   }
+ }
 ]]></artwork>
             </figure>
           </section>
@@ -61,52 +63,51 @@
  Host: alto.example.com
  Accept: application/alto-cdnifcimap+json,application/alto-error+json
 ]]></artwork>
-            </figure> 
+            </figure>
         <figure align="left">
               <artwork align="left"><![CDATA[
-    HTTP/1.1 200 OK
-    Content-Length: 618
-    Content-Type: application/alto-cdnifcimap+json
+ HTTP/1.1 200 OK
+ Content-Length: 618
+ Content-Type: application/alto-cdnifcimap+json
 
-    {
-      "meta" : {
-        "dependent-vtags" : [
-          {
-            "resource-id": "my-eu-netmap",
-            "tag": "3ee2cb7e8d63d9fab71b9b34cbf764436315542e"
-          }
-        ]
-      },
-      "cdni-fci-map": {
-        "capabilities": [
-          { "capability-type": "FCI.DeliveryProtocol",
-            "capability-value": [
-              "http/1.1"
-            ]
-          },
-          { "capability-type": "FCI.DeliveryProtocol",
-            "capability-value": [
-            "values": [
-              "https/1.1"
-            ],
-            "footprints": [
-              { "footprint-type": "altonetworkmap",
-                "footprint-value": [
-                  "germany",
-                  "south-france"
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    }
+ {
+   "meta" : {
+     "dependent-vtags" : [
+       {
+         "resource-id": "my-eu-netmap",
+         "tag": "3ee2cb7e8d63d9fab71b9b34cbf764436315542e"
+       }
+     ]
+   },
+   "cdni-fci-map": {
+     "capabilities": [
+       { "capability-type": "FCI.DeliveryProtocol",
+         "capability-value": [
+           "http/1.1"
+         ]
+       },
+       { "capability-type": "FCI.DeliveryProtocol",
+         "capability-value": [
+           "https/1.1"
+         ],
+         "footprints": [
+           { "footprint-type": "altonetworkmap",
+             "footprint-value": [
+               "germany",
+               "south-france"
+             ]
+           }
+         ]
+       }
+     ]
+   }
+ }
 ]]></artwork>
-            </figure> 
+            </figure>
           </section>
           <section title="Incremental Updates Example">
             <t>
-              In this example, the ALTO client is interested in changes of "my-cdnifci-map-with-network-map-footprints". And we present two patches here. The first one of it is to change footprints of http/1.1 Delivery Protocol capability, and the second one is to remove "south-france" from the footprints of https/1.1 Delivery Protocol capability.
+              In this example, the ALTO client is interested in changes of "my-cdnifci-map-with-network-map-footprints". Considering two changes, the first one is to change footprints of http/1.1 Delivery Protocol capability, and the second one is to remove "south-france" from the footprints of https/1.1 delivery protocol capability.
             </t>
         <figure align="left">
               <artwork align="left"><![CDATA[
@@ -131,7 +132,7 @@
   data: "http://alto.example.com/updates/streams/3141592653590"}
 
   event: application/alto-cdnifcimap+json,my-fci-stream
-  data: { ... full CDNI FCI map ... } 
+  data: { ... full CDNI FCI map ... }
 
   event: application/merge-patch+json,my-fci-stream
   data: {
@@ -141,7 +142,7 @@
   data:        "resource-id": "my-eu-netmap",
   data:        "tag": "3ee2cb7e8d63d9fab71b9b34cbf764436315542e"
   data:      }
-  data:     ],  
+  data:     ],
   data:     "vtag": {
   data:       "tag": "dasdfa10ce8b059740bddsfasd8eb1d47853716"
   data:     }
@@ -154,10 +155,10 @@
   data:       ]
   data:     },
   data:     "footprints": [
-  data:       <Footprint objects that are different from 
+  data:       <Footprint objects that are different from
   data:        footprint objects in delivery-protocols http/1.1>
   data:     ]
-  data:   }     
+  data:   }
   data: }
 
   event: application/json-patch+json,my-fci-stream
@@ -173,7 +174,7 @@
   data:   }
   data: ]
                 ]]></artwork>
-            </figure>  
+            </figure>
           </section>
         </section>
     </section>
