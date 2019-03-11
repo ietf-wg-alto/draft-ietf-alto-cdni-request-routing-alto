@@ -92,24 +92,30 @@
           ]
         },
         "countrycode:us": {
-          "cdni-fci-capabilities": [{"capability-type":,
-                                         "capability-value":}]
+          "cdni-fci-capabilities": [
+            {"capability-type": "FCI.DeliveryProtocol",
+             "capability-value": {"delivery-protocols": ["http/1.1"]}}]
         },
         "ipv4:192.0.2.0/24": {
-          "cdni-fci-capabilities": [{"capability-type":,
-                                         "capability-value":}]
+          "cdni-fci-capabilities": [
+            {"capability-type": "FCI.DeliveryProtocol",
+             "capability-value": {"delivery-protocols": ["http/1.1"]}}]
         },
         "ipv4:198.51.100.0/24": {
-          "cdni-fci-capabilities": [{"capability-type":,
-                                         "capability-value":}]
+          "cdni-fci-capabilities": [
+            {"capability-type": "FCI.DeliveryProtocol",
+             "capability-value": {"delivery-protocols": ["http/1.1"]}}]
         },
         "ipv6:2001:db8::/32": {
-          "cdni-fci-capabilities": [{"capability-type":,
-                                         "capability-value":}]
+          "cdni-fci-capabilities": [
+            {"capability-type": "FCI.DeliveryProtocol",
+             "capability-value": {"delivery-protocols": ["http/1.1"]}}]
         },
         "asn:as64496": {
-          "cdni-fci-capabilities": [{"capability-type":,
-                                         "capability-value":}]
+          "cdni-fci-capabilities": [
+            {"capability-type": "FCI.DeliveryProtocol",
+             "capability-value": {"delivery-protocols": ["http/1.1",
+                                                         "https/1.1"]}}]
         }
       }
     }
@@ -155,14 +161,16 @@
          ]
        },
        "ipv4:192.0.2.0/24": {
-         "cdni-fci-capabilities": [{"capability-type":,
-                                        "capability-value":}],
+         "cdni-fci-capabilities": [
+           {"capability-type": "FCI.DeliveryProtocol",
+            "capability-value": {"delivery-protocols": ["http/1.1"]}}],
          "pid": "pid1"
        },
        "ipv6:2001:db8::/32": {
-         "cdni-fci-capabilities": [{"capability-type":,
-                                        "capability-value":}],
-          "pid": "pid3"
+         "cdni-fci-capabilities": [
+           {"capability-type": "FCI.DeliveryProtocol",
+            "capability-value": {"delivery-protocols": ["http/1.1"]}}],
+         "pid": "pid3"
        }
      }
    }
@@ -219,8 +227,10 @@
    data:     },
    data:     "ipv4:192.0.2.0/24":
    data:     {
-   data:       "cdni-fci-capabilities":
-   data:         [{"capability-type":,"capability-value":}]
+   data:     "cdni-fci-capabilities": [
+   data:       {"capability-type": "FCI.DeliveryProtocol",
+   data:        "capability-value": {
+   data:          "delivery-protocols": ["http/1.1"]}}]
    data:     }
    data:   }
    data: }

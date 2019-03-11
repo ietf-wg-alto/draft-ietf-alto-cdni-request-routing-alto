@@ -8,6 +8,7 @@
 <!ENTITY filteredcdnifcimap     PUBLIC '' "filteredcdnifcimap.xml">
 <!ENTITY unifiedpropertymap     PUBLIC '' "unifiedpropertymap.xml">
 <!ENTITY protocolerrors     PUBLIC '' "protocolerrors.xml">
+<!ENTITY knownissues     PUBLIC '' "knownissues.xml">
 <!ENTITY iana     PUBLIC '' "iana.xml">
 <!ENTITY securityconsiderations     PUBLIC '' "securityconsiderations.xml">
 <!ENTITY acknowledgments     PUBLIC '' "acknowledgments.xml">
@@ -21,7 +22,7 @@
 <?rfc compact="yes" ?>
 <?rfc subcompact="no" ?>
 <rfc category="std"
-     docName="draft-ietf-alto-cdni-request-routing-alto-04"
+     docName="draft-ietf-alto-cdni-request-routing-alto-05"
      ipr="trust200902">
   <front>
     <title abbrev="CDNI FCI using ALTO">Content Delivery Network Interconnection (CDNI) Request Routing:
@@ -121,6 +122,7 @@
     &filteredcdnifcimap;
     &unifiedpropertymap;
 <!--     &protocolerrors; -->
+    &knownissues;
     &iana;
     &securityconsiderations;
     &acknowledgments;

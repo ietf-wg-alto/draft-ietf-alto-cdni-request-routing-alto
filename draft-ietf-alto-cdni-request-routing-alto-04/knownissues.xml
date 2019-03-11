@@ -1,0 +1,26 @@
+<section anchor="knownissues" title="Design Decisions and Discussions">
+  <section title="Table versus Map">
+    <t>
+      A major design decision is if the Map service is suitable to provide the CDNI FCI.
+      Current ALTO protocol uses Map service to provide network information, such as Network Maps, Cost Maps and Property Maps. Their common idea is to use Map-like data structure to represent information. It is different from the data structure of the CDNI FCI designed in <xref target="RFC8008"/>, which suggests to use a set of BaseAdvertisementObjects to represent the CDNI FCI information, which actually is Table-like data structure. Both Table and Map can be represented as a set of data entries. But the difference of them is whether there is a primary key to index each data entry.
+    </t>
+    <t>
+      The main advantage of Map-like data design is to simplify the filter-based query. According to the discussion in <xref target="RFC8008"/> about benefits and concerns of advertisement-based design and query-based design, filter-based query can make the CDNI FCI scalable when the dCDN has thousands or tens of thousands of FCI objects.
+      To transfer Table-like data to Map-like data, introducing the primary key is necessary. This document already defines two different solution to introduce the primary key: (1) set unique identifiers for CDNI capability objects; (2) set unique identifiers for CDNI footprint objects.
+    </t>
+    <t>
+      But the major concern of the Map-like data design is the redundancy. In Map-like data design, whatever we choose CDNI capability objects or footprint objects as the key, each data entry can only represent the 1-N relation. But there are lots of CDNI FCI objects have the N-N relation.
+    </t>
+  </section>
+  <section title="Filter-based Query versus Test-based Query">
+    <t>
+      Another design decision is the query approach. ALTO is a query-based protocol. So using ALTO, uCDN should send a query request to the dCDN to pull the CDNI FCI proactively. To make the query efficiently instead of pulling the whole FCI data base every time, query approach design is very important.
+    </t>
+    <t>
+      This document only defines the filter-based query. A uCDN can specify a set of FCI capability objects or footprint objects to only query the information including them. But there are two limitations: (1) uCDN cannot filter both of them simultaneously; (2) cannot specify complex filters.
+    </t>
+    <t>
+      One example is that uCDN wants to filter all CDNI FCI objects whose capabilities are in range C1 and footprints are in range F1, or capabilities are in range C2 and footprints are in range F2.
+    </t>
+  </section>
+</section>
