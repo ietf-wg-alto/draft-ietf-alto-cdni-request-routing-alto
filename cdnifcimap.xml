@@ -223,14 +223,14 @@ EXAMPLE 2
           ],
           "capabilities" : {
             "incremental-change-media-types" : {
-              "my-default-network-map" : "application/json-patch+json",
-              "my-eu-netmap" : "application/json-patch+json",
-              "my-default-cdnifci-map" :
-              "application/merge-patch+json,application/json-patch+json",
-              "my-filtered-cdnifci-map" :
-              "application/merge-patch+jso,application/json-patch+json",
-              "my-cdnifci-map-with-network-map-footprints" :
-              "application/merge-patch+json,application/json-patch+json"
+             "my-default-network-map" : "application/json-patch+json",
+             "my-eu-netmap" : "application/json-patch+json",
+             "my-default-cdnifci-map" :
+             "application/merge-patch+json,application/json-patch+json",
+             "my-filtered-cdnifci-map" :
+             "application/merge-patch+jso,application/json-patch+json",
+             "my-cdnifci-map-with-network-map-footprints" :
+             "application/merge-patch+json,application/json-patch+json"
             }
           }
         },
@@ -243,10 +243,10 @@ EXAMPLE 2
           ],
           "capabilities" : {
             "incremental-change-media-types": {
-              "cdnifci-property-map" :
-              "application/merge-patch+json,application/json-patch+json",
-              "filtered-cdnifci-property-map":
-              "application/merge-patch+json,application/json-patch+json"
+             "cdnifci-property-map" :
+             "application/merge-patch+json,application/json-patch+json",
+             "filtered-cdnifci-property-map":
+             "application/merge-patch+json,application/json-patch+json"
             }
           }
         }
@@ -327,7 +327,7 @@ EXAMPLE 2
     				A benefit of using ALTO to provide CDNI FCI maps is that such maps can be updated using ALTO incremental updates. Below is an example that also shows the benefit of having both JSON merge patch and JSON patch to encode updates.
           </t>
           <t>
-          At first, an ALTO client requests the ALTO server updates for "my-default-cdnifci-map", and the ALTO server returns the "control-uri" followed by the full CDNI FCI map. Then when there is a huge change in footprint objects in delivery-protocol http/1.1, the ALTO server uses JSON merge patch to encode the change and sends it to the ALTO client. Later on, the ALTO server notifies the ALTO client that "ipv4:192.0.2.0/24" is added into the footprints in delivery-protocol http/1.1 by sending the change encoded by JSON patch to the ALTO client.
+          At first, an ALTO client requests updates for "my-default-cdnifci-map", and the ALTO server returns the "control-uri" followed by the full CDNI FCI map. Then when there is a change in the delivery-protocols in that `http/2` is removed (from http/1.1 and http/2 to only http/1.1) due to maintenance of the http/2 clusters, the ALTO server uses JSON merge patch to encode the change and pushes the change to the ALTO client. Later on, the ALTO server notifies the ALTO client that "ipv4:192.0.2.0/24" is added into the footprint for delivery-protocol http/1.1 by sending the change encoded by JSON patch to the ALTO client.
     			</t>
         <figure align="left">
               <artwork align="left"><![CDATA[
@@ -362,16 +362,11 @@ EXAMPLE 2
   data:     }
   data:   },
   data:   {
-  data:     "capability-type": "FCI.DeliveryProtocol",
   data:     "capability-value": {
   data:       "delivery-protocols": [
   data:         "http/1.1"
   data:       ]
   data:     },
-  data:     "footprints": [
-  data:       <Footprint objects that are different from
-  data:        footprint objects in delivery-protocols http/1.1>
-  data:     ]
   data:   }
   data: }
 

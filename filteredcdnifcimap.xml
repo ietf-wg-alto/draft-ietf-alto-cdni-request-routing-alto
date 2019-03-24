@@ -54,16 +54,16 @@
         The response MUST indicate an error, using ALTO protocol error handling specified in Section 8.5 of the ALTO protocol  <xref target="RFC7285" pageno="false" format="default"/>, if the request is invalid.
       </t>
       <t>
-        Specifically, a filtered CDNI FCI map request can be invalid as follows:
+        Specifically, a filtered CDNI FCI map request is invalid if:
         <list style="symbols">
-          <t>The value of "capability-type" is null;</t>
-          <t>The value of "capability-value" is null;</t>
-          <t>The value of "capability-value" is inconsistent with "capability-type".</t>
+          <t>the value of "capability-type" is null;</t>
+          <t>the value of "capability-value" is null;</t>
+          <t>the value of "capability-value" is inconsistent with "capability-type".</t>
         </list>
-        When the request is invalid, the ALTO server MUST return an "E_INVALID_FIELD_VALUE" error defined in Section 8.5.2 of <xref target="RFC7285" pageno="false" format="default"/>, and the "value" field of the error message SHOULD indicate this CDNI FCI capability.
+        When a request is invalid, the ALTO server MUST return an "E_INVALID_FIELD_VALUE" error defined in Section 8.5.2 of <xref target="RFC7285" pageno="false" format="default"/>, and the "value" field of the error message SHOULD indicate this CDNI FCI capability.
       </t>
     	<t>
-        The ALTO server return a filtered CDNI FCI map for a valid request.
+        The ALTO server returns a filtered CDNI FCI map for a valid request.
     		The format of a filtered CDNI FCI map is the same as an unfiltered CDNI FCI map. See <xref target="cdnifcimapencoding"/> for the format.
     	</t>
     	<t>
