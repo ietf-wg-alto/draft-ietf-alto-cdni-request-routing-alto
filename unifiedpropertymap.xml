@@ -24,9 +24,9 @@
             </t>
   		    <section title="ASN Domain">
   			    <t>
-  			        This document specifies a new domain in addition to the ones in <xref target="I-D.ietf-alto-unified-props-new"/>. ASN is the abbreviation of Autonomous System Number.
+  			        This document specifies a new entity domain type in addition to the ones in <xref target="I-D.ietf-alto-unified-props-new"/>. ASN is the abbreviation of Autonomous System Number.
   		        </t>
-  		        <section title="Domain Name">
+  		        <section title="Entity Domain Type">
   		    	    <t>
   		    		    asn
   		    	    </t>
@@ -44,9 +44,9 @@
             </section>
             <section title="COUNTRYCODE Domain">
         	    <t>
-        		    This document specifies a new domain in addition to the ones in <xref target="I-D.ietf-alto-unified-props-new"/>.
+        		    This document specifies a new entity domain type in addition to the ones in <xref target="I-D.ietf-alto-unified-props-new"/>.
         	    </t>
-        	    <section title="Domain Name">
+        	    <section title="Entity Domain Type">
         		    <t>
         			    countrycode
         		    </t>
@@ -87,32 +87,32 @@
       "property-map": {
         "meta": {
           "dependent-vtags": [
-            {"resource-id": "my-default-cdnifci-map",
+            {"resource-id": "my-default-cdnifci",
              "tag": "7915dc0290c2705481c491a2b4ffbec482b3cf62"}
           ]
         },
         "countrycode:us": {
-          "cdni-fci-capabilities": [
+          "my-default-cdnifci.cdni-fci-capabilities": [
             {"capability-type": "FCI.DeliveryProtocol",
              "capability-value": {"delivery-protocols": ["http/1.1"]}}]
         },
         "ipv4:192.0.2.0/24": {
-          "cdni-fci-capabilities": [
+          "my-default-cdnifci.cdni-fci-capabilities": [
             {"capability-type": "FCI.DeliveryProtocol",
              "capability-value": {"delivery-protocols": ["http/1.1"]}}]
         },
         "ipv4:198.51.100.0/24": {
-          "cdni-fci-capabilities": [
+          "my-default-cdnifci.cdni-fci-capabilities": [
             {"capability-type": "FCI.DeliveryProtocol",
              "capability-value": {"delivery-protocols": ["http/1.1"]}}]
         },
         "ipv6:2001:db8::/32": {
-          "cdni-fci-capabilities": [
+          "my-default-cdnifci.cdni-fci-capabilities": [
             {"capability-type": "FCI.DeliveryProtocol",
              "capability-value": {"delivery-protocols": ["http/1.1"]}}]
         },
         "asn:as64496": {
-          "cdni-fci-capabilities": [
+          "my-default-cdnifci.cdni-fci-capabilities": [
             {"capability-type": "FCI.DeliveryProtocol",
              "capability-value": {"delivery-protocols": ["http/1.1",
                                                          "https/1.1"]}}]
@@ -139,7 +139,8 @@
        "ipv4:192.0.2.0/24",
        "ipv6:2001:db8::/32"
      ],
-     "properties": [ "cdni-fci-capabilities", "pid" ]
+     "properties": [ "my-default-cdnifci.cdni-fci-capabilities",
+                     "my-default-networkmap.pid" ]
    }
 ]]></artwork>
             </figure>
@@ -154,23 +155,23 @@
      "property-map": {
        "meta": {
          "dependent-vtags": [
-            {"resource-id": "my-default-cdnifci-map",
+            {"resource-id": "my-default-cdnifci",
               "tag": "7915dc0290c2705481c491a2b4ffbec482b3cf62"},
             {"resource-id": "my-default-networkmap",
               "tag": "7915dc0290c2705481c491a2b4ffbec482b3cf63"}
          ]
        },
        "ipv4:192.0.2.0/24": {
-         "cdni-fci-capabilities": [
+         "my-default-cdnifci.cdni-fci-capabilities": [
            {"capability-type": "FCI.DeliveryProtocol",
             "capability-value": {"delivery-protocols": ["http/1.1"]}}],
-         "pid": "pid1"
+         "my-default-networkmap.pid": "pid1"
        },
        "ipv6:2001:db8::/32": {
-         "cdni-fci-capabilities": [
+         "my-default-cdnifci.cdni-fci-capabilities": [
            {"capability-type": "FCI.DeliveryProtocol",
             "capability-value": {"delivery-protocols": ["http/1.1"]}}],
-         "pid": "pid3"
+         "my-default-networkmap.pid": "pid3"
        }
      }
    }
@@ -179,7 +180,7 @@
         	</section>
         	<section title="Incremental Updates Example">
             <t>
-              In this example, here is a client want to request updates for the properties "cdni-fci-capabilities" and "pid" for two footprints "ipv4:192.0.2.0/24" and "ipv6:2001:db8::/32".
+              In this example, here is a client want to request updates for the properties "cdni-fci-capabilities" and "pid" for two footprints "ipv4:192.0.2.0/24" and "countrycode:fr".
             </t>
         <figure align="left">
               <artwork align="left"><![CDATA[
@@ -193,7 +194,8 @@
      "property-map-including-capability-property": {
        "resource-id": "filtered-cdnifci-property-map",
          "input": {
-           "properties": ["cdni-fci-capabilities", "pid"],
+           "properties": [ "my-default-cdnifci.cdni-fci-capabilities",
+                           "my-default-networkmap.pid" ],
            "entities": [
              "ipv4:192.0.2.0/24",
              "ipv6:2001:db8::/32"
@@ -210,7 +212,7 @@
    data: {"control-uri":
    data: "http://alto.example.com/updates/streams/1414213562373"}
 
-   event: application/alto-cdnifcimap+json,my-fci-stream
+   event: application/alto-cdnifci+json,my-fci-stream
    data: { ... full filtered unified property map ... }
 
    event: application/merge-patch+json,my-fci-stream
@@ -219,7 +221,7 @@
    data:   {
    data:     "meta": {
    data:       "dependent-vtags": [
-   data:         {"resource-id": "my-default-cdnifci-map",
+   data:         {"resource-id": "my-default-cdnifci",
    data:          "tag": "2beeac8ee23c3dd1e98a73fd30df80ece9fa5627"},
    data:         {"resource-id": "my-default-networkmap",
    data:          "tag": "7915dc0290c2705481c491a2b4ffbec482b3cf63"}
@@ -227,7 +229,7 @@
    data:     },
    data:     "ipv4:192.0.2.0/24":
    data:     {
-   data:     "cdni-fci-capabilities": [
+   data:     "my-default-cdnifci.cdni-fci-capabilities": [
    data:       {"capability-type": "FCI.DeliveryProtocol",
    data:        "capability-value": {
    data:          "delivery-protocols": ["http/1.1"]}}]
@@ -239,12 +241,13 @@
    data: {[
    data: {
    data:   { "op": "replace",
-   data:       "path": "/meta/dependent-vtags/0/tag",
-   data:       "value": "61b23185a50dc7b334577507e8f00ff8c3b409e4"
+   data:     "path": "/meta/dependent-vtags/0/tag",
+   data:     "value": "61b23185a50dc7b334577507e8f00ff8c3b409e4"
    data:   },
    data:   { "op": "replace",
-   data:       "path": "/property-map/ipv4:192.0.2.0/124/",
-   data:       "value": "pid5"
+   data:     "path":
+   data:     "/property-map/countrycode:fr/my-default-networkmap.pid",
+   data:     "value": "pid5"
    data:   }
    data: }
    data: ]}

@@ -22,7 +22,7 @@
 <?rfc compact="yes" ?>
 <?rfc subcompact="no" ?>
 <rfc category="std"
-     docName="draft-ietf-alto-cdni-request-routing-alto-05"
+     docName="draft-ietf-alto-cdni-request-routing-alto-06"
      ipr="trust200902">
   <front>
     <title abbrev="CDNI FCI using ALTO">Content Delivery Network Interconnection (CDNI) Request Routing:
@@ -137,7 +137,7 @@
       <!-- <?rfc include="reference.RFC.6770.xml" ?> -->
       <?rfc include="reference.RFC.6793.xml" ?>
       <?rfc include="reference.RFC.7285.xml" ?>
-      <?rfc include="reference.RFC.7336.xml" ?>
+      <!-- <?rfc include="reference.RFC.7336.xml" ?> -->
       <!-- <?rfc include="reference.RFC.7337.xml" ?> -->
       <?rfc include="reference.RFC.8006.xml" ?>
       <?rfc include="reference.RFC.8008.xml" ?>
@@ -176,11 +176,11 @@
 
       <!-- <?rfc include="reference.I-D.marocco-alto-next"?> -->
       <!-- <?rfc include="reference.I-D.marocco-alto-ws"?> -->
-      <?rfc include="reference.I-D.draft-ietf-alto-path-vector-04.xml"?>
-      <?rfc include="reference.I-D.draft-ietf-alto-incr-update-sse-07.xml"?>
+      <?rfc include="reference.I-D.draft-ietf-alto-path-vector-05.xml"?>
+      <?rfc include="reference.I-D.draft-ietf-alto-incr-update-sse-16.xml"?>
       <?rfc include="reference.I-D.draft-jenkins-alto-cdn-use-cases-03.xml"?>
 <!--       <?rfc include="reference.I-D.draft-ma-cdni-capabilities-09.xml"?> -->
-      <?rfc include="reference.I-D.draft-ietf-alto-unified-props-new-00.xml"?>
+      <?rfc include="reference.I-D.draft-ietf-alto-unified-props-new-07.xml"?>
       <!-- <?rfc include="reference.I-D.liu-cdni-cost"?> -->
       <!-- <?rfc include="reference.I-D.ietf-cdni-metadata"?>  -->
       <!-- <?rfc include="reference.I-D.ietf-cdni-logging"?> -->

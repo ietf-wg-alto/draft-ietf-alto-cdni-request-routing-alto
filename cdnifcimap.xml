@@ -1,19 +1,19 @@
     <section anchor="cdnifcimap" title="CDNI FCI Map">
     	<t>
-          The ALTO protocol is based on an ALTO Information Service Framework which consists of several services, where all ALTO services are "provided through a common transport protocol, messaging structure and encoding, and transaction model" <xref target="RFC7285" pageno="false" format="default"/>. The ALTO protocol specification <xref target="RFC7285" pageno="false" format="default"/> defines several such services, e.g. the ALTO map service.
+          The ALTO protocol is based on an ALTO Information Service Framework which consists of several services, where all ALTO services are "provided through a common transport protocol, messaging structure and encoding, and transaction model" <xref target="RFC7285" pageno="false" format="default"/>. The ALTO protocol specification <xref target="RFC7285" pageno="false" format="default"/> defines several such services, e.g., the ALTO map service.
       </t>
 
       <t>
-          This document defines a new ALTO Map Service called "CDNI FCI Map Service" which conveys JSON objects of media type "application/alto-cdnifcimap+json". These JSON objects are used to transport BaseAdvertisementObject objects defined in <xref target="RFC8008"/>; this document specifies how to transport such BaseAdvertisementObject objects via the ALTO protocol with the ALTO "CDNI FCI Map Service". Given that the "CDNI FCI Map Service" is very similar in structure to the two already defined map services (network maps and cost maps), the specification of CDNI FCI Map below uses the same specification structure for Cost Map specification in Section 11.2.3 of <xref target="RFC7285" pageno="false" format="default"/> when specifying cost maps.
+          This document defines a new ALTO Service called "CDNI FCI Service" which conveys JSON objects of media type "application/alto-cdnifci+json". These JSON objects are used to transport BaseAdvertisementObject objects defined in <xref target="RFC8008"/>; this document specifies how to transport such BaseAdvertisementObject objects via the ALTO protocol with the ALTO "CDNI FCI Service". Similar to other ALTO services, this document defines the ALTO information resource for the "CDNI FCI Service" as follows.
         </t>
     	<section title="Media Type" anchor="cdnifcimapmediatype">
     		<t>
-    		    The media type of the CDNI FCI Map is "application/alto-cdnifcimap+json".
+    		    The media type of the CDNI FCI resource is "application/alto-cdnifcimap+json".
     		</t>
     	</section>
     	<section title="HTTP Method">
     		<t>
-    		    A CDNI FCI map resource is requested using the HTTP GET method.
+    		    A CDNI FCI resource is requested using the HTTP GET method.
     		</t>
     	</section>
     	<section title="Accept Input Parameters">
@@ -28,32 +28,32 @@
     	</section>
     	<section title="Uses">
     		<t>
-    		    The resource ID of the resource based on which the CDNI FCI map will be defined. For example, if a CDNI FCI map depends on a network map, the resource ID of the network map MUST be included in "uses" field. Please see <xref target="cdnifcinetworkmap"/> for details. If the CDNI FCI map does not depend on any other resources, "uses" field MUST NOT appear.
+    		  The "uses" field SHOULD NOT appear unless the CDNI FCI resource depends on some ALTO information resources. If the CDNI FCI resource has some dependent resources, the resource IDs of its dependent resources MUST be included into the "uses" field. This document only defines one potential dependent resource for the CDNI FCI resource. See <xref target="cdnifcinetworkmap"/> for details of when and how to use it. The future documents may extend the CDNI FCI resource and allow other dependent resources.
     		</t>
     	</section>
     	<section title="Response" anchor="cdnifcimapencoding">
     		<t>
-    			The "meta" field of a CDNI FCI map response MUST include the "vtag" field defined in Section 10.3 of <xref target="RFC7285" pageno="false" format="default"/>. This field provides the version of the retrieved CDNI FCI map.</t>
+    			The "meta" field of a CDNI FCI response MUST include the "vtag" field defined in Section 10.3 of <xref target="RFC7285" pageno="false" format="default"/>. This field provides the version of the retrieved CDNI FCI map.</t>
 
         <t>
-          If a CDNI FCI map response depends on a resource such as a network map, it MUST include the "dependent-vtags" field, whose value is an array to indicate the version tags of the resources used, where each resource is specified in "uses" of the IRD. The current defined dependent resource is only network map, and the usage of it is described in <xref target="cdnifcinetworkmap"/>.
+          If a CDNI FCI response depends on an ALTO information resource, it MUST include the "dependent-vtags" field, whose value is an array to indicate the version tags of the resources used, where each resource is specified in "uses" of its IRD entry.
         </t>
         <t>
-    			The data component of an ALTO CDNI FCI map response is named "cdni-fci-map", which is a JSON object of type CDNIFCIMapData:
+    			The data component of an ALTO CDNI FCI response is named "cdni-fci", which is a JSON object of type CDNIFCIData:
     		</t>
         <figure align="left">
               <artwork align="left"><![CDATA[
     object {
-        CDNIFCIMapData cdni-fci-map;
-    } InfoResourceCDNIFCIMap : ResponseEntityBase;
+        CDNIFCIData cdni-fci-map;
+    } InfoResourceCDNIFCI : ResponseEntityBase;
 
     object {
         BaseAdvertisementObject capabilities<1..*>;
-    } CDNIFCIMapData;
+    } CDNIFCIData;
                 ]]></artwork>
         </figure>
             <t>
-              Specifically, a CDNIFCIMapData object is a JSON object that includes only one property named "capabilities", whose value is an array of BaseAdvertisementObject objects.
+              Specifically, a CDNIFCIData object is a JSON object that includes only one property named "capabilities", whose value is an array of BaseAdvertisementObject objects.
             </t>
 
             <t>
@@ -138,7 +138,7 @@ EXAMPLE 2
 ]]></artwork>
             </figure>
 
-                Since such optimizations are not necessary for the basic interconnection of CDNs, the specifics of such mechanisms are outside the scope of this document.
+                Since such optimizations are not required for the basic interconnection of CDNs, the specifics of such mechanisms are outside the scope of this document.
             </t>
 <!--             <t>
             	Capability objects of a given capability type with identical footprint restrictions MUST be combined into a single capability object. And footprints with the same capability type and capability value MUST be combined into a single capability object.
@@ -153,10 +153,10 @@ EXAMPLE 2
     	<section title="Examples">
     		<section title="IRD Example" anchor="IRDexample">
     			<t>
-    				Below is the information resource directory (IRD) of a simple, example ALTO server. The server provides both base ALTO information resources (e.g., network maps) and CDNI FCI information resources (e.g., CDNI FCI map), demonstrating a single, integrated environment.
+    				Below is the information resource directory (IRD) of a simple, example ALTO server. The server provides both base ALTO information resources (e.g., network maps) and CDNI FCI related information resources (e.g., CDNI FCI resource), demonstrating a single, integrated environment.
           </t>
           <t>
-            Specifically, the IRD announces two network maps, one CDNI FCI map without dependency, one CDNI FCI map depending on a network map, one filtered CDNI FCI map to be defined in <xref target="filteredcdnifcimap"/>, one unified property map including "cdni-fci-capabilities" as its entities' property, one filtered unified property map including "cdni-fci-capabilities" and "pid" as its entities' properties, and two update stream services (one for updating CDNI FCI maps, and the other for updating property maps).
+            Specifically, the IRD announces two network maps, one CDNI FCI resource without dependency, one CDNI FCI resource depending on a network map, one filtered CDNI FCI resource to be defined in <xref target="filteredcdnifcimap"/>, one unified property map including "cdni-fci-capabilities" as its entity property, one filtered unified property map including "cdni-fci-capabilities" and "pid" as its entity properties, and two update stream services (one for updating CDNI FCI resources, and the other for updating property maps).
     			</t>
 		    <figure align="left">
               <artwork align="left"><![CDATA[
@@ -178,58 +178,72 @@ EXAMPLE 2
           "uri" : "http://alto.example.com/myeunetmap",
           "media-type" : "application/alto-networkmap+json"
         },
-        "my-default-cdnifci-map": {
-          "uri" : "http://alto.example.com/cdnifcimap",
-          "media-type": "application/alto-cdnifcimap+json"
+        "my-default-cdnifci": {
+          "uri" : "http://alto.example.com/cdnifci",
+          "media-type": "application/alto-cdnifci+json"
         },
-        "my-filtered-cdnifci-map" : {
-          "uri" : "http://alto.example.com/cdnifcimap/filtered",
-          "media-type" : "application/alto-cdnifcimap+json",
-          "accepts" : "application/alto-cdnifcimapfilter+json",
-          "uses" : [ "my-default-cdnifci-map" ]
+        "my-filtered-cdnifci" : {
+          "uri" : "http://alto.example.com/cdnifci/filtered",
+          "media-type" : "application/alto-cdnifci+json",
+          "accepts" : "application/alto-cdnifcifilter+json",
+          "uses" : [ "my-default-cdnifci" ]
         },
-        "my-cdnifci-map-with-network-map-footprints": {
-          "uri" : "http://alto.example.com/networkcdnifcimap",
-          "media-type" : "application/alto-cdnifcimap+json",
+        "my-cdnifci-with-pid-footprints": {
+          "uri" : "http://alto.example.com/networkcdnifci",
+          "media-type" : "application/alto-cdnifci+json",
           "uses" : [ "my-eu-netmap" ]
         },
         "cdnifci-property-map" : {
           "uri" : "http://alto.example.com/propmap/full/cdnifci",
           "media-type" : "application/alto-propmap+json",
+          "uses": [ "my-default-cdni" ],
           "capabilities" : {
-            "domain-types" : [ "ipv4", "ipv6", "coutrycode", "asn" ],
-            "prop-types" : [ "cdni-fci-capabilities" ]
+            "mappings": {
+              "ipv4": [ "my-default-cdni.cdni-fci-capabilities" ],
+              "ipv6": [ "my-default-cdni.cdni-fci-capabilities" ],
+              "countrycode": [
+                "my-default-cdni.cdni-fci-capabilities" ],
+              "asn": [ "my-default-cdni.cdni-fci-capabilities" ],
+            }
           }
         },
         "filtered-cdnifci-property-map" : {
           "uri" : "http://alto.example.com/propmap/lookup/cdnifci-pid",
           "media-type" : "application/alto-propmap+json",
           "accepts" : "application/alto-propmapparams+json",
+          "uses": [ "my-default-cdni", "my-default-network-map" ],
           "capabilities" : {
-            "domain-types" : [ "ipv4", "ipv6", "coutrycode", "asn" ],
-            "prop-types" : [ "cdni-fci-capabilities", "pid" ]
-           }
+            "mappings": {
+              "ipv4": [ "my-default-cdni.cdni-fci-capabilities",
+                        "my-default-network-map.pid" ],
+              "ipv6": [ "my-default-cdni.cdni-fci-capabilities",
+                        "my-default-network-map.pid" ],
+              "countrycode": [
+                "my-default-cdni.cdni-fci-capabilities" ],
+              "asn": [ "my-default-cdni.cdni-fci-capabilities" ],
+            }
+          }
         },
-        "update-my-cdni-fci-maps" : {
-          "uri": "http:///alto.example.com/updates/cdnifcimaps",
+        "update-my-cdni-fci" : {
+          "uri": "http:///alto.example.com/updates/cdnifci",
           "media-type" : "text/event-stream",
           "accepts" : "application/alto-updatestreamparams+json",
           "uses" : [
             "my-default-network-map",
             "my-eu-netmap",
-            "my-default-cdnifci-map",
-            "my-filtered-cdnifci-map"
-            "my-cdnifci-map-with-network-map-footprints"
+            "my-default-cdnifci",
+            "my-filtered-cdnifci"
+            "my-cdnifci-with-pid-footprints"
           ],
           "capabilities" : {
             "incremental-change-media-types" : {
              "my-default-network-map" : "application/json-patch+json",
              "my-eu-netmap" : "application/json-patch+json",
-             "my-default-cdnifci-map" :
+             "my-default-cdnifci" :
              "application/merge-patch+json,application/json-patch+json",
-             "my-filtered-cdnifci-map" :
+             "my-filtered-cdnifci" :
              "application/merge-patch+jso,application/json-patch+json",
-             "my-cdnifci-map-with-network-map-footprints" :
+             "my-cdnifci-with-pid-footprints" :
              "application/merge-patch+json,application/json-patch+json"
             }
           }
@@ -257,14 +271,14 @@ EXAMPLE 2
     		</section>
     		<section title="Basic Example" anchor="fullcdnifcimap">
           <t>
-            In this example, we demonstrate a simple CDNI FCI map; this map does not depend on other resources. There are three BaseAdvertisementObjects in this map and these objects' capabilities are http/1.1 delivery protocol, [http/1.1, https/1.1] delivery protocol and https/1.1 acquisition protocol respectively.
+            In this example, we demonstrate a simple CDNI FCI resource; this resource does not depend on other resources. There are three BaseAdvertisementObjects in this map and these objects' capabilities are http/1.1 delivery protocol, [http/1.1, https/1.1] delivery protocol and https/1.1 acquisition protocol respectively.
           </t>
 		    <figure align="left">
               <artwork align="left"><![CDATA[
-  GET /cdnifcimap HTTP/1.1
+  GET /cdnifci HTTP/1.1
   Host: alto.example.com
-  Accept: application/alto-cdnifcimap+json
-  Accept: application/alto-error+json
+  Accept: application/alto-cdnifci+json,
+          application/alto-error+json
 ]]></artwork>
             </figure>
 
@@ -272,15 +286,15 @@ EXAMPLE 2
               <artwork align="left"><![CDATA[
   HTTP/1.1 200 OK
   Content-Length: XXX
-  Content-Type: application/alto-cdnifcimap+json
+  Content-Type: application/alto-cdnifci+json
   {
     "meta" : {
       "vtag": {
-        "resource-id": "my-default-cdnifci-map",
+        "resource-id": "my-default-cdnifci",
         "tag": "da65eca2eb7a10ce8b059740b0b2e3f8eb1d4785"
       }
     },
-    "cdni-fci-map": {
+    "cdni-fci": {
       "capabilities": [
         {
           "capability-type": "FCI.DeliveryProtocol",
@@ -327,11 +341,11 @@ EXAMPLE 2
     				A benefit of using ALTO to provide CDNI FCI maps is that such maps can be updated using ALTO incremental updates. Below is an example that also shows the benefit of having both JSON merge patch and JSON patch to encode updates.
           </t>
           <t>
-          At first, an ALTO client requests updates for "my-default-cdnifci-map", and the ALTO server returns the "control-uri" followed by the full CDNI FCI map. Then when there is a change in the delivery-protocols in that `http/2` is removed (from http/1.1 and http/2 to only http/1.1) due to maintenance of the http/2 clusters, the ALTO server uses JSON merge patch to encode the change and pushes the change to the ALTO client. Later on, the ALTO server notifies the ALTO client that "ipv4:192.0.2.0/24" is added into the footprint for delivery-protocol http/1.1 by sending the change encoded by JSON patch to the ALTO client.
+          At first, an ALTO client requests updates for "my-default-cdnifci", and the ALTO server returns the "control-uri" followed by the full CDNI FCI response. Then when there is a change in the delivery-protocols in that `http/2` is removed (from http/1.1 and http/2 to only http/1.1) due to maintenance of the http/2 clusters, the ALTO server uses JSON merge patch to encode the change and pushes the change to the ALTO client. Later on, the ALTO server notifies the ALTO client that "ipv4:192.0.2.0/24" is added into the footprint for delivery-protocol http/1.1 by sending the change encoded by JSON patch to the ALTO client.
     			</t>
         <figure align="left">
               <artwork align="left"><![CDATA[
-  POST /updates/cdnifcimaps HTTP/1.1
+  POST /updates/cdnifci HTTP/1.1
   Host: alto.example.com
   Accept: text/event-stream,application/alto-error+json
   Content-Type: application/alto-updatestreamparams+json
@@ -339,7 +353,7 @@ EXAMPLE 2
 
   { "add": {
       "my-cdnifci-stream": {
-          "resource-id": "my-default-cdnifci-map"
+          "resource-id": "my-default-cdnifci"
       }
   }
 
@@ -351,26 +365,34 @@ EXAMPLE 2
   data: {"control-uri":
   data: "http://alto.example.com/updates/streams/3141592653589"}
 
-  event: application/alto-cdnifcimap+json,my-default-cdnifci-map
+  event: application/alto-cdnifci+json,my-default-cdnifci
   data: { ... full CDNI FCI map ... }
 
-  event: application/merge-patch+json,my-default-cdnifci-map
+  event: application/merge-patch+json,my-default-cdnifci
   data: {
   data:   "meta": {
   data:     "vtag": {
   data:       "tag": "dasdfa10ce8b059740bddsfasd8eb1d47853716"
   data:     }
   data:   },
-  data:   {
-  data:     "capability-value": {
-  data:       "delivery-protocols": [
-  data:         "http/1.1"
-  data:       ]
-  data:     },
+  data:   "cdni-fci": {
+  data:     "capabilities": [
+  data:       {
+  data:         "capability-type": "FCI.DeliveryProtocol",
+  data:         "capability-value": {
+  data:           "delivery-protocols": [
+  data:             "http/1.1"
+  data:           ]
+  data:         },
+  data:         "footprints": [
+  data:           <Footprint objects in only http/1.1>
+  data:         ]
+  data:       }
+  data:     ]
   data:   }
   data: }
 
-  event: application/json-patch+json,my-default-cdnifci-map
+  event: application/json-patch+json,my-default-cdnifci
   data: [
   data:   {
   data:     "op": "replace",
@@ -378,7 +400,7 @@ EXAMPLE 2
   data:     "value": "a10ce8b059740b0b2e3f8eb1d4785acd42231bfe"
   data:   },
   data:   { "op": "add",
-  data:     "path": "/cdni-fci-map/capabilities/0/footprints/-",
+  data:     "path": "/cdni-fci/capabilities/0/footprints/-",
   data:     "value": "ipv4:192.0.2.0/24"
   data:   }
   data: ]
