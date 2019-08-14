@@ -135,7 +135,7 @@
     &filteredcdnifcimap;
     &unifiedpropertymap;
 <!--     &protocolerrors; -->
-    &knownissues;
+    <!-- &knownissues; -->
     &iana;
     &securityconsiderations;
     &acknowledgments;

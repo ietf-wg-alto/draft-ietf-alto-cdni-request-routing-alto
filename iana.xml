@@ -13,7 +13,7 @@
             </ttcol>
 
             <c>
-              altonetworkmap
+              altopid
             </c>
             <c>
               A list of PID-names
@@ -27,14 +27,14 @@
       </t>
       </section>
 
-      <section title="ALTO Entity Domain Registry">
+      <section title="ALTO Entity Domain Type Registry">
     <t>
-      As proposed in Section 9.2 of <xref target="I-D.ietf-alto-unified-props-new"/>,
-      "ALTO Entity Domain Registry" is requested. Besides, two
-      new domains are to be registered, listed in
+      As proposed in Section 11.2 of <xref target="I-D.ietf-alto-unified-props-new"/>,
+      "ALTO Entity Domain Type Registry" is requested. Besides, two
+      new entity domain types are to be registered, listed in
       <xref target="tbl:entity-domain"/>.
     </t>
-    <texttable anchor="tbl:entity-domain" align="center" title="ALTO Entity Domain">
+    <texttable anchor="tbl:entity-domain" align="center" title="ALTO Entity Domain Types">
 
             <ttcol align="left" width="16%">
               Identifier
@@ -70,11 +70,11 @@
 
       </section>
 
-      <section title="ALTO CDNI FCI Property Type Registry">
+      <section title="ALTO Entity Property Type Registry">
     <t>
-      The "ALTO CDNI FCI Property Type
-      Registry" is required by the ALTO Entity Domain
-      "asn", "countrycode", "pid", "ipv4" and "ipv6", listed in
+      As proposed in Section 11.3 of <xref target="I-D.ietf-alto-unified-props-new"/>,
+      "ALTO Entity Property Type Registry" is required. Besides, a new
+      entity property type is to be registred, listed in
       <xref target="tbl:prop-type-register"/>.
     </t>
     <texttable anchor="tbl:prop-type-register" align="center" title="ALTO CDNI FCI Property Type">
