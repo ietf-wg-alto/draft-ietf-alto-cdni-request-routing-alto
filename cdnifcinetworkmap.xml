@@ -1,5 +1,5 @@
-    <section title="CDNI FCI Map using ALTO Network Map" anchor="cdnifcinetworkmap">
-        <section title="Network Map Footprint Type: altonetworkmap">
+    <section title="CDNI FCI Service using ALTO Network Map" anchor="cdnifcinetworkmap">
+        <section title="Network Map Footprint Type: altopid">
           <t>
             The ALTO protocol defines a concept called PID to represent a group of IPv4 or IPv6 addresses which can be applied the same management policy. The PID is an alternative to the pre-defined CDNI footprint types (i.e., ipv4cidr, ipv6cidr, asn, and countrycode).
           </t>
@@ -132,7 +132,7 @@
   data: "http://alto.example.com/updates/streams/3141592653590"}
 
   event: application/alto-cdnifci+json,my-fci-stream
-  data: { ... full CDNI FCI map ... }
+  data: { ... full CDNI FCI resource ... }
 
   event: application/merge-patch+json,my-fci-stream
   data: {

@@ -35,7 +35,7 @@
                 The same as Base Advertisement Object's capability-value defined in Section 5.1 of <xref target="RFC8008" pageno="false" format="default"/>.
             </t>
             <t hangText="cdni-fci-capabilities:">
-            	A list of CDNI FCI capabilities defined in Section 5.1 of <xref target="RFC8008" pageno="false" format="default"/> for which footprints are to be returned. If a list is empty or not appearing, the ALTO server MUST interpret it as a request for the full CDNI FCI Map. The ALTO server MUST interpret entries appearing in a list multiple times as if they appeared only once.
+            	A list of CDNI FCI capabilities defined in Section 5.1 of <xref target="RFC8008" pageno="false" format="default"/> for which footprints are to be returned. If a list is empty or not appearing, the ALTO server MUST interpret it as a request for the full CDNI FCI resource. The ALTO server MUST interpret entries appearing in a list multiple times as if they appeared only once. If the ALTO server does not define any footprints for a CDNI capability, it MUST omit this capability from the response.
             </t>
         </list></t>
     	</section>
@@ -84,7 +84,7 @@
     		</section>
     		<section title="Basic Example" anchor="filtercdnifcimapexample">
     			<t>
-    			    This example filters the full CDNI FCI resource in <xref target="fullcdnifcimap"/> by selecting only http/1.1 delivery protocol capability. Only the first two BaseAdvertisementObjects in the full map will be returned because the first object's capability is http/1.1 delivery protocol and the second object's capability is http/1.1 and https/1.1 delivery protocols which is the superset of http/1.1 delivery protocol.
+    			    This example filters the full CDNI FCI resource in <xref target="fullcdnifcimap"/> by selecting only http/1.1 delivery protocol capability. Only the first two BaseAdvertisementObjects in the full resource will be returned because the first object's capability is http/1.1 delivery protocol and the second object's capability is http/1.1 and https/1.1 delivery protocols which is the superset of http/1.1 delivery protocol.
     			</t>
 		    <figure align="left">
               <artwork align="left"><![CDATA[
@@ -187,7 +187,7 @@
   data: "http://alto.example.com/updates/streams/3141592653590"}
 
   event: application/alto-cdnifci+json,my-fci-stream
-  data: { ... full filtered CDNI FCI map ... }
+  data: { ... full filtered CDNI FCI resource ... }
 
   event: application/merge-patch+json,my-fci-stream
   data: {

@@ -1,4 +1,4 @@
-    <section anchor="cdnifcimap" title="CDNI FCI Map">
+    <section anchor="cdnifcimap" title="CDNI FCI Service">
     	<t>
           The ALTO protocol is based on an ALTO Information Service Framework which consists of several services, where all ALTO services are "provided through a common transport protocol, messaging structure and encoding, and transaction model" <xref target="RFC7285" pageno="false" format="default"/>. The ALTO protocol specification <xref target="RFC7285" pageno="false" format="default"/> defines several such services, e.g., the ALTO map service.
       </t>
@@ -8,7 +8,7 @@
         </t>
     	<section title="Media Type" anchor="cdnifcimapmediatype">
     		<t>
-    		    The media type of the CDNI FCI resource is "application/alto-cdnifcimap+json".
+    		    The media type of the CDNI FCI resource is "application/alto-cdnifci+json".
     		</t>
     	</section>
     	<section title="HTTP Method">
@@ -44,7 +44,7 @@
         <figure align="left">
               <artwork align="left"><![CDATA[
     object {
-        CDNIFCIData cdni-fci-map;
+        CDNIFCIData cdni-fci;
     } InfoResourceCDNIFCI : ResponseEntityBase;
 
     object {
@@ -87,7 +87,7 @@
 EXAMPLE 1
     {
       "meta" : {...},
-      "cdni-fci-map": {
+      "cdni-fci": {
         "capabilities": [
           {
             "capability-type": "FCI.DeliveryProtocol",
@@ -118,7 +118,7 @@ EXAMPLE 1
 EXAMPLE 2
     {
       "meta" : {...},
-      "cdni-fci-map": {
+      "cdni-fci": {
         "capabilities": [
           {
             "capability-type": "FCI.DeliveryProtocol",
