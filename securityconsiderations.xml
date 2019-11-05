@@ -8,7 +8,7 @@
          <t>In the context of CDNI FCI, additional security considerations should be included as follows.
          </t>
          <t>
-          For authenticity and integrity of ALTO information, an attacker may disguise itself as an ALTO server for a dCDN, and provide false capabilities and footprints to a uCDN using the CDNI FCI map. Such false information may lead a uCDN to (1) select an incorrect dCDN to serve user requests or (2) skip uCDNs in good conditions.
+          For authenticity and integrity of ALTO information, an attacker may disguise itself as an ALTO server for a dCDN, and provide false capabilities and footprints to a uCDN using the CDNI FCI service. Such false information may lead a uCDN to (1) select an incorrect dCDN to serve user requests or (2) skip uCDNs in good conditions.
          </t>
          <t>
           For potential undesirable guidance from authenticated ALTO information, dCDNs can provide a uCDN with limited capabilities and smaller footprint coverage so that dCDNs can avoid transferring traffic for a uCDN which they should have to transfer.  
@@ -17,17 +17,17 @@
           For confidentiality and privacy of ALTO information, footprint properties integrated with ALTO unified property may expose network location identifiers (e.g., IP addresses or fine-grained PIDs). 
          </t>
          <t>
-          For availability of ALTO services, an attacker may get the potential huge full CDNI FCI maps from an ALTO server in a dCDN continuously to run out of bandwidth resources of that ALTO server or may query filtered CDNI FCI services with complex capabilities to run out of computation resources of an ALTO server.
+          For availability of ALTO services, an attacker may get the potential huge full CDNI FCI resources from an ALTO server in a dCDN continuously to run out of bandwidth resources of that ALTO server or may query filtered CDNI FCI services with complex capabilities to run out of computation resources of an ALTO server.
          </t>
          <t>
-          Protection strategies described in RFC 7285 can solve problems mentioned above well. However, the isolation of full/filtered CDNI FCI maps should also be considered.
+          Protection strategies described in RFC 7285 can solve problems mentioned above well. However, the isolation of full/filtered CDNI FCI resources should also be considered.
          </t>
          <t>
           <!-- The identification of ALTO clients and ALTO servers is extremely important in CDNI. Because capabilities and footprints are key information for dCDNs and they are key factors influencing the final selection decision of a uCDN. --> 
-          If a dCDN signs agreements with multiple uCDNs, it must isolate full/filtered CDNI FCI maps for different uCDNs in that uCDNs will not redirect requests which should not have to served by this dCDN to this dCDN and it may not disclose extra information to uCDNs.
+          If a dCDN signs agreements with multiple uCDNs, it must isolate full/filtered CDNI FCI resources for different uCDNs in that uCDNs will not redirect requests which should not have to served by this dCDN to this dCDN and it may not disclose extra information to uCDNs.
          </t>
          <t>
-          To avoid this risk, a dCDN may consider generating URIs of different full/filtered CDNI FCI maps by hashing its company ID, a uCDN's company ID as well as their agreements. And it needs to avoid expoing all full/filtered CDNI FCI maps resources in one of its IRDs.
+          To avoid this risk, a dCDN may consider generating URIs of different full/filtered CDNI FCI resources by hashing its company ID, a uCDN's company ID as well as their agreements. And it needs to avoid expoing all full/filtered CDNI FCI resources in one of its IRDs.
          </t>
 <!--          <t>One important security consideration is the proper authentication of advertisement information provided by a downstream CDN. The ALTO protocol provides a specification for a signature of ALTO information (see Section 15 of <xref target="RFC7285" pageno="false" format="default"/>. ALTO thus provides a proper mechanism for protecting the integrity of FCI information.</t>
 

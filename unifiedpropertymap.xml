@@ -14,7 +14,7 @@
 <!--         <t>
             A unified property map that includes "cdni-fci-capabilities" property registered in <xref target="iana"/> builds the inverted index of a CDNI FCI map. The building process consists of two steps: firstly, each footprint object is represented as a set of unified property map entities in a domain; secondly, each unified property map entity is mapped into a list of property objects including CDNI capabilities.
         </t> -->
-  	    <section title="Representing Footprint Objects as Unified Property Map Entities" anchor="footprinttoentities">
+  	    <section title="Representing Footprint Objects as Property Map Entities" anchor="footprinttoentities">
             <t>
               A footprint object has two properties: footprint-type and footprint-value. A footprint-value is an array of footprint values conforming to the specification associated with the registered footprint type ("ipv4cidr", "ipv6cidr", "asn", and "countrycode").
               Considering each ALTO entity defined in <xref target="I-D.ietf-alto-unified-props-new"/> also has two properties: entity domain type and domain-specific identifier, a straightforward approach to represent a footprint as an ALTO entity is to regard its footprint-type as an entity domain type, and its footprint value as a domain-specific identifier. According to <xref target="I-D.ietf-alto-unified-props-new"/>, "ipv4" and "ipv6" are two predefined entity domain types, which can be used to represent "ipv4cidr" and "ipv6cidr" footprints respectively. However, no existing entity domain type can represent "asn" and "countrycode" footprints.

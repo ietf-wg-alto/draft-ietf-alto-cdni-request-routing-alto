@@ -33,7 +33,7 @@
     	</section>
     	<section title="Response" anchor="cdnifcimapencoding">
     		<t>
-    			The "meta" field of a CDNI FCI response MUST include the "vtag" field defined in Section 10.3 of <xref target="RFC7285" pageno="false" format="default"/>. This field provides the version of the retrieved CDNI FCI map.</t>
+    			The "meta" field of a CDNI FCI response MUST include the "vtag" field defined in Section 10.3 of <xref target="RFC7285" pageno="false" format="default"/>. This field provides the version of the retrieved CDNI FCI resource.</t>
 
         <t>
           If a CDNI FCI response depends on an ALTO information resource, it MUST include the "dependent-vtags" field, whose value is an array to indicate the version tags of the resources used, where each resource is specified in "uses" of its IRD entry.
@@ -156,7 +156,7 @@ EXAMPLE 2
     				Below is the information resource directory (IRD) of a simple, example ALTO server. The server provides both base ALTO information resources (e.g., network maps) and CDNI FCI related information resources (e.g., CDNI FCI resource), demonstrating a single, integrated environment.
           </t>
           <t>
-            Specifically, the IRD announces two network maps, one CDNI FCI resource without dependency, one CDNI FCI resource depending on a network map, one filtered CDNI FCI resource to be defined in <xref target="filteredcdnifcimap"/>, one unified property map including "cdni-fci-capabilities" as its entity property, one filtered unified property map including "cdni-fci-capabilities" and "pid" as its entity properties, and two update stream services (one for updating CDNI FCI resources, and the other for updating property maps).
+            Specifically, the IRD announces two network maps, one CDNI FCI resource without dependency, one CDNI FCI resource depending on a network map, one filtered CDNI FCI resource to be defined in <xref target="filteredcdnifcimap"/>, one property map including "cdni-fci-capabilities" as its entity property, one filtered property map including "cdni-fci-capabilities" and "pid" as its entity properties, and two update stream services (one for updating CDNI FCI resources, and the other for updating property maps).
     			</t>
 		    <figure align="left">
               <artwork align="left"><![CDATA[
@@ -271,7 +271,7 @@ EXAMPLE 2
     		</section>
     		<section title="Basic Example" anchor="fullcdnifcimap">
           <t>
-            In this example, we demonstrate a simple CDNI FCI resource; this resource does not depend on other resources. There are three BaseAdvertisementObjects in this map and these objects' capabilities are http/1.1 delivery protocol, [http/1.1, https/1.1] delivery protocol and https/1.1 acquisition protocol respectively.
+            In this example, we demonstrate a simple CDNI FCI resource; this resource does not depend on other resources. There are three BaseAdvertisementObjects in this resource and these objects' capabilities are http/1.1 delivery protocol, [http/1.1, https/1.1] delivery protocol and https/1.1 acquisition protocol respectively.
           </t>
 		    <figure align="left">
               <artwork align="left"><![CDATA[
@@ -338,7 +338,7 @@ EXAMPLE 2
     		</section>
     		<section title="Incremental Updates Example">
     			<t>
-    				A benefit of using ALTO to provide CDNI FCI maps is that such maps can be updated using ALTO incremental updates. Below is an example that also shows the benefit of having both JSON merge patch and JSON patch to encode updates.
+    				A benefit of using ALTO to provide CDNI FCI resources is that such resources can be updated using ALTO incremental updates. Below is an example that also shows the benefit of having both JSON merge patch and JSON patch to encode updates.
           </t>
           <t>
           At first, an ALTO client requests updates for "my-default-cdnifci", and the ALTO server returns the "control-uri" followed by the full CDNI FCI response. Then when there is a change in the delivery-protocols in that `http/2` is removed (from http/1.1 and http/2 to only http/1.1) due to maintenance of the http/2 clusters, the ALTO server uses JSON merge patch to encode the change and pushes the change to the ALTO client. Later on, the ALTO server notifies the ALTO client that "ipv4:192.0.2.0/24" is added into the footprint for delivery-protocol http/1.1 by sending the change encoded by JSON patch to the ALTO client.

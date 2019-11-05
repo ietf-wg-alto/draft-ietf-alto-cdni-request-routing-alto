@@ -22,7 +22,7 @@
 <?rfc compact="yes" ?>
 <?rfc subcompact="no" ?>
 <rfc category="std"
-     docName="draft-ietf-alto-cdni-request-routing-alto-07"
+     docName="draft-ietf-alto-cdni-request-routing-alto-08"
      ipr="trust200902">
   <front>
     <title abbrev="CDNI FCI using ALTO">Content Delivery Network Interconnection (CDNI) Request Routing:
@@ -193,7 +193,7 @@
       <?rfc include="reference.I-D.draft-ietf-alto-incr-update-sse-17.xml"?>
       <?rfc include="reference.I-D.draft-jenkins-alto-cdn-use-cases-03.xml"?>
 <!--       <?rfc include="reference.I-D.draft-ma-cdni-capabilities-09.xml"?> -->
-      <?rfc include="reference.I-D.draft-ietf-alto-unified-props-new-08.xml"?>
+      <?rfc include="reference.I-D.draft-ietf-alto-unified-props-new-09.xml"?>
       <!-- <?rfc include="reference.I-D.liu-cdni-cost"?> -->
       <!-- <?rfc include="reference.I-D.ietf-cdni-metadata"?>  -->
       <!-- <?rfc include="reference.I-D.ietf-cdni-logging"?> -->
