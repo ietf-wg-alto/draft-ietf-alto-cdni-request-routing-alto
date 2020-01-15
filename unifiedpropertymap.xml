@@ -238,7 +238,7 @@
    data:     "my-default-cdnifci.cdni-fci-capabilities": [
    data:       {"capability-type": "FCI.DeliveryProtocol",
    data:        "capability-value": {
-   data:          "delivery-protocols": ["http/1.1"]}}]
+   data:          "delivery-protocols": ["http/1.1", "https/1.1"]}}]
    data:     }
    data:   }
    data: }

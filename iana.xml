@@ -1,5 +1,8 @@
  <section title="IANA Considerations" anchor="iana">
       <section title="CDNI Metadata Footprint Type Registry" anchor="newfootprinttype">
+      <t>
+        As proposed in Section 7.2 of <xref target="RFC8006"/>, "CDNI Metadata Footprint Types" registry is requested. A new footprint type is to be registred, listed in <xref target="tbl:footprint-type"/>.
+      </t>
     <texttable anchor="tbl:footprint-type" align="center" title="CDNI Metadata Footprint Type">
 
             <ttcol align="left" width="16%">
@@ -19,7 +22,7 @@
               A list of PID-names
             </c>
             <c>
-              RFCthis
+              <xref target="cdnifcinetworkmap"/> of RFCthis
             </c>
     </texttable>
       <t>
@@ -30,7 +33,7 @@
       <section title="ALTO Entity Domain Type Registry">
     <t>
       As proposed in Section 11.2 of <xref target="I-D.ietf-alto-unified-props-new"/>,
-      "ALTO Entity Domain Type Registry" is requested. Besides, two
+      "ALTO Entity Domain Type Registry" is requested. Two
       new entity domain types are to be registered, listed in
       <xref target="tbl:entity-domain"/>.
     </t>
@@ -73,7 +76,7 @@
       <section title="ALTO Entity Property Type Registry">
     <t>
       As proposed in Section 11.3 of <xref target="I-D.ietf-alto-unified-props-new"/>,
-      "ALTO Entity Property Type Registry" is required. Besides, a new
+      "ALTO Entity Property Type Registry" is required. A new
       entity property type is to be registred, listed in
       <xref target="tbl:prop-type-register"/>.
     </t>

@@ -28,7 +28,7 @@
     	</section>
     	<section title="Uses">
     		<t>
-    		  The "uses" field SHOULD NOT appear unless the CDNI FCI resource depends on some ALTO information resources. If the CDNI FCI resource has some dependent resources, the resource IDs of its dependent resources MUST be included into the "uses" field. This document only defines one potential dependent resource for the CDNI FCI resource. See <xref target="cdnifcinetworkmap"/> for details of when and how to use it. The future documents may extend the CDNI FCI resource and allow other dependent resources.
+    		  The "uses" field SHOULD NOT appear unless the CDNI FCI resource depends on some ALTO information resources. If the CDNI FCI resource has some dependent resources, the resource IDs of its dependent resources MUST be included into the "uses" field. This document only defines one potential dependent resource for the CDNI FCI resource. See <xref target="cdnifcinetworkmap"/> for details of when and how to use it. Future documents may extend the CDNI FCI resource and allow other dependent resources.
     		</t>
     	</section>
     	<section title="Response" anchor="cdnifcimapencoding">
@@ -182,16 +182,16 @@ EXAMPLE 2
           "uri" : "http://alto.example.com/cdnifci",
           "media-type": "application/alto-cdnifci+json"
         },
+        "my-cdnifci-with-pid-footprints": {
+          "uri" : "http://alto.example.com/networkcdnifci",
+          "media-type" : "application/alto-cdnifci+json",
+          "uses" : [ "my-eu-netmap" ]
+        },
         "my-filtered-cdnifci" : {
           "uri" : "http://alto.example.com/cdnifci/filtered",
           "media-type" : "application/alto-cdnifci+json",
           "accepts" : "application/alto-cdnifcifilter+json",
           "uses" : [ "my-default-cdnifci" ]
-        },
-        "my-cdnifci-with-pid-footprints": {
-          "uri" : "http://alto.example.com/networkcdnifci",
-          "media-type" : "application/alto-cdnifci+json",
-          "uses" : [ "my-eu-netmap" ]
         },
         "cdnifci-property-map" : {
           "uri" : "http://alto.example.com/propmap/full/cdnifci",
@@ -242,7 +242,7 @@ EXAMPLE 2
              "my-default-cdnifci" :
              "application/merge-patch+json,application/json-patch+json",
              "my-filtered-cdnifci" :
-             "application/merge-patch+jso,application/json-patch+json",
+             "application/merge-patch+json,application/json-patch+json",
              "my-cdnifci-with-pid-footprints" :
              "application/merge-patch+json,application/json-patch+json"
             }
@@ -271,7 +271,7 @@ EXAMPLE 2
     		</section>
     		<section title="Basic Example" anchor="fullcdnifcimap">
           <t>
-            In this example, we demonstrate a simple CDNI FCI resource; this resource does not depend on other resources. There are three BaseAdvertisementObjects in this resource and these objects' capabilities are http/1.1 delivery protocol, [http/1.1, https/1.1] delivery protocol and https/1.1 acquisition protocol respectively.
+            In this example, we demonstrate a simple CDNI FCI resource; this resource does not depend on other resources. There are three BaseAdvertisementObjects in this resource and these objects' capabilities are http/1.1 delivery protocol, [http/1.1, https/1.1] delivery protocol, and https/1.1 acquisition protocol respectively.
           </t>
 		    <figure align="left">
               <artwork align="left"><![CDATA[
@@ -341,7 +341,7 @@ EXAMPLE 2
     				A benefit of using ALTO to provide CDNI FCI resources is that such resources can be updated using ALTO incremental updates. Below is an example that also shows the benefit of having both JSON merge patch and JSON patch to encode updates.
           </t>
           <t>
-          At first, an ALTO client requests updates for "my-default-cdnifci", and the ALTO server returns the "control-uri" followed by the full CDNI FCI response. Then when there is a change in the delivery-protocols in that `http/2` is removed (from http/1.1 and http/2 to only http/1.1) due to maintenance of the http/2 clusters, the ALTO server uses JSON merge patch to encode the change and pushes the change to the ALTO client. Later on, the ALTO server notifies the ALTO client that "ipv4:192.0.2.0/24" is added into the footprint for delivery-protocol http/1.1 by sending the change encoded by JSON patch to the ALTO client.
+          At first, an ALTO client requests updates for "my-default-cdnifci", and the ALTO server returns the "control-uri" followed by the full CDNI FCI response. Then when there is a change in the delivery-protocols in that `http/1.1` is removed (from http/1.1 and https/1.1 to only https/1.1) due to maintenance of the https/1.1 clusters, the ALTO server uses JSON merge patch to encode the change and pushes the change to the ALTO client. Later on, the ALTO server notifies the ALTO client that "192.0.2.0/24" is added into the "ipv4" footprint object for delivery-protocol https/1.1 by sending the change encoded by JSON patch to the ALTO client.
     			</t>
         <figure align="left">
               <artwork align="left"><![CDATA[
@@ -381,11 +381,11 @@ EXAMPLE 2
   data:         "capability-type": "FCI.DeliveryProtocol",
   data:         "capability-value": {
   data:           "delivery-protocols": [
-  data:             "http/1.1"
+  data:             "https/1.1"
   data:           ]
   data:         },
   data:         "footprints": [
-  data:           <Footprint objects in only http/1.1>
+  data:           <Footprint objects in only https/1.1>
   data:         ]
   data:       }
   data:     ]
@@ -400,8 +400,8 @@ EXAMPLE 2
   data:     "value": "a10ce8b059740b0b2e3f8eb1d4785acd42231bfe"
   data:   },
   data:   { "op": "add",
-  data:     "path": "/cdni-fci/capabilities/0/footprints/-",
-  data:     "value": "ipv4:192.0.2.0/24"
+  data:     "path": "/cdni-fci/capabilities/0/footprints/0/footprint-value/-",
+  data:     "value": "192.0.2.0/24"
   data:   }
   data: ]
                 ]]></artwork>

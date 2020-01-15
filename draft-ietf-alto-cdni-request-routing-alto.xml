@@ -22,7 +22,7 @@
 <?rfc compact="yes" ?>
 <?rfc subcompact="no" ?>
 <rfc category="std"
-     docName="draft-ietf-alto-cdni-request-routing-alto-08"
+     docName="draft-ietf-alto-cdni-request-routing-alto-09"
      ipr="trust200902">
   <front>
     <title abbrev="CDNI FCI using ALTO">Content Delivery Network Interconnection (CDNI) Request Routing:
@@ -66,7 +66,7 @@
                <country>United States of America</country>
         </postal>
         <phone>+1-978-844-5100</phone>
-        <email>kevin.j.ma@ericsson.com</email>
+        <email>kevin.j.ma.ietf@gmail.com</email>
       </address>
     </author>
 

@@ -4,10 +4,10 @@
        (3) the CDNI Logging Interface; and (4) the CDNI Control Interface.
       </t>
 
-      <t>Among the four interfaces, the CDNI Request Routing Interface provides key functions, as specified in <xref target="RFC6707" pageno="false" format="default"/>: "The CDNI Request Routing interface enables a Request Routing function in an Upstream CDN to query a Request Routing function in a Downstream CDN to determine if the Downstream CDN is able (and willing) to accept the delegated Content Request.  It also allows the Downstream CDN to control what should be returned to the User Agent in the redirection message by the upstream Request Routing function." On a high level, the scope of the CDNI Request Routing Interface, therefore, contains two main tasks: (1) determining if the downstream CDN (dCDN) is willing to accept a delegated content request; (2) redirecting the content request coming from an upstream CDN (uCDN) to the proper entry point or entity in the downstream CDN.
+      <t>Among the four interfaces, the CDNI Request Routing Interface provides key functions, as specified in <xref target="RFC6707" pageno="false" format="default"/>: "The CDNI Request Routing interface enables a Request Routing function in an Upstream CDN to query a Request Routing function in a Downstream CDN to determine if the Downstream CDN is able (and willing) to accept the delegated Content Request.  It also allows the Downstream CDN to control what should be returned to the User Agent in the redirection message by the upstream Request Routing function." At a high level, the scope of the CDNI Request Routing Interface, therefore, contains two main tasks: (1) determining if the downstream CDN (dCDN) is willing to accept a delegated content request, and (2) redirecting the content request coming from an upstream CDN (uCDN) to the proper entry point or entity in the downstream CDN.
       </t>
 
-      <t>Correspondingly, the request routing interface is broadly divided into two functionalities: (1) CDNI Footprint &amp; Capabilities Advertisement interface (FCI); (2) CDNI Request Routing Redirection interface (RI). Since this document focuses on the first functionality, CDNI FCI, we will describe it in a more detailed way.
+      <t>Correspondingly, the request routing interface is broadly divided into two functionalities: (1) CDNI Footprint &amp; Capabilities Advertisement interface (FCI), and (2) CDNI Request Routing Redirection interface (RI). Since this document focuses on the first functionality, CDNI FCI, we will describe it in a more detailed way.
 <!--       <list style="symbols"> -->
       CDNI FCI is an advertisement from a dCDN to a uCDN (push) or a query from a uCDN to a dCDN (pull) so that the uCDN knows whether it can redirect a particular user request to that dCDN.
 <!--         <t>CDNI Request Routing Redirection interface (RI): the synchronous operation of actually redirecting a user request.</t> -->
@@ -15,7 +15,7 @@
       </t>
 
       <t><!-- This document focuses on the first functionality, CDNI FCI. --> 
-        A key component in defining CDNI FCI is defining objects describing the footprints and capabilities of a dCDN. Such objects are already in <xref target="RFC8008"/>. A protocol to transport and update such objects between a uCDN and a dCDN, however, is not defined. Hence, the scope of this document is to define such a protocol by introducing a new Application-Layer Traffic Optimization (ALTO) <xref target="RFC7285" pageno="false" format="default"/> service called "CDNI FCI Service".
+        A key component in defining CDNI FCI is defining objects describing the footprints and capabilities of a dCDN. Such objects are already defined in <xref target="RFC8008"/>. A protocol to transport and update such objects between a uCDN and a dCDN, however, is not defined. Hence, the scope of this document is to define such a protocol by introducing a new Application-Layer Traffic Optimization (ALTO) <xref target="RFC7285" pageno="false" format="default"/> service called "CDNI FCI Service".
       </t>
 
       <t>There are multiple benefits in using ALTO as a transport protocol, as we discuss in <xref target="bgALTO"/>.</t> 

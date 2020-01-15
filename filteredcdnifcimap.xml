@@ -1,6 +1,6 @@
     <section anchor="filteredcdnifcimap" title="Filtered CDNI FCI using Capabilities">
     	<t>
-        <xref target="cdnifcimap"/> and <xref target="cdnifcinetworkmap"/> describe CDNI FCI Service which can be used to enable a uCDN to get capabilities with footprints constrains from dCDNs. However, always getting full CDNI FCI resources from dCDNs is very inefficient, hence we introduce a new service named "Filtered CDNI FCI Service" to allow a client to filter a CDNI FCI resource using a client-given set of capabilities. For each entry of the CDNI FCI response, only if the entry contains at least one of the client-given capabilities will it be returned to the client. The relationship between a filtered CDNI FCI resource and a CDNI FCI resource is similar to the relationship between a filtered network/cost map and a network/cost map.
+        <xref target="cdnifcimap"/> and <xref target="cdnifcinetworkmap"/> describe CDNI FCI Service which can be used to enable a uCDN to get capabilities with footprints constraints from dCDNs. However, always getting full CDNI FCI resources from dCDNs is very inefficient, hence we introduce a new service named "Filtered CDNI FCI Service" to allow a client to filter a CDNI FCI resource using a client-given set of capabilities. For each entry of the CDNI FCI response, an entry will only be returned to the client if it contains at least one of the client given capabilities. The relationship between a filtered CDNI FCI resource and a CDNI FCI resource is similar to the relationship between a filtered network/cost map and a network/cost map.
     	</t>
     	<section title="Media Type">
         <t>
@@ -84,7 +84,7 @@
     		</section>
     		<section title="Basic Example" anchor="filtercdnifcimapexample">
     			<t>
-    			    This example filters the full CDNI FCI resource in <xref target="fullcdnifcimap"/> by selecting only http/1.1 delivery protocol capability. Only the first two BaseAdvertisementObjects in the full resource will be returned because the first object's capability is http/1.1 delivery protocol and the second object's capability is http/1.1 and https/1.1 delivery protocols which is the superset of http/1.1 delivery protocol.
+    			    This example filters the full CDNI FCI resource in <xref target="fullcdnifcimap"/> by selecting only the http/1.1 delivery protocol capability. Only the first two BaseAdvertisementObjects in the full resource will be returned because the first object's capability is http/1.1 delivery protocol and the second object's capability is http/1.1 and https/1.1 delivery protocols which is the superset of http/1.1 delivery protocol.
     			</t>
 		    <figure align="left">
               <artwork align="left"><![CDATA[
