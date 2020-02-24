@@ -4,9 +4,8 @@
           <!-- Previous sections describe how a uCDN can get the whole capabilities and footprints from dCDNs and how a uCDN can get the footprints of given capabilities. But there is another important case which is how a uCDN can get properties (i.e., capabilities) of given footprints. -->
         </t>
         <t>
-          Considering each footprint as an entity with properties including CDNI capabilities, the most natrual way to satisfy this requirement is to use the ALTO property map defined in <xref target="I-D.ietf-alto-unified-props-new"/>.
-          <!-- The most natrual way to satisfy this requirement is to use ALTO property map defined in <xref target="I-D.ietf-alto-unified-props-new"/> since footprints can be easily presented as groups of entities and Filtered Property Maps are already well-defined. -->
-          In this section, we describe how ALTO clients look up properties for individual footprints. We firstly describe how to represent footprint objects as entities in the ALTO property map. And then we provide examples of the full property map and the filtered property map supporting CDNI capabilities, and their incremental updates.<!-- Our design decision here is to use ALTO unified property map service to query footprint properties because we do not want to introduce extra complexity and ALTO unified property map defined in <xref target="I-D.ietf-alto-unified-props-new"/> already meets the requirement.  -->
+          Considering each footprint as an entity with properties including CDNI capabilities, the most natural way to satisfy this requirement is to use the ALTO property map defined in <xref target="I-D.ietf-alto-unified-props-new"/>.
+          In this section, we describe how ALTO clients look up properties for individual footprints. First, we describe how to represent footprint objects as entities in the ALTO property map. Second, we provide examples of the full property map and the filtered property map supporting CDNI capabilities, and their incremental updates.
         </t>
 <!--         <t>
           A footprint is a group of entities, and CDNI capabilities can be regarded as properties of a footprint. Unified property map is used to provide properties for collections of entities such as CIDRs or PIDs. So every footprint can be presented as a set of entities, and we will describe it in details in <xref target="footprinttoentities"/>. In addition, two resource types Property Maps and Filtered Property Maps are already well-defined in <xref target="I-D.ietf-alto-unified-props-new"/>.
@@ -18,7 +17,6 @@
             <t>
               A footprint object has two properties: footprint-type and footprint-value. A footprint-value is an array of footprint values conforming to the specification associated with the registered footprint type ("ipv4cidr", "ipv6cidr", "asn", and "countrycode").
               Considering each ALTO entity defined in <xref target="I-D.ietf-alto-unified-props-new"/> also has two properties: entity domain type and domain-specific identifier, a straightforward approach to represent a footprint as an ALTO entity is to regard its footprint-type as an entity domain type, and its footprint value as a domain-specific identifier. According to <xref target="I-D.ietf-alto-unified-props-new"/>, "ipv4" and "ipv6" are two predefined entity domain types, which can be used to represent "ipv4cidr" and "ipv6cidr" footprints respectively. However, no existing entity domain type can represent "asn" and "countrycode" footprints.
-              <!-- Since each unified property map entity has a unique address and each pair of footprint-type and a footprint value determines a group of unique addresses, a footprint object can be represented as a set of entities according to their different footprint-type and footprint values. However, <xref target="I-D.ietf-alto-unified-props-new"/> only defines IPv4 Domain and IPv6 Domain which represent footprint-type "ipv4cidr" and "ipv6cidr" respectively. -->
               To represent footprint-type "asn" and "countrycode", this document registers two new domains in <xref target="iana"/> in addition to the ones in <xref target="I-D.ietf-alto-unified-props-new"/>.
             </t>
             <t>
@@ -39,7 +37,7 @@
   		        </section>
   		        <section title="Domain-Specific Entity Identifiers" anchor="asn-entity-address">
   		    	    <t>
-  		                 The entity identifiers of entities in an asn domain is encoded as a string consisting of the characters "as" (in lowercase) followed by the Autonomous System Number <xref target="RFC6793" pageno="false" format="default"/>.
+  		                 The entity identifier of an entity in an asn domain is encoded as a string consisting of the characters "as" (in lowercase) followed by the Autonomous System Number <xref target="RFC6793" pageno="false" format="default"/>.
   		            </t>
   		        </section>
   		        <section title="Hierarchy and Inheritance">
@@ -59,7 +57,7 @@
         	    </section>
         	    <section title="Domain-Specific Entity Identifiers" anchor="countrycode-entity-address">
         		    <t>
-        			    The entity identifiers of entities in a countrycode domain is encoded as an ISO 3166-1 alpha-2 code <xref target="ISO3166-1"/> in lowercase.
+        			    The entity identifier of an entity in a countrycode domain is encoded as an ISO 3166-1 alpha-2 code <xref target="ISO3166-1"/> in lowercase.
         		    </t>
         	    </section>
         	    <section title="Hierarchy and Inheritance">

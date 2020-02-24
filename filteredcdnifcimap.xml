@@ -64,7 +64,7 @@
       </t>
     	<t>
         The ALTO server returns a filtered CDNI FCI resource for a valid request.
-    		The format of a filtered CDNI FCI resource is the same as an full CDNI FCI resource (See <xref target="cdnifcimapencoding"/>.)
+    		The format of a filtered CDNI FCI resource is the same as a full CDNI FCI resource (See <xref target="cdnifcimapencoding"/>.)
     	</t>
     	<t>
     		The returned CDNI FCI resource MUST contain only BaseAdvertisementObject objects whose CDNI capability object is the superset of one of CDNI capability object in "cdni-fci-capabilities".

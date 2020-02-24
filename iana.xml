@@ -1,7 +1,7 @@
  <section title="IANA Considerations" anchor="iana">
       <section title="CDNI Metadata Footprint Type Registry" anchor="newfootprinttype">
       <t>
-        As proposed in Section 7.2 of <xref target="RFC8006"/>, "CDNI Metadata Footprint Types" registry is requested. A new footprint type is to be registred, listed in <xref target="tbl:footprint-type"/>.
+        As proposed in Section 7.2 of <xref target="RFC8006"/>, "CDNI Metadata Footprint Types" registry is requested. A new footprint type is to be registered, listed in <xref target="tbl:footprint-type"/>.
       </t>
     <texttable anchor="tbl:footprint-type" align="center" title="CDNI Metadata Footprint Type">
 
@@ -77,7 +77,7 @@
     <t>
       As proposed in Section 11.3 of <xref target="I-D.ietf-alto-unified-props-new"/>,
       "ALTO Entity Property Type Registry" is required. A new
-      entity property type is to be registred, listed in
+      entity property type is to be registered, listed in
       <xref target="tbl:prop-type-register"/>.
     </t>
     <texttable anchor="tbl:prop-type-register" align="center" title="ALTO CDNI FCI Property Type">

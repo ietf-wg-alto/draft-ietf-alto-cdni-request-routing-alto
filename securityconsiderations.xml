@@ -1,11 +1,11 @@
   <section anchor="security" title="Security Considerations">
   	     <t>
-  	     	As an extension of the base ALTO protocol [RFC7285], this document 
-        fits into the architecture of the base protocol, and hence the Security 
-        Considerations (Section 15) of the base protocol fully apply when this 
+  	     	As an extension of the base ALTO protocol (<xref target="RFC7285"/>), this document 
+        fits into the architecture of the base protocol. And hence its Security 
+        Considerations (Section 15 of <xref target="RFC7285"/>) fully apply when this 
         extension is provided by an ALTO server. 
   	     </t>
-         <t>In the context of CDNI FCI, additional security considerations should be included as follows.
+         <t>In the context of CDNI FCI, additional security considerations should be included as follows:
          </t>
          <t>
           For authenticity and integrity of ALTO information, an attacker may disguise itself as an ALTO server for a dCDN, and provide false capabilities and footprints to a uCDN using the CDNI FCI service. Such false information may lead a uCDN to (1) select an incorrect dCDN to serve user requests or (2) skip uCDNs in good conditions.
@@ -17,7 +17,7 @@
           For confidentiality and privacy of ALTO information, footprint properties integrated with ALTO unified property may expose network location identifiers (e.g., IP addresses or fine-grained PIDs). 
          </t>
          <t>
-          For availability of ALTO services, an attacker may get the potential huge full CDNI FCI resources from an ALTO server in a dCDN continuously to unnecessarily consume bandwidth resources of that ALTO server or may query filtered CDNI FCI services with complex capabilities to unnecessarily consume computation resources of an ALTO server.
+          Without access control of ALTO services, an attacker may get the potential huge full CDNI FCI resources from an ALTO server in a dCDN continuously to unnecessarily consume bandwidth resources of that ALTO server or may query filtered property map services with many smaller individual footprints to unnecessarily consume computation resources of an ALTO server.
          </t>
          <t>
           Protection strategies described in RFC 7285 can solve problems mentioned above, however, the isolation of full/filtered CDNI FCI resources should also be considered.
@@ -27,7 +27,7 @@
           If a dCDN signs agreements with multiple uCDNs, it must isolate full/filtered CDNI FCI resources for different uCDNs in that uCDNs will not redirect requests which should not have to be served by this dCDN to this dCDN and it may not disclose extra information to uCDNs.
          </t>
          <t>
-          To avoid this risk, a dCDN could consider generating URIs of different full/filtered CDNI FCI resources by hashing its company ID, a uCDN's company ID as well as their agreements. A dCDN SHOULD avoid expoing all full/filtered CDNI FCI resources in one of its IRDs.
+          To avoid this risk, a dCDN could consider generating URIs of different full/filtered CDNI FCI resources by hashing its company ID, a uCDN's company ID as well as their agreements. A dCDN SHOULD avoid exposing all full/filtered CDNI FCI resources in one of its IRDs.
          </t>
 <!--          <t>One important security consideration is the proper authentication of advertisement information provided by a downstream CDN. The ALTO protocol provides a specification for a signature of ALTO information (see Section 15 of <xref target="RFC7285" pageno="false" format="default"/>. ALTO thus provides a proper mechanism for protecting the integrity of FCI information.</t>
 

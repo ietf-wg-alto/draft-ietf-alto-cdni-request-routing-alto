@@ -57,7 +57,7 @@
             </t>
 
             <t>
-              The syntax and semantics of BaseAdvertisementObject are well defined in Section 5.1 of <xref target="RFC8008" pageno="false" format="default"/>. A BaseAdvertisementObject object includes multiple properties, including capability-type, capability-value and footprints, where footprints are defined in Section 4.2.2.2 of <xref target="RFC8006" pageno="false" format="default"/>.
+              The syntax and semantics of BaseAdvertisementObject are well defined in Section 5.1 of <xref target="RFC8008" pageno="false" format="default"/>. A BaseAdvertisementObject object includes multiple properties, including capability-type, capability-value, and footprints, where footprints are defined in Section 4.2.2.2 of <xref target="RFC8006" pageno="false" format="default"/>.
             </t>
 
             <t>
@@ -394,13 +394,13 @@ EXAMPLE 2
 
   event: application/json-patch+json,my-default-cdnifci
   data: [
-  data:   {
-  data:     "op": "replace",
+  data:   { "op": "replace",
   data:     "path": "/meta/vtag/tag",
   data:     "value": "a10ce8b059740b0b2e3f8eb1d4785acd42231bfe"
   data:   },
   data:   { "op": "add",
-  data:     "path": "/cdni-fci/capabilities/0/footprints/0/footprint-value/-",
+  data:     "path":
+  data:     "/cdni-fci/capabilities/1/footprints/0/footprint-value/-",
   data:     "value": "192.0.2.0/24"
   data:   }
   data: ]
