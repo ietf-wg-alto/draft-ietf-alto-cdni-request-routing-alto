@@ -92,20 +92,20 @@ Table of Contents
        3.7.3.  Incremental Updates Example . . . . . . . . . . . . .  15
    4.  CDNI FCI Service using ALTO Network Map . . . . . . . . . . .  17
      4.1.  Network Map Footprint Type: altopid . . . . . . . . . . .  17
-     4.2.  Examples  . . . . . . . . . . . . . . . . . . . . . . . .  18
-       4.2.1.  IRD Example . . . . . . . . . . . . . . . . . . . . .  18
-       4.2.2.  ALTO Network Map for CDNI FCI Footprints Example  . .  18
-       4.2.3.  ALTO PID Footprints in CDNI FCI . . . . . . . . . . .  19
-       4.2.4.  Incremental Updates Example . . . . . . . . . . . . .  20
-   5.  Filtered CDNI FCI using Capabilities  . . . . . . . . . . . .  22
-     5.1.  Media Type  . . . . . . . . . . . . . . . . . . . . . . .  22
-     5.2.  HTTP Method . . . . . . . . . . . . . . . . . . . . . . .  22
-     5.3.  Accept Input Parameters . . . . . . . . . . . . . . . . .  22
-     5.4.  Capabilities  . . . . . . . . . . . . . . . . . . . . . .  23
-     5.5.  Uses  . . . . . . . . . . . . . . . . . . . . . . . . . .  23
-     5.6.  Response  . . . . . . . . . . . . . . . . . . . . . . . .  23
-     5.7.  Examples  . . . . . . . . . . . . . . . . . . . . . . . .  24
-       5.7.1.  IRD Example . . . . . . . . . . . . . . . . . . . . .  24
+     4.2.  Examples  . . . . . . . . . . . . . . . . . . . . . . . .  17
+       4.2.1.  IRD Example . . . . . . . . . . . . . . . . . . . . .  17
+       4.2.2.  ALTO Network Map for CDNI FCI Footprints Example  . .  17
+       4.2.3.  ALTO PID Footprints in CDNI FCI . . . . . . . . . . .  18
+       4.2.4.  Incremental Updates Example . . . . . . . . . . . . .  19
+   5.  Filtered CDNI FCI using Capabilities  . . . . . . . . . . . .  21
+     5.1.  Media Type  . . . . . . . . . . . . . . . . . . . . . . .  21
+     5.2.  HTTP Method . . . . . . . . . . . . . . . . . . . . . . .  21
+     5.3.  Accept Input Parameters . . . . . . . . . . . . . . . . .  21
+     5.4.  Capabilities  . . . . . . . . . . . . . . . . . . . . . .  22
+     5.5.  Uses  . . . . . . . . . . . . . . . . . . . . . . . . . .  22
+     5.6.  Response  . . . . . . . . . . . . . . . . . . . . . . . .  22
+     5.7.  Examples  . . . . . . . . . . . . . . . . . . . . . . . .  23
+       5.7.1.  IRD Example . . . . . . . . . . . . . . . . . . . . .  23
 
 
 
@@ -114,27 +114,27 @@ Seedorf, et al.          Expires August 27, 2020                [Page 2]
 Internet-Draft             CDNI FCI using ALTO             February 2020
 
 
-       5.7.2.  Basic Example . . . . . . . . . . . . . . . . . . . .  24
-       5.7.3.  Incremental Updates Example . . . . . . . . . . . . .  26
-   6.  Query Footprint Properties using ALTO Property Map Service  .  27
-     6.1.  Representing Footprint Objects as Property Map Entities .  28
-       6.1.1.  ASN Domain  . . . . . . . . . . . . . . . . . . . . .  28
-       6.1.2.  COUNTRYCODE Domain  . . . . . . . . . . . . . . . . .  29
-     6.2.  Examples  . . . . . . . . . . . . . . . . . . . . . . . .  29
-       6.2.1.  IRD Example . . . . . . . . . . . . . . . . . . . . .  29
-       6.2.2.  Property Map Example  . . . . . . . . . . . . . . . .  29
-       6.2.3.  Filtered Property Map Example . . . . . . . . . . . .  31
-       6.2.4.  Incremental Updates Example . . . . . . . . . . . . .  33
-   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  34
-     7.1.  CDNI Metadata Footprint Type Registry . . . . . . . . . .  34
-     7.2.  ALTO Entity Domain Type Registry  . . . . . . . . . . . .  35
-     7.3.  ALTO Entity Property Type Registry  . . . . . . . . . . .  35
-   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  35
-   9.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  36
-   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  37
-     10.1.  Normative References . . . . . . . . . . . . . . . . . .  37
-     10.2.  Informative References . . . . . . . . . . . . . . . . .  38
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  38
+       5.7.2.  Basic Example . . . . . . . . . . . . . . . . . . . .  23
+       5.7.3.  Incremental Updates Example . . . . . . . . . . . . .  25
+   6.  Query Footprint Properties using ALTO Property Map Service  .  26
+     6.1.  Representing Footprint Objects as Property Map Entities .  27
+       6.1.1.  ASN Domain  . . . . . . . . . . . . . . . . . . . . .  27
+       6.1.2.  COUNTRYCODE Domain  . . . . . . . . . . . . . . . . .  28
+     6.2.  Examples  . . . . . . . . . . . . . . . . . . . . . . . .  28
+       6.2.1.  IRD Example . . . . . . . . . . . . . . . . . . . . .  28
+       6.2.2.  Property Map Example  . . . . . . . . . . . . . . . .  28
+       6.2.3.  Filtered Property Map Example . . . . . . . . . . . .  30
+       6.2.4.  Incremental Updates Example . . . . . . . . . . . . .  32
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  33
+     7.1.  CDNI Metadata Footprint Type Registry . . . . . . . . . .  33
+     7.2.  ALTO Entity Domain Type Registry  . . . . . . . . . . . .  34
+     7.3.  ALTO Entity Property Type Registry  . . . . . . . . . . .  34
+   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  34
+   9.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  35
+   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  36
+     10.1.  Normative References . . . . . . . . . . . . . . . . . .  36
+     10.2.  Informative References . . . . . . . . . . . . . . . . .  36
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  37
 
 1.  Introduction
 
@@ -861,42 +861,12 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
     Connection: keep-alive
     Content-Type: text/event-stream
 
-    event: application/alto-updatestreamcontrol+json data: {"control-
-    uri": data: "http://alto.example.com/updates/streams/3141592653589"}
+    event: application/alto-updatestreamcontrol+json
+    data: {"control-uri":
+    data: "http://alto.example.com/updates/streams/3141592653589"}
 
-    event: application/alto-cdnifci+json,my-default-cdnifci data: { ...
-    full CDNI FCI map ... }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Seedorf, et al.          Expires August 27, 2020               [Page 16]
-
-Internet-Draft             CDNI FCI using ALTO             February 2020
-
+    event: application/alto-cdnifci+json,my-default-cdnifci
+    data: { ... full CDNI FCI map ... }
 
     event: application/merge-patch+json,my-default-cdnifci
     data: {
@@ -921,6 +891,13 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
     data:     ]
     data:   }
 
+
+
+Seedorf, et al.          Expires August 27, 2020               [Page 16]
+
+Internet-Draft             CDNI FCI using ALTO             February 2020
+
+
     data: }
 
     event: application/json-patch+json,my-default-cdnifci
@@ -944,15 +921,6 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
    of IPv4 or IPv6 addresses which can be applied the same management
    policy.  The PID is an alternative to the pre-defined CDNI footprint
    types (i.e., ipv4cidr, ipv6cidr, asn, and countrycode).
-
-
-
-
-
-Seedorf, et al.          Expires August 27, 2020               [Page 17]
-
-Internet-Draft             CDNI FCI using ALTO             February 2020
-
 
    Specifically, a CDNI FCI resource can depend on an ALTO network map
    resource and use a new CDNI Footprint Type called "altopid" to
@@ -981,31 +949,7 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Seedorf, et al.          Expires August 27, 2020               [Page 18]
+Seedorf, et al.          Expires August 27, 2020               [Page 17]
 
 Internet-Draft             CDNI FCI using ALTO             February 2020
 
@@ -1061,7 +1005,7 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
 
 
 
-Seedorf, et al.          Expires August 27, 2020               [Page 19]
+Seedorf, et al.          Expires August 27, 2020               [Page 18]
 
 Internet-Draft             CDNI FCI using ALTO             February 2020
 
@@ -1117,7 +1061,7 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
 
 
 
-Seedorf, et al.          Expires August 27, 2020               [Page 20]
+Seedorf, et al.          Expires August 27, 2020               [Page 19]
 
 Internet-Draft             CDNI FCI using ALTO             February 2020
 
@@ -1138,12 +1082,12 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
      Connection: keep-alive
      Content-Type: text/event-stream
 
-     event: application/alto-updatestreamcontrol+json data: {"control-
-     uri": data: "http://alto.example.com/updates/
-     streams/3141592653590"}
+     event: application/alto-updatestreamcontrol+json
+     data: {"control-uri":
+     data: "http://alto.example.com/updates/streams/3141592653590"}
 
-     event: application/alto-cdnifci+json,my-fci-stream data: { ... full
-     CDNI FCI resource ... }
+     event: application/alto-cdnifci+json,my-fci-stream
+     data: { ... full CDNI FCI resource ... }
 
      event: application/merge-patch+json,my-fci-stream
      data: {
@@ -1173,12 +1117,13 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
 
 
 
-Seedorf, et al.          Expires August 27, 2020               [Page 21]
+Seedorf, et al.          Expires August 27, 2020               [Page 20]
 
 Internet-Draft             CDNI FCI using ALTO             February 2020
 
 
-     event: application/json-patch+json,my-fci-stream data: [
+     event: application/json-patch+json,my-fci-stream
+     data: [
 
      data:   {
      data:     "op": "replace",
@@ -1228,8 +1173,7 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
 
 
 
-
-Seedorf, et al.          Expires August 27, 2020               [Page 22]
+Seedorf, et al.          Expires August 27, 2020               [Page 21]
 
 Internet-Draft             CDNI FCI using ALTO             February 2020
 
@@ -1285,7 +1229,7 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
 
 
 
-Seedorf, et al.          Expires August 27, 2020               [Page 23]
+Seedorf, et al.          Expires August 27, 2020               [Page 22]
 
 Internet-Draft             CDNI FCI using ALTO             February 2020
 
@@ -1341,7 +1285,7 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
 
 
 
-Seedorf, et al.          Expires August 27, 2020               [Page 24]
+Seedorf, et al.          Expires August 27, 2020               [Page 23]
 
 Internet-Draft             CDNI FCI using ALTO             February 2020
 
@@ -1397,7 +1341,7 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
 
 
 
-Seedorf, et al.          Expires August 27, 2020               [Page 25]
+Seedorf, et al.          Expires August 27, 2020               [Page 24]
 
 Internet-Draft             CDNI FCI using ALTO             February 2020
 
@@ -1441,19 +1385,19 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
      Connection: keep-alive
      Content-Type: text/event-stream
 
-     event: application/alto-updatestreamcontrol+json data: {"control-
-     uri": data: "http://alto.example.com/updates/
-     streams/3141592653590"}
+     event: application/alto-updatestreamcontrol+json
+     data: {"control-uri":
+     data: "http://alto.example.com/updates/streams/3141592653590"}
 
-     event: application/alto-cdnifci+json,my-fci-stream data: { ... full
-     filtered CDNI FCI resource ... }
+     event: application/alto-cdnifci+json,my-fci-stream
+     data: { ... full filtered CDNI FCI resource ... }
 
-     event: application/merge-patch+json,my-fci-stream data: {
+     event: application/merge-patch+json,my-fci-stream
+     data: {
 
 
 
-
-Seedorf, et al.          Expires August 27, 2020               [Page 26]
+Seedorf, et al.          Expires August 27, 2020               [Page 25]
 
 Internet-Draft             CDNI FCI using ALTO             February 2020
 
@@ -1509,7 +1453,7 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
 
 
 
-Seedorf, et al.          Expires August 27, 2020               [Page 27]
+Seedorf, et al.          Expires August 27, 2020               [Page 26]
 
 Internet-Draft             CDNI FCI using ALTO             February 2020
 
@@ -1565,7 +1509,7 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
 
 
 
-Seedorf, et al.          Expires August 27, 2020               [Page 28]
+Seedorf, et al.          Expires August 27, 2020               [Page 27]
 
 Internet-Draft             CDNI FCI using ALTO             February 2020
 
@@ -1621,7 +1565,7 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
 
 
 
-Seedorf, et al.          Expires August 27, 2020               [Page 29]
+Seedorf, et al.          Expires August 27, 2020               [Page 28]
 
 Internet-Draft             CDNI FCI using ALTO             February 2020
 
@@ -1677,7 +1621,7 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
 
 
 
-Seedorf, et al.          Expires August 27, 2020               [Page 30]
+Seedorf, et al.          Expires August 27, 2020               [Page 29]
 
 Internet-Draft             CDNI FCI using ALTO             February 2020
 
@@ -1733,7 +1677,7 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
 
 
 
-Seedorf, et al.          Expires August 27, 2020               [Page 31]
+Seedorf, et al.          Expires August 27, 2020               [Page 30]
 
 Internet-Draft             CDNI FCI using ALTO             February 2020
 
@@ -1789,7 +1733,7 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
 
 
 
-Seedorf, et al.          Expires August 27, 2020               [Page 32]
+Seedorf, et al.          Expires August 27, 2020               [Page 31]
 
 Internet-Draft             CDNI FCI using ALTO             February 2020
 
@@ -1825,30 +1769,12 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
      Connection: keep-alive
      Content-Type: text/event-stream
 
-     event: application/alto-updatestreamcontrol+json data: {"control-
-     uri": data: "http://alto.example.com/updates/
-     streams/1414213562373"}
+     event: application/alto-updatestreamcontrol+json
+     data: {"control-uri":
+     data: "http://alto.example.com/updates/streams/1414213562373"}
 
-     event: application/alto-cdnifci+json,my-fci-stream data: { ... full
-     filtered unified property map ... }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Seedorf, et al.          Expires August 27, 2020               [Page 33]
-
-Internet-Draft             CDNI FCI using ALTO             February 2020
-
+     event: application/alto-cdnifci+json,my-fci-stream
+     data: { ... full filtered unified property map ... }
 
      event: application/merge-patch+json,my-fci-stream
      data: {
@@ -1860,6 +1786,14 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
      data:          "tag": "2beeac8ee23c3dd1e98a73fd30df80ece9fa5627"},
      data:         {"resource-id": "my-default-networkmap",
      data:          "tag": "7915dc0290c2705481c491a2b4ffbec482b3cf63"}
+
+
+
+Seedorf, et al.          Expires August 27, 2020               [Page 32]
+
+Internet-Draft             CDNI FCI using ALTO             February 2020
+
+
      data:       ]
      data:     },
      data:     "ipv4:192.0.2.0/24":
@@ -1895,17 +1829,6 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
    Types" registry is requested.  A new footprint type is to be
    registered, listed in Table 1.
 
-
-
-
-
-
-
-Seedorf, et al.          Expires August 27, 2020               [Page 34]
-
-Internet-Draft             CDNI FCI using ALTO             February 2020
-
-
       +----------------+---------------------+----------------------+
       | Footprint Type | Description         | Specification        |
       +----------------+---------------------+----------------------+
@@ -1916,6 +1839,16 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
 
    [RFC Editor: Please replace RFCthis with the published RFC number for
    this document.]
+
+
+
+
+
+
+Seedorf, et al.          Expires August 27, 2020               [Page 33]
+
+Internet-Draft             CDNI FCI using ALTO             February 2020
+
 
 7.2.  ALTO Entity Domain Type Registry
 
@@ -1953,15 +1886,6 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
    Security Considerations (Section 15 of [RFC7285]) fully apply when
    this extension is provided by an ALTO server.
 
-
-
-
-
-Seedorf, et al.          Expires August 27, 2020               [Page 35]
-
-Internet-Draft             CDNI FCI using ALTO             February 2020
-
-
    In the context of CDNI FCI, additional security considerations should
    be included as follows:
 
@@ -1973,6 +1897,15 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
 
    For potential undesirable guidance from authenticated ALTO
    information, dCDNs can provide a uCDN with limited capabilities and
+
+
+
+
+Seedorf, et al.          Expires August 27, 2020               [Page 34]
+
+Internet-Draft             CDNI FCI using ALTO             February 2020
+
+
    smaller footprint coverage so that dCDNs can avoid transferring
    traffic for a uCDN which they should have to transfer.
 
@@ -2003,27 +1936,31 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
 
 9.  Acknowledgments
 
-   The authors would like to thank Daryl Malas, Matt Caulfield for their
-   timely reviews and invaluable comments.
+   The authors thank Matt Caulfield, Danny Alex Lachos Perez, Daryl
+   Malas and Sanjay Mishra for their timely reviews and invaluable
+   comments.
 
    Jan Seedorf is partially supported by the GreenICN project (GreenICN:
    Architecture and Applications of Green Information Centric
    Networking), a research project supported jointly by the European
    Commission under its 7th Framework Program (contract no. 608518) and
-
-
-
-Seedorf, et al.          Expires August 27, 2020               [Page 36]
-
-Internet-Draft             CDNI FCI using ALTO             February 2020
-
-
    the National Institute of Information and Communications Technology
    (NICT) in Japan (contract no. 167).  The views and conclusions
    contained herein are those of the authors and should not be
    interpreted as necessarily representing the official policies or
    endorsements, either expressed or implied, of the GreenICN project,
    the European Commission, or NICT.
+
+
+
+
+
+
+
+Seedorf, et al.          Expires August 27, 2020               [Page 35]
+
+Internet-Draft             CDNI FCI using ALTO             February 2020
+
 
 10.  References
 
@@ -2067,19 +2004,19 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
               Semantics", RFC 8008, DOI 10.17487/RFC8008, December 2016,
               <https://www.rfc-editor.org/info/rfc8008>.
 
-
-
-Seedorf, et al.          Expires August 27, 2020               [Page 37]
-
-Internet-Draft             CDNI FCI using ALTO             February 2020
-
-
 10.2.  Informative References
 
    [I-D.ietf-alto-incr-update-sse]
               Roome, W. and Y. Yang, "ALTO Incremental Updates Using
               Server-Sent Events (SSE)", draft-ietf-alto-incr-update-
               sse-20 (work in progress), February 2020.
+
+
+
+Seedorf, et al.          Expires August 27, 2020               [Page 36]
+
+Internet-Draft             CDNI FCI using ALTO             February 2020
+
 
    [I-D.ietf-alto-path-vector]
               Gao, K., Lee, Y., Randriamasy, S., Yang, Y., and J. Zhang,
@@ -2120,16 +2057,6 @@ Authors' Addresses
    URI:   http://www.cs.yale.edu/~yry/
 
 
-
-
-
-
-
-Seedorf, et al.          Expires August 27, 2020               [Page 38]
-
-Internet-Draft             CDNI FCI using ALTO             February 2020
-
-
    Kevin J. Ma
    Ericsson
    43 Nagog Park
@@ -2138,6 +2065,13 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
 
    Phone: +1-978-844-5100
    Email: kevin.j.ma.ietf@gmail.com
+
+
+
+
+Seedorf, et al.          Expires August 27, 2020               [Page 37]
+
+Internet-Draft             CDNI FCI using ALTO             February 2020
 
 
    Jon Peterson
@@ -2181,4 +2115,14 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
 
 
 
-Seedorf, et al.          Expires August 27, 2020               [Page 39]
+
+
+
+
+
+
+
+
+
+
+Seedorf, et al.          Expires August 27, 2020               [Page 38]

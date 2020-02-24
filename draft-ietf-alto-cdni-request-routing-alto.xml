@@ -755,24 +755,14 @@ EXAMPLE 2
  HTTP/1.1 200 OK
  Connection: keep-alive
  Content-Type: text/event-stream
-]]></artwork>
-	</figure>
-	<t><list hangIndent="1" style="hanging"><t>
-    event: application/alto-updatestreamcontrol+json
-    data: {"control-uri":
-    data: "http://alto.example.com/updates/streams/3141592653589"}</t>
 
-	</list>
-	</t>
+ event: application/alto-updatestreamcontrol+json
+ data: {"control-uri":
+ data: "http://alto.example.com/updates/streams/3141592653589"}
 
-	<t><list hangIndent="1" style="hanging"><t>
-    event: application/alto-cdnifci+json,my-default-cdnifci
-    data: { ... full CDNI FCI map ... }</t>
+ event: application/alto-cdnifci+json,my-default-cdnifci
+ data: { ... full CDNI FCI map ... }
 
-	</list>
-	</t>
-
-	<figure><artwork><![CDATA[
  event: application/merge-patch+json,my-default-cdnifci
  data: {
  data:   "meta": {
@@ -950,24 +940,14 @@ EXAMPLE 2
   HTTP/1.1 200 OK
   Connection: keep-alive
   Content-Type: text/event-stream
-]]></artwork>
-	</figure>
-	<t><list hangIndent="2" style="hanging"><t>
-     event: application/alto-updatestreamcontrol+json
-     data: {"control-uri":
-     data: "http://alto.example.com/updates/streams/3141592653590"}</t>
 
-	</list>
-	</t>
+  event: application/alto-updatestreamcontrol+json
+  data: {"control-uri":
+  data: "http://alto.example.com/updates/streams/3141592653590"}
 
-	<t><list hangIndent="2" style="hanging"><t>
-     event: application/alto-cdnifci+json,my-fci-stream
-     data: { ... full CDNI FCI resource ... }</t>
+  event: application/alto-cdnifci+json,my-fci-stream
+  data: { ... full CDNI FCI resource ... }
 
-	</list>
-	</t>
-
-	<figure><artwork><![CDATA[
   event: application/merge-patch+json,my-fci-stream
   data: {
   data:   "meta": {
@@ -993,16 +973,9 @@ EXAMPLE 2
   data:     ]
   data:   }
   data: }
-]]></artwork>
-	</figure>
-	<t><list hangIndent="2" style="hanging"><t>
-     event: application/json-patch+json,my-fci-stream
-     data: [</t>
+  event: application/json-patch+json,my-fci-stream
+  data: [
 
-	</list>
-	</t>
-
-	<figure><artwork><![CDATA[
   data:   {
   data:     "op": "replace",
   data:     "path": "/meta/vtag/tag",
@@ -1261,31 +1234,16 @@ with fields:
   HTTP/1.1 200 OK
   Connection: keep-alive
   Content-Type: text/event-stream
-]]></artwork>
-	</figure>
-	<t><list hangIndent="2" style="hanging"><t>
-     event: application/alto-updatestreamcontrol+json
-     data: {"control-uri":
-     data: "http://alto.example.com/updates/streams/3141592653590"}</t>
 
-	</list>
-	</t>
+  event: application/alto-updatestreamcontrol+json
+  data: {"control-uri":
+  data: "http://alto.example.com/updates/streams/3141592653590"}
 
-	<t><list hangIndent="2" style="hanging"><t>
-     event: application/alto-cdnifci+json,my-fci-stream
-     data: { ... full filtered CDNI FCI resource ... }</t>
+  event: application/alto-cdnifci+json,my-fci-stream
+  data: { ... full filtered CDNI FCI resource ... }
 
-	</list>
-	</t>
-
-	<t><list hangIndent="2" style="hanging"><t>
-     event: application/merge-patch+json,my-fci-stream
-     data: {</t>
-
-	</list>
-	</t>
-
-	<figure><artwork><![CDATA[
+  event: application/merge-patch+json,my-fci-stream
+  data: {
   data:   "meta": {
   data:     "vtag": {
   data:       "tag": "dasdfa10ce8b059740bddsfasd8eb1d47853716"
@@ -1556,24 +1514,14 @@ with fields:
   HTTP/1.1 200 OK
   Connection: keep-alive
   Content-Type: text/event-stream
-]]></artwork>
-	</figure>
-	<t><list hangIndent="2" style="hanging"><t>
-     event: application/alto-updatestreamcontrol+json
-     data: {"control-uri":
-     data: "http://alto.example.com/updates/streams/1414213562373"}</t>
 
-	</list>
-	</t>
+  event: application/alto-updatestreamcontrol+json
+  data: {"control-uri":
+  data: "http://alto.example.com/updates/streams/1414213562373"}
 
-	<t><list hangIndent="2" style="hanging"><t>
-     event: application/alto-cdnifci+json,my-fci-stream
-     data: { ... full filtered unified property map ... }</t>
+  event: application/alto-cdnifci+json,my-fci-stream
+  data: { ... full filtered unified property map ... }
 
-	</list>
-	</t>
-
-	<figure><artwork><![CDATA[
   event: application/merge-patch+json,my-fci-stream
   data: {
   data:   "property-map":
@@ -1721,7 +1669,8 @@ with fields:
 	</section>
 
 	<section title="Acknowledgments" anchor="sect-9"><t>
-   The authors would like to thank Daryl Malas, Matt Caulfield for their
+   The authors thank Matt Caulfield, Danny Alex Lachos Perez, 
+   Daryl Malas and Sanjay Mishra for their
    timely reviews and invaluable comments.</t>
 
 	<t>
