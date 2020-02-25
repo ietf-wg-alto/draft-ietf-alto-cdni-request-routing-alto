@@ -4,6 +4,7 @@
 <!ENTITY RFC6707 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6707.xml">
 <!ENTITY RFC6793 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6793.xml">
 <!ENTITY RFC7285 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7285.xml">
+<!ENTITY RFC7736 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7736.xml">
 <!ENTITY RFC8006 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8006.xml">
 <!ENTITY RFC8008 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8008.xml">
 <!ENTITY I-D.ietf-alto-incr-update-sse SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-alto-incr-update-sse-20.xml">
@@ -203,12 +204,19 @@
       prefix length.  There must also be support for multiple IP address
       versions, i.e., IPv4 and IPv6, in such a footprint.</t>
 
-      <t>Multiple "base" capabilities are defined [TODO: which RFC]. By 
+      <!-- <t>Multiple "base" capabilities are defined [TODO: which RFC]. By
       "base" capabilities, they are required in all cases and therefore constitute
       mandatory capabilities to be supported by the CDNI FCI: (1)
       Delivery Protocol, (2) Acquisition Protocol, (3) Redirection Mode,
       (4) Capabilities related to CDNI Logging, and (5) Capabilities
-      related to CDNI Metadata.</t>
+      related to CDNI Metadata.</t> -->
+      <t>Multiple initial capability types are defined in <xref
+      target="RFC8008"/>, including (1) Delivery Protocol, (2) Acquisition
+      Protocol, (3) Redirection Mode, (4) Capabilities related to CDNI
+      Logging, and (5) Capabilities related to CDNI Metadata. Each capability
+      type is registered as a CDNI Payload Type <xref target="7736"/> which
+      indicates the data format of the corresponding CDNI capability
+      object.</t>
 
       <t>Footprint and capabilities are defined together 
       and cannot be interpreted independently from each other. Specifically, 
@@ -1751,6 +1759,7 @@ with fields:
 	&I-D.ietf-alto-incr-update-sse;
 	&I-D.ietf-alto-path-vector;
 	&I-D.ietf-alto-unified-props-new;
+  &RFC7736;
 	&RFC7975;
 	</references>
 	</back>
