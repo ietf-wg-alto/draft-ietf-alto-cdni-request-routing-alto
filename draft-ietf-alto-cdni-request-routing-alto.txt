@@ -41,7 +41,7 @@ Status of This Memo
    Internet-Drafts are working documents of the Internet Engineering
    Task Force (IETF).  Note that other groups may also distribute
    working documents as Internet-Drafts.  The list of current Internet-
-   Drafts is at http://datatracker.ietf.org/drafts/current/.
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
 
    Internet-Drafts are draft documents valid for a maximum of six months
    and may be updated, replaced, or obsoleted by other documents at any
@@ -65,7 +65,7 @@ Copyright Notice
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
-   (http://trustee.ietf.org/license-info) in effect on the date of
+   (https://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
@@ -133,7 +133,7 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
    9.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  35
    10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  36
      10.1.  Normative References . . . . . . . . . . . . . . . . . .  36
-     10.2.  Informative References . . . . . . . . . . . . . . . . .  36
+     10.2.  Informative References . . . . . . . . . . . . . . . . .  37
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  37
 
 1.  Introduction
@@ -243,12 +243,12 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
       prefix length.  There must also be support for multiple IP address
       versions, i.e., IPv4 and IPv6, in such a footprint.
 
-   o  Multiple "base" capabilities are defined [TODO: which RFC].  By
-      "base" capabilities, they are required in all cases and therefore
-      constitute mandatory capabilities to be supported by the CDNI FCI:
-      (1) Delivery Protocol, (2) Acquisition Protocol, (3) Redirection
-      Mode, (4) Capabilities related to CDNI Logging, and (5)
-      Capabilities related to CDNI Metadata.
+   o  Multiple initial capability types are defined in [RFC8008],
+      including (1) Delivery Protocol, (2) Acquisition Protocol, (3)
+      Redirection Mode, (4) Capabilities related to CDNI Logging, and
+      (5) Capabilities related to CDNI Metadata.  Each capability type
+      is registered as a CDNI Payload Type [RFC7736] which indicates the
+      data format of the corresponding CDNI capability object.
 
    o  Footprint and capabilities are defined together and cannot be
       interpreted independently from each other.  Specifically,
@@ -1882,22 +1882,22 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
 8.  Security Considerations
 
    As an extension of the base ALTO protocol ([RFC7285]), this document
-   fits into the architecture of the base protocol.  And hence its
-   Security Considerations (Section 15 of [RFC7285]) fully apply when
-   this extension is provided by an ALTO server.
+   fits into the architecture of the base protocol.  And hence Security
+   Considerations of the base protocol (Section 15 of [RFC7285]) fully
+   apply when this extension is provided by an ALTO server.
 
    In the context of CDNI FCI, additional security considerations should
    be included as follows:
 
-   For authenticity and integrity of ALTO information, an attacker may
-   disguise itself as an ALTO server for a dCDN, and provide false
-   capabilities and footprints to a uCDN using the CDNI FCI service.
-   Such false information may lead a uCDN to (1) select an incorrect
-   dCDN to serve user requests, or (2) skip uCDNs in good conditions.
+   o  For authenticity and integrity of ALTO information, an attacker
+      may disguise itself as an ALTO server for a dCDN, and provide
+      false capabilities and footprints to a uCDN using the CDNI FCI
+      service.  Such false information may lead a uCDN to (1) select an
+      incorrect dCDN to serve user requests, or (2) skip uCDNs in good
+      conditions.
 
-   For potential undesirable guidance from authenticated ALTO
-   information, a dCDN can provide a uCDN with limited capabilities and
-
+   o  For potential undesirable guidance from authenticated ALTO
+      information, a dCDN can provide a uCDN with limited capabilities
 
 
 
@@ -1906,34 +1906,38 @@ Seedorf, et al.          Expires August 27, 2020               [Page 34]
 Internet-Draft             CDNI FCI using ALTO             February 2020
 
 
-   smaller footprint coverage so that the dCDN can avoid transferring
-   traffic for a uCDN which they should have to transfer.
+      and smaller footprint coverage so that the dCDN can avoid
+      transferring traffic for a uCDN which they should have to
+      transfer.
 
-   For confidentiality and privacy of ALTO information, footprint
-   properties integrated with ALTO unified property may expose network
-   location identifiers (e.g., IP addresses or fine-grained PIDs).
+   o  For confidentiality and privacy of ALTO information, footprint
+      properties integrated with ALTO unified property may expose
+      network location identifiers (e.g., IP addresses or fine-grained
+      PIDs).
 
-   Without access control of ALTO services, an attacker may conduct
-   service degradation attacks.  It may request potentially large, full
-   CDNI FCI resources from an ALTO server in a dCDN continuously, to
-   consume the bandwidth resources of that ALTO server.  It may also
-   query filtered property map services with many smaller individual
-   footprints, to consume the computation resources of the ALTO server.
+   o  For availability of ALTO services, an attacker may conduct service
+      degradation attacks using services defined in this document to
+      disable ALTO services of a network.  It may request potentially
+      large, full CDNI FCI resources from an ALTO server in a dCDN
+      continuously, to consume the bandwidth resources of that ALTO
+      server.  It may also query filtered property map services with
+      many smaller individual footprints, to consume the computation
+      resources of the ALTO server.
 
-   Protection strategies as described in RFC 7285 should be applied to
-   address aforementioned security considerations.  In addition, the
-   isolation of full/filtered CDNI FCI resources should also be
-   considered.  In particular, if a dCDN signs agreements with multiple
-   uCDNs, it must isolate full/ filtered CDNI FCI resources for
-   different uCDNs in that uCDNs will not redirect requests which should
-   not have to be served by this dCDN to this dCDN and it may not
-   disclose extra information to uCDNs.
+   Although protection strategies as described in Section 15 of
+   [RFC7285] should be applied to address aforementioned security
+   considerations, one additional information leakage risk introduced by
+   this document could not be addressed by these strategies.  In
+   particular, if a dCDN signs agreements with multiple uCDNs without
+   any isolation, this dCDN may disclose extra information of one uCDN
+   to another one.  In that case, one uCDN may redirect requests which
+   should not have to be served by this dCDN to it.
 
-   One approach to reducing the risk is that a dCDN could consider
-   generating URIs of different full/filtered CDNI FCI resources by
-   hashing its company ID, a uCDN's company ID as well as their
-   agreements.  A dCDN SHOULD avoid exposing all full/filtered CDNI FCI
-   resources in one of its IRDs.
+   To reduce the risk, a dCDN should isolate full/filtered CDNI FCI
+   resources for different uCDNs.  It could consider generating URIs of
+   different full/filtered CDNI FCI resources by hashing its company ID,
+   a uCDN's company ID as well as their agreements.  A dCDN should avoid
+   exposing all full/filtered CDNI FCI resources in one of its IRDs.
 
 9.  Acknowledgments
 
@@ -1950,10 +1954,6 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
    (NICT) in Japan (contract no. 167).  The views and conclusions
    contained herein are those of the authors and should not be
    interpreted as necessarily representing the official policies or
-   endorsements, either expressed or implied, of the GreenICN project,
-   the European Commission, or NICT.
-
-
 
 
 
@@ -1961,6 +1961,9 @@ Seedorf, et al.          Expires August 27, 2020               [Page 35]
 
 Internet-Draft             CDNI FCI using ALTO             February 2020
 
+
+   endorsements, either expressed or implied, of the GreenICN project,
+   the European Commission, or NICT.
 
 10.  References
 
@@ -1973,9 +1976,9 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
               2013.
 
    [RFC5693]  Seedorf, J. and E. Burger, "Application-Layer Traffic
-              Optimization (ALTO) Problem Statement", RFC 5693, DOI
-              10.17487/RFC5693, October 2009, <https://www.rfc-
-              editor.org/info/rfc5693>.
+              Optimization (ALTO) Problem Statement", RFC 5693,
+              DOI 10.17487/RFC5693, October 2009,
+              <https://www.rfc-editor.org/info/rfc5693>.
 
    [RFC6707]  Niven-Jenkins, B., Le Faucheur, F., and N. Bitar, "Content
               Distribution Network Interconnection (CDNI) Problem
@@ -1983,9 +1986,9 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
               2012, <https://www.rfc-editor.org/info/rfc6707>.
 
    [RFC6793]  Vohra, Q. and E. Chen, "BGP Support for Four-Octet
-              Autonomous System (AS) Number Space", RFC 6793, DOI
-              10.17487/RFC6793, December 2012, <https://www.rfc-
-              editor.org/info/rfc6793>.
+              Autonomous System (AS) Number Space", RFC 6793,
+              DOI 10.17487/RFC6793, December 2012,
+              <https://www.rfc-editor.org/info/rfc6793>.
 
    [RFC7285]  Alimi, R., Ed., Penno, R., Ed., Yang, Y., Ed., Kiesel, S.,
               Previdi, S., Roome, W., Shalunov, S., and R. Woundy,
@@ -2004,12 +2007,9 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
               Semantics", RFC 8008, DOI 10.17487/RFC8008, December 2016,
               <https://www.rfc-editor.org/info/rfc8008>.
 
-10.2.  Informative References
 
-   [I-D.ietf-alto-incr-update-sse]
-              Roome, W. and Y. Yang, "ALTO Incremental Updates Using
-              Server-Sent Events (SSE)", draft-ietf-alto-incr-update-
-              sse-20 (work in progress), February 2020.
+
+
 
 
 
@@ -2017,6 +2017,13 @@ Seedorf, et al.          Expires August 27, 2020               [Page 36]
 
 Internet-Draft             CDNI FCI using ALTO             February 2020
 
+
+10.2.  Informative References
+
+   [I-D.ietf-alto-incr-update-sse]
+              Roome, W. and Y. Yang, "ALTO Incremental Updates Using
+              Server-Sent Events (SSE)", draft-ietf-alto-incr-update-
+              sse-20 (work in progress), February 2020.
 
    [I-D.ietf-alto-path-vector]
               Gao, K., Lee, Y., Randriamasy, S., Yang, Y., and J. Zhang,
@@ -2029,11 +2036,15 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
               ietf-alto-unified-props-new-10 (work in progress),
               November 2019.
 
+   [RFC7736]  Ma, K., "Content Delivery Network Interconnection (CDNI)
+              Media Type Registration", RFC 7736, DOI 10.17487/RFC7736,
+              December 2015, <https://www.rfc-editor.org/info/rfc7736>.
+
    [RFC7975]  Niven-Jenkins, B., Ed. and R. van Brandenburg, Ed.,
               "Request Routing Redirection Interface for Content
-              Delivery Network (CDN) Interconnection", RFC 7975, DOI
-              10.17487/RFC7975, October 2016, <https://www.rfc-
-              editor.org/info/rfc7975>.
+              Delivery Network (CDN) Interconnection", RFC 7975,
+              DOI 10.17487/RFC7975, October 2016,
+              <https://www.rfc-editor.org/info/rfc7975>.
 
 Authors' Addresses
 
@@ -2057,6 +2068,12 @@ Authors' Addresses
    URI:   http://www.cs.yale.edu/~yry/
 
 
+
+Seedorf, et al.          Expires August 27, 2020               [Page 37]
+
+Internet-Draft             CDNI FCI using ALTO             February 2020
+
+
    Kevin J. Ma
    Ericsson
    43 Nagog Park
@@ -2065,13 +2082,6 @@ Authors' Addresses
 
    Phone: +1-978-844-5100
    Email: kevin.j.ma.ietf@gmail.com
-
-
-
-
-Seedorf, et al.          Expires August 27, 2020               [Page 37]
-
-Internet-Draft             CDNI FCI using ALTO             February 2020
 
 
    Jon Peterson
@@ -2090,16 +2100,6 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
    China
 
    Email: jingxuan.zhang@tongji.edu.cn
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -214,8 +214,8 @@
       target="RFC8008"/>, including (1) Delivery Protocol, (2) Acquisition
       Protocol, (3) Redirection Mode, (4) Capabilities related to CDNI
       Logging, and (5) Capabilities related to CDNI Metadata. Each capability
-      type is registered as a CDNI Payload Type <xref target="7736"/> which
-      indicates the data format of the corresponding CDNI capability
+      type is registered as a CDNI Payload Type <xref target="RFC7736"/>
+      which indicates the data format of the corresponding CDNI capability
       object.</t>
 
       <t>Footprint and capabilities are defined together 
@@ -1659,14 +1659,15 @@ with fields:
 
 	<section title="Security Considerations" anchor="sect-8"><t>
    As an extension of the base ALTO protocol (<xref target="RFC7285"/>), this document
-   fits into the architecture of the base protocol.  And hence its
-   Security Considerations (Section 15 of <xref target="RFC7285"/>) fully apply when
+   fits into the architecture of the base protocol.  And hence
+   Security Considerations of the base protocol (Section 15 of <xref target="RFC7285"/>) fully apply when
    this extension is provided by an ALTO server.</t>
 
 	<t>
    In the context of CDNI FCI, additional security considerations should
    be included as follows:</t>
 
+	<t><list style="symbols">
 	<t>
    For authenticity and integrity of ALTO information, an attacker may
    disguise itself as an ALTO server for a dCDN, and provide false
@@ -1689,27 +1690,32 @@ with fields:
    </t>
 
 	<t>
-   Without access control of ALTO services, an attacker may conduct service 
-   degradation attacks. It may request potentially large, full CDNI FCI 
-   resources from an ALTO server in a dCDN continuously, to consume
-   the bandwidth resources of that ALTO server. It may also query filtered 
-   property map services with many smaller individual footprints, to 
-   consume the computation resources of the ALTO server.</t>
+   For availability of ALTO services, an attacker may conduct service
+   degradation attacks using services defined in this document to disable
+   ALTO services of a network. It may request potentially large, full CDNI
+   FCI resources from an ALTO server in a dCDN continuously, to consume the
+   bandwidth resources of that ALTO server. It may also query filtered
+   property map services with many smaller individual footprints, to consume
+   the computation resources of the ALTO server.
+   </t>
+  </list></t>
 
 	<t>
-   Protection strategies as described in RFC 7285 should be applied to address
-   aforementioned security considerations. In addition, the isolation of 
-   full/filtered CDNI FCI resources should also be considered. In particular, 
-   if a dCDN signs agreements with multiple uCDNs, it must isolate full/
-   filtered CDNI FCI resources for different uCDNs in that uCDNs will
-   not redirect requests which should not have to be served by this dCDN
-   to this dCDN and it may not disclose extra information to uCDNs.</t>
+   Although protection strategies as described in Section 15 of <xref
+   target="RFC7285"/> should be applied to address aforementioned security
+   considerations, one additional information leakage risk introduced by this
+   document could not be addressed by these strategies. In particular, if a
+   dCDN signs agreements with multiple uCDNs without any isolation, this dCDN
+   may disclose extra information of one uCDN to another one. In that case,
+   one uCDN may redirect requests which should not have to be served by this
+   dCDN to it. </t>
 
 	<t>
-   One approach to reducing the risk is that a dCDN could consider generating 
-   URIs of different full/filtered CDNI FCI resources by hashing its company ID,
-   a uCDN's company ID as well as their agreements.  A dCDN SHOULD avoid
-   exposing all full/filtered CDNI FCI resources in one of its IRDs.</t>
+   To reduce the risk, a dCDN should isolate full/filtered CDNI FCI resources
+   for different uCDNs. It could consider generating URIs of different
+   full/filtered CDNI FCI resources by hashing its company ID, a uCDN's
+   company ID as well as their agreements. A dCDN should avoid exposing all
+   full/filtered CDNI FCI resources in one of its IRDs.</t>
 
 	</section>
 
