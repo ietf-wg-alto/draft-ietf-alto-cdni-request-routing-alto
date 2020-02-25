@@ -2,7 +2,7 @@
 
 
 
-CDNI                                                          J. Seedorf
+ALTO & CDNI WGs                                               J. Seedorf
 Internet-Draft                 HFT Stuttgart - Univ. of Applied Sciences
 Intended status: Standards Track                                 Y. Yang
 Expires: August 27, 2020                                     Tongji/Yale
@@ -10,7 +10,6 @@ Expires: August 27, 2020                                     Tongji/Yale
                                                                 Ericsson
                                                              J. Peterson
                                                                  Neustar
-                                                                  X. Lin
                                                                 J. Zhang
                                                                   Tongji
                                                        February 24, 2020
@@ -50,6 +49,7 @@ Status of This Memo
    material or to cite them other than as "work in progress."
 
    This Internet-Draft will expire on August 27, 2020.
+
 
 
 
@@ -1939,7 +1939,8 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
 
    The authors thank Matt Caulfield, Danny Alex Lachos Perez, Daryl
    Malas and Sanjay Mishra for their timely reviews and invaluable
-   comments.
+   comments.  Mr. Xiao Shawn Lin is an author of an early version of
+   this document, with many contributions.
 
    Jan Seedorf is partially supported by the GreenICN project (GreenICN:
    Architecture and Applications of Green Information Centric
@@ -1951,7 +1952,6 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
    interpreted as necessarily representing the official policies or
    endorsements, either expressed or implied, of the GreenICN project,
    the European Commission, or NICT.
-
 
 
 
@@ -2048,7 +2048,7 @@ Authors' Addresses
 
 
    Y.R. Yang
-   Tongji/Yale University
+   Yale University/PCL
    51 Prospect Street
    New Haven, CT  06511
    United States of America
@@ -2083,15 +2083,6 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
    Email: jon.peterson@neustar.biz
 
 
-   Xiao Shawn Lin
-   Tongji University
-   4800 Cao'an Hwy
-   Shanghai  201804
-   China
-
-   Email: x.shawn.lin@gmail.com
-
-
    Jingxuan Jensen Zhang
    Tongji University
    4800 Cao'an Hwy
@@ -2099,6 +2090,15 @@ Internet-Draft             CDNI FCI using ALTO             February 2020
    China
 
    Email: jingxuan.zhang@tongji.edu.cn
+
+
+
+
+
+
+
+
+
 
 
 

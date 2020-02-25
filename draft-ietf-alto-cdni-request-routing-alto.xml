@@ -34,7 +34,7 @@
 	</author>
 
 	<author fullname="Y.R. Yang" initials="Y." surname="Yang">
-	<organization abbrev="Tongji/Yale">Tongji/Yale University</organization>
+	<organization abbrev="Tongji/Yale">Yale University/PCL</organization>
 	<address><postal><street>51 Prospect Street</street>
 	<street>New Haven, CT  06511</street>
 	<street>United States of America</street>
@@ -65,6 +65,7 @@
 	</address>
 	</author>
 
+   <!--
 	<author fullname="Xiao Shawn Lin" initials="X." surname="Lin">
 	<organization abbrev="Tongji">Tongji University</organization>
 	<address><postal><street>4800 Cao'an Hwy</street>
@@ -74,6 +75,7 @@
 	<email>x.shawn.lin@gmail.com</email>
 	</address>
 	</author>
+   -->
 
 	<author fullname="Jingxuan Jensen Zhang" initials="J." surname="Zhang">
 	<organization abbrev="Tongji">Tongji University</organization>
@@ -86,7 +88,7 @@
 	</author>
 
 	<date day="24" month="February" year="2020"/>
-	<workgroup>CDNI</workgroup>
+	<workgroup>ALTO &amp; CDNI WGs</workgroup>
 	<abstract><t>
    The Content Delivery Networks Interconnection (CDNI) framework
    <xref target="RFC6707"/> defines a set of protocols to interconnect CDNs, to achieve
@@ -1706,7 +1708,8 @@ with fields:
 	<section title="Acknowledgments" anchor="sect-9"><t>
    The authors thank Matt Caulfield, Danny Alex Lachos Perez, 
    Daryl Malas and Sanjay Mishra for their
-   timely reviews and invaluable comments.</t>
+   timely reviews and invaluable comments. Mr. Xiao Shawn Lin is an author of
+   an early version of this document, with many contributions.</t>
 
 	<t>
    Jan Seedorf is partially supported by the GreenICN project (GreenICN:
