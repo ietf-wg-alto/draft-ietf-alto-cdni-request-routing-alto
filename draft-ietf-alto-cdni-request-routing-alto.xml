@@ -210,13 +210,13 @@
       Delivery Protocol, (2) Acquisition Protocol, (3) Redirection Mode,
       (4) Capabilities related to CDNI Logging, and (5) Capabilities
       related to CDNI Metadata.</t> -->
-      <t>Multiple initial capability types are defined in <xref
+      <t>Multiple initial types of capabilities are defined in <xref
       target="RFC8008"/>, including (1) Delivery Protocol, (2) Acquisition
       Protocol, (3) Redirection Mode, (4) Capabilities related to CDNI
-      Logging, and (5) Capabilities related to CDNI Metadata. Each capability
-      type is registered as a CDNI Payload Type <xref target="RFC7736"/>
-      which indicates the data format of the corresponding CDNI capability
-      object.</t>
+      Logging, and (5) Capabilities related to CDNI Metadata. They are
+      required in all cases and therefore considered as
+      mandatory-to-implement capabilities for all CDNI FCI
+      implementations.</t>
 
       <t>Footprint and capabilities are defined together 
       and cannot be interpreted independently from each other. Specifically, 
