@@ -8,8 +8,8 @@
 <!ENTITY RFC8006 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8006.xml">
 <!ENTITY RFC8008 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8008.xml">
 <!ENTITY I-D.ietf-alto-incr-update-sse SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-alto-incr-update-sse-20.xml">
-<!ENTITY I-D.ietf-alto-path-vector SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-alto-path-vector-09.xml">
-<!ENTITY I-D.ietf-alto-unified-props-new SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-alto-unified-props-new-10.xml">
+<!ENTITY I-D.ietf-alto-path-vector SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-alto-path-vector-10.xml">
+<!ENTITY I-D.ietf-alto-unified-props-new SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-alto-unified-props-new-11.xml">
 <!ENTITY RFC7975 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7975.xml">
 ]>
 <rfc submissionType="IETF" docName="draft-ietf-alto-cdni-request-routing-alto-10" category="std" ipr="trust200902">
@@ -204,14 +204,8 @@
       prefix length.  There must also be support for multiple IP address
       versions, i.e., IPv4 and IPv6, in such a footprint.</t>
 
-      <!-- <t>Multiple "base" capabilities are defined [TODO: which RFC]. By
-      "base" capabilities, they are required in all cases and therefore constitute
-      mandatory capabilities to be supported by the CDNI FCI: (1)
-      Delivery Protocol, (2) Acquisition Protocol, (3) Redirection Mode,
-      (4) Capabilities related to CDNI Logging, and (5) Capabilities
-      related to CDNI Metadata.</t> -->
       <t>Multiple initial types of capabilities are defined in <xref
-      target="RFC8008"/>, including (1) Delivery Protocol, (2) Acquisition
+      target="RFC8008"/> including (1) Delivery Protocol, (2) Acquisition
       Protocol, (3) Redirection Mode, (4) Capabilities related to CDNI
       Logging, and (5) Capabilities related to CDNI Metadata. They are
       required in all cases and therefore considered as
@@ -1071,34 +1065,32 @@ EXAMPLE 2
        [CDNIFCICapability cdni-fci-capabilities<0..*>;]
    } ReqFilteredCDNIFCI;
 
-with fields:
 ]]></artwork>
-	</figure>
-	<t><list style="hanging" hangIndent="3"><t hangText="capability-type:">
-	The same as Base Advertisement Object's capability-
-	<vspace blankLines="0"/>
-	type defined in Section 5.1 of <xref target="RFC8008"/>.
-	</t>
+  </figure>
+	<t>
+    with fields:
+    <list style="hanging" hangIndent="3">
+      <t hangText="capability-type:">
+        The same as Base Advertisement Object's capability-type defined in
+        Section 5.1 of <xref target="RFC8008" />.
+      </t>
 
-	<t hangText="capability-value:">
-	The same as Base Advertisement Object's
-	<vspace blankLines="0"/>
-	capability-value defined in Section 5.1 of <xref target="RFC8008"/>.
-	</t>
+      <t hangText="capability-value:">
+        The same as Base Advertisement Object's capability-value defined in
+        Section 5.1 of <xref target="RFC8008" />.
+      </t>
 
-	<t hangText="cdni-fci-capabilities:">
-	A list of CDNI FCI capabilities defined in
-	<vspace blankLines="0"/>
-	Section 5.1 of <xref target="RFC8008"/> for which footprints are to be returned.
-      If a list is empty or not appearing, the ALTO server MUST
-      interpret it as a request for the full CDNI FCI resource.  The
-      ALTO server MUST interpret entries appearing in a list multiple
-      times as if they appeared only once.  If the ALTO server does not
-      define any footprints for a CDNI capability, it MUST omit this
-      capability from the response.
-	</t>
-
-	</list>
+      <t hangText="cdni-fci-capabilities:">
+        A list of CDNI FCI capabilities defined in Section 5.1 of <xref
+        target="RFC8008" /> for which footprints are to be returned. If a
+        list is empty or not appearing, the ALTO server MUST interpret it as
+        a request for the full CDNI FCI resource. The ALTO server MUST
+        interpret entries appearing in a list multiple times as if they
+        appeared only once. If the ALTO server does not define any footprints
+        for a CDNI capability, it MUST omit this capability from the
+        response.
+      </t>
+    </list>
 	</t>
 
 	</section>
@@ -1547,7 +1539,6 @@ with fields:
           "properties": [ "my-default-cdnifci.cdni-fci-capabilities",
                           "my-default-networkmap.pid" ],
           "entities": [
-
             "ipv4:192.0.2.0/24",
             "ipv6:2001:db8::/32"
           ]
