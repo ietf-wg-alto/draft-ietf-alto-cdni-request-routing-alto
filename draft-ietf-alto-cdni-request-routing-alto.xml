@@ -133,7 +133,7 @@
 
       <t>
         Among the four interfaces, the CDNI Request Routing Interface
-        provides key functions, as specified in <xref target="RFC6707"/> :
+        provides key functions, as specified in <xref target="RFC6707"/>:
         "The CDNI Request Routing interface enables a Request Routing
         function in an Upstream CDN to query a Request Routing function in a
         Downstream CDN to determine if the Downstream CDN is able (and
@@ -150,9 +150,9 @@
       <t>
         Correspondingly, the request routing interface is broadly divided
         into two functionalities: (1) the CDNI Footprint &amp; Capabilities
-        Advertisement interface (FCI) defined in <xref target="RFC8008"/> ,
+        Advertisement interface (FCI) defined in <xref target="RFC8008"/>,
         and (2) the CDNI Request Routing Redirection interface (RI) defined
-        in <xref target="RFC7975"/> . Since this document focuses on the
+        in <xref target="RFC7975"/>. Since this document focuses on the
         first functionality (CDNI FCI), below is more details about it.
       </t>
 
@@ -165,7 +165,7 @@
       <t>
         A key component in defining CDNI FCI is defining objects describing
         the footprints and capabilities of a dCDN. Such objects are already
-        defined in <xref target="RFC8008"/> . A protocol to transport and
+        defined in <xref target="RFC8008"/>. A protocol to transport and
         update such objects between a uCDN and a dCDN, however, is not
         defined. Hence, the scope of this document is to define such a
         protocol by introducing a new Application-Layer Traffic Optimization
@@ -1011,7 +1011,7 @@ EXAMPLE 2
  Accept: application/alto-networkmap+json,application/alto-error+json
 
  HTTP/1.1 200 OK
- Content-Length: 308
+ Content-Length: 309
  Content-Type: application/alto-networkmap+json
 
  {
@@ -1027,7 +1027,7 @@ EXAMPLE 2
        "ipv4": [ "192.0.2.0/24", "198.51.100.0/25" ]
      },
      "germany": {
-       "ipv4": [ "203.0.113.0/24"]
+       "ipv4": [ "203.0.113.0/24" ]
      }
    }
  }
