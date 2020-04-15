@@ -735,7 +735,7 @@ EXAMPLE 2
        }
      },
      "update-my-cdni-fci" : {
-       "uri": "http:///alto.example.com/updates/cdnifci",
+       "uri": "https:///alto.example.com/updates/cdnifci",
        "media-type" : "text/event-stream",
        "accepts" : "application/alto-updatestreamparams+json",
        "uses" : [
@@ -759,7 +759,7 @@ EXAMPLE 2
        }
      },
      "update-my-props": {
-       "uri" : "http://alto.example.com/updates/properties",
+       "uri" : "https://alto.example.com/updates/properties",
        "media-type" : "text/event-stream",
        "uses" : [
          "cdnifci-property-map",
@@ -907,7 +907,7 @@ EXAMPLE 2
 
  event: application/alto-updatestreamcontrol+json
  data: {"control-uri":
- data: "http://alto.example.com/updates/streams/3141592653589"}
+ data: "https://alto.example.com/updates/streams/3141592653589"}
 
  event: application/alto-cdnifci+json,my-cdnifci-stream
  data: { ... full CDNI FCI resource ... }
@@ -1006,8 +1006,8 @@ EXAMPLE 2
           <figure>
             <artwork>
               <![CDATA[
- GET /networkmap HTTP/1.1
- Host: http://alto.example.com/myeunetmap
+ GET /myeunetmap HTTP/1.1
+ Host: alto.example.com
  Accept: application/alto-networkmap+json,application/alto-error+json
 
  HTTP/1.1 200 OK
@@ -1123,7 +1123,7 @@ EXAMPLE 2
 
   event: application/alto-updatestreamcontrol+json
   data: {"control-uri":
-  data: "http://alto.example.com/updates/streams/3141592653590"}
+  data: "https://alto.example.com/updates/streams/3141592653590"}
 
   event: application/alto-networkmap+json,my-eu-netmap-stream
   data: { ... full Network Map of my-eu-netmap ... }
@@ -1439,7 +1439,7 @@ EXAMPLE 2
 
   event: application/alto-updatestreamcontrol+json
   data: {"control-uri":
-  data: "http://alto.example.com/updates/streams/3141592653590"}
+  data: "https://alto.example.com/updates/streams/3141592653590"}
 
   event: application/alto-cdnifci+json,my-filtered-fci-stream
   data: { ... filtered CDNI FCI resource ... }
@@ -1757,7 +1757,7 @@ EXAMPLE 2
 
   event: application/alto-updatestreamcontrol+json
   data: {"control-uri":
-  data: "http://alto.example.com/updates/streams/1414213562373"}
+  data: "https://alto.example.com/updates/streams/1414213562373"}
 
   event: application/alto-cdnifci+json,fci-propmap-stream
   data: { ... filtered property map ... }
