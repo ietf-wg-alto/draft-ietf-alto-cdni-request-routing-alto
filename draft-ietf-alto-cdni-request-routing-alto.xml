@@ -1479,15 +1479,17 @@ EXAMPLE 2
         target="I-D.ietf-alto-unified-props-new"/>. This section describes
         how ALTO clients look up properties for individual footprints. First,
         it describes how to represent footprint objects as entities in the
-        ALTO property map. Second, it provides examples of the full property
-        map and the filtered property map supporting CDNI capabilities, and
-        their incremental updates.
+        ALTO property map. Then it describes how to represent footprint
+        capabilities as entity properties in the ALTO property map. Finally,
+        it provides examples of the full property map and the filtered
+        property map supporting CDNI capabilities, and their incremental
+        updates.
       </t>
 
       <section title="Representing Footprint Objects as Property Map Entities" anchor="footprinttoentities">
         <t>
           A footprint object has two properties: footprint-type and
-          footprint- value. A footprint-value is an array of footprint values
+          footprint-value. A footprint-value is an array of footprint values
           conforming to the specification associated with the registered
           footprint type ("ipv4cidr", "ipv6cidr", "asn", and "countrycode").
           Considering each ALTO entity defined in <xref
@@ -1507,8 +1509,10 @@ EXAMPLE 2
         </t>
 
         <t>
-          Here is an example of representing a footprint object as a set of
-          entities in the ALTO property map.
+          Here is an example of representing a footprint object of "ipv4cidr"
+          type as a set of "ipv4" entities in the ALTO property map. The
+          representation of the footprint object of "ipv6cidr" type is
+          similar.
         </t>
 
         <figure>
@@ -1585,6 +1589,24 @@ EXAMPLE 2
 
         </section>
 
+      </section>
+
+      <section title="Representing CDNI Capabilities as Property Map Entity Properties" anchor="capabilitytoproperties">
+        An ALTO server can provide a property map resource mapping the
+        "cdni-fci-capablities" entity property type for a CDNI FCI resource
+        that it provides to an "ipv4", "ipv6", "asn" or "countrycode" entity
+        domain. The property name of the "cdni-fci-capapbilities" property in
+        a provided mapping MUST be a resource-specific entity property name.
+        The associated resource id of a "cdni-fci-capabilities" property MUST
+        be a CDNI FCI resource provided by the ALTO server. The value of a
+        "cdni-fci-capabilities" property MUST be a JSON array. Each element
+        in a "cdni-fci-capabilities" property MUST be an JSON object
+        including "capability-type" and "capability-value". The value of a
+        "cdni-fci-capabilities" property for an "ipv4", "ipv6", "asn" or
+        "countrycode" entity MUST include all the combinations of
+        "capability-type" and "capability-value" that are provided by the
+        associated CDNI FCI resource and the represented footprint object of
+        this entity are in their footprint restrictions.
       </section>
 
       <section title="Examples">
@@ -1818,7 +1840,7 @@ EXAMPLE 2
           <ttcol>Specification</ttcol>
           <c>altopid</c>
           <c>A list of PID-names</c>
-          <c>Section 4 of RFCthis</c>
+          <c><xref target="cdnifcineetworkmap"/> of RFCthis</c>
         </texttable>
         <t>
           [RFC Editor: Please replace RFCthis with the published RFC number
@@ -1842,15 +1864,19 @@ EXAMPLE 2
           <ttcol>Hierarchy &amp; Inheritance</ttcol>
           <c>asn</c>
           <c>
-            See <xref target="asn-entity-id"/>
+            See <xref target="asn-entity-id"/> of RFCthis
           </c>
           <c>None</c>
           <c>countrycode</c>
           <c>
-            See <xref target="countrycode-entity-id"/>
+            See <xref target="countrycode-entity-id"/> of RFCthis
           </c>
           <c>None</c>
         </texttable>
+        <t>
+          [RFC Editor: Please replace RFCthis with the published RFC number
+          for this document.]
+        </t>
       </section>
 
       <section title="ALTO Entity Property Type Registry">
@@ -1866,8 +1892,13 @@ EXAMPLE 2
           <ttcol>Identifier</ttcol>
           <ttcol>Intended Semantics</ttcol>
           <c>cdni-fci-capabilities</c>
-          <c>An array of CDNI FCI capability objects</c>
+          <c><xref target="capabilitytoproperties"/> of RFCthis</c>
+          <!-- <c>An array of CDNI FCI capability objects</c> -->
         </texttable>
+        <t>
+          [RFC Editor: Please replace RFCthis with the published RFC number
+          for this document.]
+        </t>
       </section>
 
     </section>
@@ -1954,7 +1985,7 @@ EXAMPLE 2
       </t>
 
       <t>
-        Jan Seedorf is partially supported by the GreenICN project (GreenICN:
+        Jan Seedorf has been partially supported by the GreenICN project (GreenICN:
         Architecture and Applications of Green Information Centric
         Networking), a research project supported jointly by the European
         Commission under its 7th Framework Program (contract no. 608518) and
@@ -1964,6 +1995,17 @@ EXAMPLE 2
         interpreted as necessarily representing the official policies or
         endorsements, either expressed or implied, of the GreenICN project,
         the European Commission, or NICT.
+      </t>
+
+      <t>
+        This document has also been supported by the Coordination Support
+        Action entitled 'Supporting European Experts Presence in
+        lnternational Standardisation Activities in ICT' ("StandlCT.eu")
+        funded by the European Commission under the Horizon 2020 Programme
+        with Grant Agreement no. 780439. The views and conclusions contained
+        herein are those of the authors and should not be interpreted as
+        necessarily representing the official policies or endorsements,
+        either expressed or implied, of the European Commission.
       </t>
     </section>
 
