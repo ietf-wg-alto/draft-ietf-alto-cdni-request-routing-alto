@@ -1592,21 +1592,24 @@ EXAMPLE 2
       </section>
 
       <section title="Representing CDNI Capabilities as Property Map Entity Properties" anchor="capabilitytoproperties">
-        An ALTO server can provide a property map resource mapping the
-        "cdni-fci-capablities" entity property type for a CDNI FCI resource
-        that it provides to an "ipv4", "ipv6", "asn" or "countrycode" entity
-        domain. The property name of the "cdni-fci-capapbilities" property in
-        a provided mapping MUST be a resource-specific entity property name.
-        The associated resource id of a "cdni-fci-capabilities" property MUST
-        be a CDNI FCI resource provided by the ALTO server. The value of a
-        "cdni-fci-capabilities" property MUST be a JSON array. Each element
-        in a "cdni-fci-capabilities" property MUST be an JSON object
-        including "capability-type" and "capability-value". The value of a
-        "cdni-fci-capabilities" property for an "ipv4", "ipv6", "asn" or
-        "countrycode" entity MUST include all the combinations of
-        "capability-type" and "capability-value" that are provided by the
-        associated CDNI FCI resource and the represented footprint object of
-        this entity are in their footprint restrictions.
+        <t>
+          An ALTO server can provide a property map resource mapping the
+          "cdni-fci-capablities" entity property type for a CDNI FCI resource
+          that it provides to an "ipv4", "ipv6", "asn" or "countrycode"
+          entity domain. The property name of the "cdni-fci-capapbilities"
+          property in a provided mapping MUST be a resource-specific entity
+          property name. The associated resource id of a
+          "cdni-fci-capabilities" property MUST be a CDNI FCI resource
+          provided by the ALTO server. The value of a "cdni-fci-capabilities"
+          property MUST be a JSON array. Each element in a
+          "cdni-fci-capabilities" property MUST be an JSON object including
+          "capability-type" and "capability-value". The value of a
+          "cdni-fci-capabilities" property for an "ipv4", "ipv6", "asn" or
+          "countrycode" entity MUST include all the combinations of
+          "capability-type" and "capability-value" that are provided by the
+          associated CDNI FCI resource and the represented footprint object
+          of this entity are in their footprint restrictions.
+        </t>
       </section>
 
       <section title="Examples">
@@ -1840,7 +1843,7 @@ EXAMPLE 2
           <ttcol>Specification</ttcol>
           <c>altopid</c>
           <c>A list of PID-names</c>
-          <c><xref target="cdnifcineetworkmap"/> of RFCthis</c>
+          <c><xref target="cdnifcinetworkmap"/> of RFCthis</c>
         </texttable>
         <t>
           [RFC Editor: Please replace RFCthis with the published RFC number
