@@ -979,7 +979,7 @@ EXAMPLE 2
           corresponding footprint value is a list of PIDNames as defined in
           <xref target="RFC7285"/>. These PIDNames are references of PIDs
           in a network map resource. Hence a CDNI FCI with "altopid"
-          footprints depends on a network map. For such a CDNI FCI map, the
+          footprints depends on a network map. For such a CDNI FCI resource, the
           resource id of its dependent network map MUST be included in the
           "uses" field of its IRD entry, and the "dependent-vtag" field with
           a reference to this network map MUST be included in its response
@@ -1491,21 +1491,41 @@ EXAMPLE 2
           A footprint object has two properties: footprint-type and
           footprint-value. A footprint-value is an array of footprint values
           conforming to the specification associated with the registered
-          footprint type ("ipv4cidr", "ipv6cidr", "asn", and "countrycode").
+          footprint type ("ipv4cidr", "ipv6cidr", "asn", "countrycode", and "altopid").
           Considering each ALTO entity defined in <xref
           target="I-D.ietf-alto-unified-props-new"/> also has two
           properties: entity domain type and domain-specific identifier, a
           straightforward approach to represent a footprint as an ALTO entity
-          is to regard its footprint-type as an entity domain type, and its
-          footprint value as a domain-specific identifier. According to <xref
-          target="I-D.ietf-alto-unified-props-new"/>, "ipv4" and "ipv6" are
-          two predefined entity domain types, which can be used to represent
-          "ipv4cidr" and "ipv6cidr" footprints respectively. However, no
-          existing entity domain type can represent "asn" and "countrycode"
-          footprints. To represent footprint-type "asn" and "countrycode",
-          this document registers two new domains in <xref target="iana"/>
-          in addition to the ones in <xref
-          target="I-D.ietf-alto-unified-props-new"/>.
+          is to represent its footprint-type as an entity domain type, and its
+          footprint value as a domain-specific identifier.
+        </t>
+
+        <t>
+          Each existing footprint type can be represented as an entity domain type as follows:
+          <list style="symbols">
+            <t>
+              According to <xref target="I-D.ietf-alto-unified-props-new"/>,
+              "ipv4" and "ipv6" are two predefined entity domain types, which
+              can be used to represent "ipv4cidr" and "ipv6cidr" footprints
+              respectively.
+            </t>
+            <t>
+              "pid" is also a predefined entity domain type, which can be
+              used to represent "altopid" footprints. Note that "pid" is a
+              resource-specific entity domain. To represent an "altopid"
+              footprint, the associated information resource of the
+              corresponding "pid" entity domain MUST be the dependent network
+              map used by the CDNI FCI resource providing this "altopid"
+              footprint.
+            </t>
+            <t>
+              However, no existing entity domain type can represent "asn" and
+              "countrycode" footprints. To represent footprint-type "asn" and
+              "countrycode", this document registers two new domains in <xref
+              target="iana"/> in addition to the ones in <xref
+              target="I-D.ietf-alto-unified-props-new"/>.
+            </t>
+          </list>
         </t>
 
         <t>
