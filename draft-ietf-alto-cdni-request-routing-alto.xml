@@ -1513,7 +1513,7 @@ EXAMPLE 2
               "pid" is also a predefined entity domain type, which can be
               used to represent "altopid" footprints. Note that "pid" is a
               resource-specific entity domain. To represent an "altopid"
-              footprint, the associated information resource of the
+              footprint, the specifying information resource of the
               corresponding "pid" entity domain MUST be the dependent network
               map used by the CDNI FCI resource providing this "altopid"
               footprint.
@@ -1618,14 +1618,14 @@ EXAMPLE 2
           that it provides to an "ipv4", "ipv6", "asn" or "countrycode"
           entity domain. The property name of the "cdni-fci-capapbilities"
           property in a provided mapping MUST be a resource-specific entity
-          property name. The associated resource id of a
+          property name. The specifying resource of a
           "cdni-fci-capabilities" property MUST be a CDNI FCI resource
           provided by the ALTO server. The value of a "cdni-fci-capabilities"
           property MUST be a JSON array. Each element in a
           "cdni-fci-capabilities" property MUST be an JSON object including
           "capability-type" and "capability-value". The value of a
-          "cdni-fci-capabilities" property for an "ipv4", "ipv6", "asn" or
-          "countrycode" entity MUST include all the combinations of
+          "cdni-fci-capabilities" property for an "ipv4", "ipv6", "asn",
+          "countrycode" or "altopid" entity MUST include all the combinations of
           "capability-type" and "capability-value" that are provided by the
           associated CDNI FCI resource and the represented footprint object
           of this entity are in their footprint restrictions.
