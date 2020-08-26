@@ -14,7 +14,7 @@
 <!ENTITY I-D.ietf-alto-unified-props-new SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-alto-unified-props-new-11.xml">
 <!ENTITY RFC7975 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7975.xml">
 ]>
-<rfc submissionType="IETF" docName="draft-ietf-alto-cdni-request-routing-alto-11" category="std" ipr="trust200902">
+<rfc submissionType="IETF" docName="draft-ietf-alto-cdni-request-routing-alto-12" category="std" ipr="trust200902">
   <?rfc compact="yes"?>
   <?rfc text-list-symbols="o*+-"?>
   <?rfc subcompact="no"?>
@@ -1661,21 +1661,38 @@ EXAMPLE 2
           that it provides to an "ipv4", "ipv6", "asn" or "countrycode"
           entity domain.
         </t>
-        <t>
-          The property name of the "cdni-capapbilities" property in a
-          provided mapping MUST be a resource-specific entity property name.
-          The defining resource of a "cdni-capabilities" property MUST be a
-          CDNI Advertisement resource provided by the ALTO server. The value
-          of a "cdni-capabilities" property MUST be a JSON array. Each
-          element in a "cdni-capabilities" property MUST be an JSON object as
-          format of CDNICapability (see <xref
-          target="filteredcdnifciinputs"/>). The value of a
-          "cdni-capabilities" property for an "ipv4", "ipv6", "asn",
-          "countrycode" or "altopid" entity MUST include all the
-          CDNICapability objects that are provided by the defining CDNI
-          Advertisement resource and the represented footprint object of this
-          entity are in their footprint restrictions.
-        </t>
+        <section title="Defining Information Resource Media Type for Property Type cdni-capabilities">
+          <t>
+            The entity property type "cdni-capabilities" allows to define
+            resource-specific entity properties. When resource-specific
+            entity properties are defined with entity property type
+            "cdni-capabilities", the defining information resource for a
+            "cdni-capabilities" property MUST be a CDNI Advertisement
+            resource provided by the ALTO server. The media type of the
+            defining information resource for a "cdni-capabilities" property
+            is therefore:
+          </t>
+          <t>
+            application/alto-cdni+json
+          </t>
+        </section>
+          
+        <section title="Intended Semantics of Property Type cdni-capabilities">
+          <t>
+            A "cdni-capabilities" property for an entity is to indicate all
+            the CDNI capabilities that a corresponding CDNI Advertisement
+            resource provides for the footprint represented by this entity.
+            Thus, the value of a "cdni-capabilities" property MUST be a JSON array.
+            Each element in a "cdni-capabilities" property MUST be an JSON
+            object as format of CDNICapability (see <xref
+            target="filteredcdnifciinputs"/>). The value of a
+            "cdni-capabilities" property for an "ipv4", "ipv6", "asn",
+            "countrycode" or "altopid" entity MUST include all the
+            CDNICapability objects that are provided by the defining CDNI
+            Advertisement resource and the represented footprint object of
+            this entity are in their footprint restrictions.
+          </t>
+        </section>
       </section>
 
       <section title="Examples">
@@ -2067,7 +2084,7 @@ EXAMPLE 2
           <ttcol>Media Type of Defining Resource</ttcol>
           <c>cdni-capabilities</c>
           <c><xref target="capabilitytoproperties"/> of RFCthis</c>
-          <c></c>
+          <c>application/alto-cdni+json</c>
           <!-- <c>An array of CDNI FCI capability objects</c> -->
         </texttable>
         <t>
