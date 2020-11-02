@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+<!ENTITY RFC2119 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml">
 <!ENTITY RFC5693 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5693.xml">
 <!ENTITY RFC6707 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6707.xml">
 <!ENTITY RFC6793 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6793.xml">
@@ -9,12 +10,13 @@
 <!-- <!ENTITY RFC7736 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7736.xml"> -->
 <!ENTITY RFC8006 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8006.xml">
 <!ENTITY RFC8008 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8008.xml">
+<!ENTITY RFC8174 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml">
 <!ENTITY I-D.ietf-alto-incr-update-sse SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-alto-incr-update-sse-22.xml">
-<!ENTITY I-D.ietf-alto-path-vector SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-alto-path-vector-10.xml">
-<!ENTITY I-D.ietf-alto-unified-props-new SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-alto-unified-props-new-11.xml">
+<!ENTITY I-D.ietf-alto-path-vector SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-alto-path-vector-11.xml">
+<!ENTITY I-D.ietf-alto-unified-props-new SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-alto-unified-props-new-12.xml">
 <!ENTITY RFC7975 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7975.xml">
 ]>
-<rfc submissionType="IETF" docName="draft-ietf-alto-cdni-request-routing-alto-12" category="std" ipr="trust200902">
+<rfc submissionType="IETF" docName="draft-ietf-alto-cdni-request-routing-alto-13" category="std" ipr="trust200902">
   <?rfc compact="yes"?>
   <?rfc text-list-symbols="o*+-"?>
   <?rfc subcompact="no"?>
@@ -40,7 +42,7 @@
     </author>
 
     <author fullname="Y.R. Yang" initials="Y." surname="Yang">
-      <organization abbrev="Tongji/Yale">Yale University/PCL</organization>
+      <organization abbrev="Yale">Yale University</organization>
       <address>
         <postal>
           <street>51 Prospect Street</street>
@@ -119,6 +121,16 @@
         guidelines defined in <xref target="RFC8008"/>.
       </t>
     </abstract>
+
+    <note title="Requirements Language">
+      <t>
+        The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+        "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY",
+        and "OPTIONAL" in this document are to be interpreted as described
+        in BCP 14 <xref target="RFC2119"/><xref target="RFC8174"/> when,
+        and only when, they appear in all capitals, as shown here.
+      </t>
+    </note>
   </front>
 
   <middle>
@@ -326,7 +338,7 @@
         <t>
           <list style="symbols">
             <t>
-              ALTO is a protocol specifically designed to improve application
+              Application Layer-oriented: ALTO is a protocol specifically designed to improve application
               layer traffic (and application layer connections among hosts on
               the Internet) by providing additional information to
               applications that these applications could not easily retrieve
@@ -340,13 +352,6 @@
             </t>
 
             <t>
-              The semantics of an ALTO network map is an exact match for the
-              needed information to convey a footprint by a dCDN, in
-              particular, if such a footprint is being expressed by IP-prefix
-              ranges. Please see <xref target="cdnifcinetworkmap"/>.
-            </t>
-
-            <t>
               Security: The identification between uCDNs and dCDNs is an
               important requirement. ALTO maps can be signed and hence
               provide inherent integrity protection. Please see <xref
@@ -354,7 +359,7 @@
             </t>
 
             <t>
-              RESTful-Design: The ALTO protocol has undergone extensive
+              RESTful Design: The ALTO protocol has undergone extensive
               revisions in order to provide a RESTful design regarding the
               client-server interaction specified by the protocol. A CDNI FCI
               interface based on ALTO would inherit this RESTful design.
@@ -370,7 +375,14 @@
             </t>
 
             <t>
-              Filtered map service: The ALTO map filtering service would
+              Map Service: The semantics of an ALTO network map is an exact match for the
+              needed information to convey a footprint by a dCDN, in
+              particular, if such a footprint is being expressed by IP-prefix
+              ranges. Please see <xref target="cdnifcinetworkmap"/>.
+            </t>
+
+            <t>
+              Filtered Map Service: The ALTO map filtering service would
               allow a uCDN to query only for parts of an ALTO map. For
               example, the ALTO filtered property map service can enable a
               uCDN to query properties of a part of footprints efficiently
@@ -2026,7 +2038,7 @@ EXAMPLE 2
           <ttcol>Description</ttcol>
           <ttcol>Specification</ttcol>
           <c>altopid</c>
-          <c>A list of PID-names</c>
+          <c>A list of PID names</c>
           <c><xref target="cdnifcinetworkmap"/> of RFCthis</c>
         </texttable>
         <t>
@@ -2224,6 +2236,7 @@ EXAMPLE 2
 
         <seriesInfo name="ISO" value="3166-1:2013" />
       </reference>
+      &RFC2119;
       &RFC5693;
       &RFC6707;
       &RFC6793;
@@ -2232,6 +2245,7 @@ EXAMPLE 2
       <!-- &RFC7736; -->
       &RFC8006;
       &RFC8008;
+      &RFC8174;
     </references>
     <references title="Informative References">
       &I-D.ietf-alto-incr-update-sse;
