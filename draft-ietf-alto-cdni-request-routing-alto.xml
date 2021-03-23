@@ -4,19 +4,21 @@
 <!ENTITY RFC5693 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5693.xml">
 <!ENTITY RFC6707 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6707.xml">
 <!ENTITY RFC6793 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6793.xml">
-<!ENTITY RFC7159 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7159.xml">
+<!-- <!ENTITY RFC7159 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7159.xml"> -->
 <!ENTITY RFC7285 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7285.xml">
-<!ENTITY RFC7336 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7336.xml">
+<!-- <!ENTITY RFC7336 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7336.xml"> -->
 <!-- <!ENTITY RFC7736 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7736.xml"> -->
 <!ENTITY RFC8006 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8006.xml">
 <!ENTITY RFC8008 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8008.xml">
 <!ENTITY RFC8174 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml">
-<!ENTITY I-D.ietf-alto-incr-update-sse SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-alto-incr-update-sse-22.xml">
-<!ENTITY I-D.ietf-alto-path-vector SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-alto-path-vector-11.xml">
-<!ENTITY I-D.ietf-alto-unified-props-new SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-alto-unified-props-new-12.xml">
+<!-- <!ENTITY I-D.ietf-alto-incr-update-sse SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-alto-incr-update-sse-22.xml"> -->
+<!ENTITY I-D.ietf-alto-path-vector SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-alto-path-vector-13.xml">
+<!ENTITY I-D.ietf-alto-unified-props-new SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-alto-unified-props-new-15.xml">
 <!ENTITY RFC7975 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7975.xml">
+<!ENTITY RFC8259 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8259.xml">
+<!ENTITY RFC8895 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8895.xml">
 ]>
-<rfc submissionType="IETF" docName="draft-ietf-alto-cdni-request-routing-alto-13" category="std" ipr="trust200902">
+<rfc submissionType="IETF" docName="draft-ietf-alto-cdni-request-routing-alto-16" category="std" ipr="trust200902">
   <?rfc compact="yes"?>
   <?rfc text-list-symbols="o*+-"?>
   <?rfc subcompact="no"?>
@@ -107,18 +109,17 @@
     <workgroup>ALTO &amp; CDNI WGs</workgroup>
     <abstract>
       <t>
-        The Content Delivery Networks Interconnection (CDNI) framework <xref
-        target="RFC6707"/> defines a set of protocols to interconnect CDNs, to
-        achieve multiple goals such as extending the reach of a given CDN to
-        areas that are not covered by that particular CDN. One component that
-        is needed to achieve the goal of CDNI described in <xref
-        target="RFC7336"/> is the CDNI Request Routing Footprint &amp;
-        Capabilities Advertisement interface (FCI). <xref target="RFC8008"/>
-        defines precisely the semantics of FCI and provides guidelines on the
-        FCI protocol, but the exact protocol is explicitly outside the scope of
-        that document. This document defines an FCI protocol using the
-        Application-Layer Traffic Optimization (ALTO) protocol, following the
-        guidelines defined in <xref target="RFC8008"/>.
+        The Content Delivery Networks Interconnection (CDNI) framework
+        defines a set of protocols to interconnect CDNs, to achieve multiple
+        goals such as extending the reach of a given CDN to areas that are
+        not covered by that particular CDN. One component that is needed to
+        achieve the goal of CDNI described in CDNI framework is the CDNI
+        Request Routing Footprint &amp; Capabilities Advertisement interface
+        (FCI). RFC 8008 defines precisely the semantics of FCI and provides
+        guidelines on the FCI protocol, but the exact protocol is explicitly
+        outside the scope of that document. This document defines an FCI
+        protocol using the Application-Layer Traffic Optimization (ALTO)
+        protocol, following the guidelines defined in RFC 8008.
       </t>
     </abstract>
 
@@ -203,8 +204,8 @@
         Service" to allow a uCDN to get footprints with given capabilities
         instead of getting the full resource, which can be large. <xref
         target="unifiedpropertymap"/> further shows another benefit of using
-        ALTO: the ability to query footprint properties using ALTO unified
-        properties. In this way, a uCDN can effectively fetch capabilities of
+        ALTO: the ability to query footprint properties using ALTO entity
+        property map extension. In this way, a uCDN can effectively fetch capabilities of
         footprints in which it is interested. IANA and security
         considerations are discussed in <xref target="iana"/> and <xref
         target="security"/> respectively.
@@ -404,7 +405,7 @@
               conveyance of the aforementioned (or similar) status changes by
               the dCDN to the uCDN. The newest design of ALTO supports server
               pushed incremental updates <xref
-              target="I-D.ietf-alto-incr-update-sse"/>.
+              target="RFC8895"/>.
             </t>
 
             <t>
@@ -1971,7 +1972,7 @@ EXAMPLE 2
             </t>
             <t hangText="Encoding considerations:">
               Encoding considerations are identical to those specified for
-              the "application/json" media type. See <xref target="RFC7159"
+              the "application/json" media type. See <xref target="RFC8259"
               />.
             </t>
             <t hangText="Security considerations:">
@@ -2142,7 +2143,7 @@ EXAMPLE 2
 
           <t>
             For confidentiality and privacy of ALTO information, footprint
-            properties integrated with ALTO unified property may expose
+            properties integrated with ALTO property maps may expose
             network location identifiers (e.g., IP addresses or fine-grained
             PIDs).
           </t>
@@ -2236,23 +2237,24 @@ EXAMPLE 2
 
         <seriesInfo name="ISO" value="3166-1:2013" />
       </reference>
+      &I-D.ietf-alto-unified-props-new;
       &RFC2119;
-      &RFC5693;
-      &RFC6707;
       &RFC6793;
-      &RFC7159;
       &RFC7285;
       <!-- &RFC7736; -->
       &RFC8006;
       &RFC8008;
+      &RFC8259;
       &RFC8174;
     </references>
     <references title="Informative References">
-      &I-D.ietf-alto-incr-update-sse;
+      <!-- &I-D.ietf-alto-incr-update-sse; -->
       &I-D.ietf-alto-path-vector;
-      &I-D.ietf-alto-unified-props-new;
-      &RFC7336;
+      &RFC5693;
+      &RFC6707;
+      <!-- &RFC7336; -->
       &RFC7975;
+      &RFC8895;
     </references>
   </back>
 </rfc>
