@@ -1,5 +1,8 @@
 <!-- Skip header line -->
+
 # IANA Considerations {#iana}
+
+## application/alto-* Media Types
 
 This document registers two additional ALTO media types, listed in
 [](#TableMediaTypes).
@@ -10,6 +13,7 @@ This document registers two additional ALTO media types, listed in
 | application | alto-cdnifilter+json | [](#filteredcdnifci) |
 {: #TableMediaTypes title="Additional ALTO Media Types."}
 
+{: newline="true"}
 Type name:
 : application
 
@@ -43,8 +47,7 @@ Applications that use this media type:
   applications.
 
 Additional information:
-:
-  Magic number(s):
+: Magic number(s):
   : n/a
 
   File extension(s):
@@ -80,8 +83,8 @@ in [](#tbl:footprint-type).
 | altopid        | A list of PID names | [](#cdnifcinetworkmap) of RFCthis |
 {: #tbl:footprint-type title="CDNI Metadata Footprint Type"}
 
-[RFC Editor: Please replace RFCthis with the published RFC number for this
-document.]
+\[RFC Editor: Please replace RFCthis with the published RFC number for this
+document.\]
 
 ## ALTO Entity Domain Type Registry
 
@@ -95,8 +98,8 @@ registered, listed in [](#tbl:entity-domain).
 | countrycode | See [](#countrycode-entity-id) of RFCthis | None                        | None                            |
 {: #tbl:entity-domain title="Additional ALTO Entity Domain Types"}
 
-[RFC Editor: Please replace RFCthis with the published RFC number for this
-document.]
+\[RFC Editor: Please replace RFCthis with the published RFC number for this
+document.\]
 
 ## ALTO Entity Property Type Registry
 
@@ -109,8 +112,8 @@ registered, listed in [](#tbl:prop-type-register).
 | cdni-capabilities | [](#capabilitytoproperties) of RFCthis | application/alto-cdni+json      |
 {: #tbl:prop-type-register title="Additional ALTO Entity Property Type"}
 
-[RFC Editor: Please replace RFCthis with the published RFC number for this
-document.]
+\[RFC Editor: Please replace RFCthis with the published RFC number for this
+document.\]
 
 # Security Considerations {#security}
 

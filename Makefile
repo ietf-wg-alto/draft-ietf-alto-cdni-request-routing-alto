@@ -1,8 +1,11 @@
-XML2RFC := xml2rfc --verbose -D $(shell date -u +%Y-%m-%d)
-TARGET := draft-ietf-alto-cdni-request-routing-alto
-all:
-	$(XML2RFC) $(TARGET).xml
+LIBDIR := lib
+include $(LIBDIR)/main.mk
 
-clean:
-	rm -f $(TARGET).txt
-
+$(LIBDIR)/main.mk:
+ifneq (,$(shell grep "path *= *$(LIBDIR)" .gitmodules 2>/dev/null))
+	git submodule sync
+	git submodule update $(CLONE_ARGS) --init
+else
+	git clone -q --depth 10 $(CLONE_ARGS) \
+	    -b main https://github.com/martinthomson/i-d-template $(LIBDIR)
+endif

@@ -65,7 +65,7 @@ author:
     ins: J. Zhang
     name: Jingxuan Jensen Zhang
     org: Tongji University
-    street: 4800 Cao'An Hwy
+    street: 4800 Cao'an Hwy
     city: Shanghai
     code: 201804
     country: China

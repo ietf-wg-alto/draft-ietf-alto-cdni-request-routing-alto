@@ -1,4 +1,5 @@
 <!-- Skip header line -->
+
 # CDNI Advertisement Service {#cdnifci}
 
 The ALTO protocol is based on the ALTO Information Service Framework which
@@ -102,7 +103,7 @@ understand that the capabilities in this BaseAdvertisementObject have the
 Note: Further optimization of BaseAdvertisement objects to effectively provide
 the advertisement of capabilities with footprint restrictions is certainly
 possible. For example, these two examples below both describe that the dCDN can
-provide capabilities ["http/1.1", "https/1.1"] for the same footprints. However,
+provide capabilities \["http/1.1", "https/1.1"\] for the same footprints. However,
 the latter one is smaller in its size.
 
 ~~~
@@ -303,7 +304,7 @@ CDNI Advertisement resources, and the other for updating property maps).
 This basic example demonstrates a simple CDNI Advertisement resource, which does
 not depend on other resources. There are three BaseAdvertisementObjects in this
 resource and these objects' capabilities are http/1.1 delivery protocol,
-[http/1.1, https/1.1] delivery protocol, and https/1.1 acquisition protocol,
+\[http/1.1, https/1.1\] delivery protocol, and https/1.1 acquisition protocol,
 respectively.
 
 ~~~
@@ -383,7 +384,7 @@ encode updates.
 At first, an ALTO client requests updates for "my-default-cdnifci", and the ALTO
 server returns the `control-uri` followed by the full CDNI Advertisement
 response. Then when there is a change in the delivery-protocols in that http/1.1
-is removed (from [http/1.1, https/1.1] to only https/1.1) due to maintenance of
+is removed (from \[http/1.1, https/1.1\] to only https/1.1) due to maintenance of
 the https/1.1 clusters, the ALTO server regenerates the new CDNI Advertisement
 resource and pushes the full replacement to the ALTO client. Later on, the ALTO
 server notifies the ALTO client that "192.0.2.0/24" is added into the "ipv4"
@@ -879,7 +880,7 @@ A footprint object has two properties: footprint-type and footprint-value. A
 footprint-value is an array of footprint values conforming to the specification
 associated with the registered footprint type ("ipv4cidr", "ipv6cidr", "asn",
 "countrycode", and "altopid"). Considering each ALTO entity defined in
-{{I-D.ietf-alto-unified-props-new} also has two properties: entity domain type
+{{I-D.ietf-alto-unified-props-new}} also has two properties: entity domain type
 and domain-specific identifier, a straightforward approach to represent a
 footprint as an ALTO entity is to represent its footprint-type as an entity
 domain type, and its footprint value as a domain-specific identifier.

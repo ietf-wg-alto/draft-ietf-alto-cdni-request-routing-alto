@@ -1,1 +1,12 @@
-draft-ietf-alto-cdni-request-routing-alto.txt
+*.bak
+*.gen
+.targets.mk
+.tags
+
+# Do not upload the generated files
+draft-*-alto-cdni-request-routing-alto.txt
+draft-*-alto-cdni-request-routing-alto.html
+draft-*-alto-cdni-request-routing-alto.xml
+
+# Temp
+tmp
