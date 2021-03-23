@@ -1,0 +1,32 @@
+  <section title="Protocol Errors">
+    <t>
+        Protocol errors are handled as specified in Section 8.5 of the ALTO protocol <xref target="RFC7285" pageno="false" format="default"/>.
+    </t>
+    <t>
+<!--         Since the protocol errors are used to describe an error encoutering while processing a request, we explain how error codes defined in <xref target="RFC8008" pageno="false" format="default"/>  -->
+        Here we explain the error-handling mechanism of filtered CDNI FCI map:
+    </t>
+ <!--    <t> -->
+<!--         E_SYNTAX covers all cases of syntax errors of filtered CDNI FCI map queries. When the syntax of queries is correct, there may be some errors in queries' semantics. Such errors can be covered by E_MISSING_FIELD and E_INVALID_FIELD_VALUE. If a capability in the "cdni-fci-capabilities" only has "capability-type" or only has "capability-value" or the value of "capability-value" is null, these cases belong to E_MISSING_FIELD errors. If the value of "capability-value" is inconsistent with "capability-type", this case belongs to E_INVALID_FIELD_VALUE error.
+    </t> -->
+    <t>
+    <list style="symbols">
+    	<t>E_SYNTAX covers all cases of syntax errors of filtered CDNI FCI map queries.</t>
+    	<t>When the syntax of queries is correct, there may be some errors in queries' semantics. Such Cases can be covered by E_INVALID_FIELD_VALUE:
+    	<list style="symbols">
+    		<t>The value of "capability-type" is null;</t>
+    		<t>The value of "capability-value" is null;</t>
+    		<!-- <t>If a capability in the "cdni-fci-capabilities" only has "capability-type" or only has "capability-value" or the value of "capability-value" is null, these cases belong to E_MISSING_FIELD errors.</t> -->
+    		<t>The value of "capability-value" is inconsistent with "capability-type".</t>
+    	</list>
+    	</t>
+    </list>
+    </t>
+    <t>
+        The error-handling mechanism of query footprints is the same as the error-handling mechanism of ALTO Unified Property Map Service described in <xref target="I-D.ietf-alto-unified-props-new"/>.
+    </t>
+<!--     <t>
+        To be noted that if "capability-type" is not defined, the ALTO server MUST ignore this capability. If it is the only capability in the list, the ALTO server MUST return nothing.
+        there are two special cases which are not errors. If "cdni-fci-capabilities" is null or the value of it has no element, the ALTO server will return the related full CDNI FCI map. And 
+    </t> -->
+  </section>

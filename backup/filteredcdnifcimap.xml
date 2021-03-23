@@ -1,0 +1,228 @@
+    <section anchor="filteredcdnifcimap" title="Filtered CDNI FCI using Capabilities">
+    	<t>
+        <xref target="cdnifcimap"/> and <xref target="cdnifcinetworkmap"/> describe CDNI FCI Service which can be used to enable a uCDN to get capabilities with footprints constraints from dCDNs. However, always getting full CDNI FCI resources from dCDNs is very inefficient, hence we introduce a new service named "Filtered CDNI FCI Service" to allow a client to filter a CDNI FCI resource using a client-given set of capabilities. For each entry of the CDNI FCI response, an entry will only be returned to the client if it contains at least one of the client given capabilities. The relationship between a filtered CDNI FCI resource and a CDNI FCI resource is similar to the relationship between a filtered network/cost map and a network/cost map.
+    	</t>
+    	<section title="Media Type">
+        <t>
+          A filtered CDNI FCI resource uses the same media type defined for the CDNI FCI resource in <xref target="cdnifcimapmediatype"/>.
+        </t>
+    	</section>
+    	<section title="HTTP Method">
+        <t>
+          A filtered CDNI FCI resource is requested using the HTTP POST method.
+        </t>
+    	</section>
+    	<section title="Accept Input Parameters">
+    	<t>The input parameters for a filtered CDNI FCI resource are supplied in the entity body of the POST request. This document specifies the input parameters with a data format indicated by the media type "application/alto-cdnifcifilter+json" which is a JSON object of type ReqFilteredCDNIFCI, where:</t>
+  		<figure align="left">
+            <artwork align="left"><![CDATA[
+   object {
+       JSONString capability-type;
+       JSONValue capability-value;
+   } CDNIFCICapability;
+
+   object {
+       [CDNIFCICapability cdni-fci-capabilities<0..*>;]
+   } ReqFilteredCDNIFCI;
+]]>         </artwork>
+        </figure>
+        <t>with fields: </t>
+        <t><list style="hanging">
+            <t hangText="capability-type:">
+            	The same as Base Advertisement Object's capability-type defined in Section 5.1 of <xref target="RFC8008" pageno="false" format="default"/>.
+            </t>
+            <t hangText="capability-value:">
+                The same as Base Advertisement Object's capability-value defined in Section 5.1 of <xref target="RFC8008" pageno="false" format="default"/>.
+            </t>
+            <t hangText="cdni-fci-capabilities:">
+            	A list of CDNI FCI capabilities defined in Section 5.1 of <xref target="RFC8008" pageno="false" format="default"/> for which footprints are to be returned. If a list is empty or not appearing, the ALTO server MUST interpret it as a request for the full CDNI FCI resource. The ALTO server MUST interpret entries appearing in a list multiple times as if they appeared only once. If the ALTO server does not define any footprints for a CDNI capability, it MUST omit this capability from the response.
+            </t>
+        </list></t>
+    	</section>
+    	<section title="Capabilities">
+    		<t>
+    		    None.
+    	    </t>
+    	</section>
+    	<section title="Uses">
+        <t>
+          The resource ID of the CDNI FCI resource based on which the filtering is performed.
+        </t>
+    	</section>
+    	<section title="Response">
+      <t>
+        The response MUST indicate an error, using ALTO protocol error handling specified in Section 8.5 of the ALTO protocol  <xref target="RFC7285" pageno="false" format="default"/>, if the request is invalid.
+      </t>
+      <t>
+        Specifically, a filtered CDNI FCI request is invalid if:
+        <list style="symbols">
+          <t>the value of "capability-type" is null;</t>
+          <t>the value of "capability-value" is null;</t>
+          <t>the value of "capability-value" is inconsistent with "capability-type".</t>
+        </list>
+        When a request is invalid, the ALTO server MUST return an "E_INVALID_FIELD_VALUE" error defined in Section 8.5.2 of <xref target="RFC7285" pageno="false" format="default"/>, and the "value" field of the error message SHOULD indicate this CDNI FCI capability.
+      </t>
+    	<t>
+        The ALTO server returns a filtered CDNI FCI resource for a valid request.
+    		The format of a filtered CDNI FCI resource is the same as a full CDNI FCI resource (See <xref target="cdnifcimapencoding"/>.)
+    	</t>
+    	<t>
+    		The returned CDNI FCI resource MUST contain only BaseAdvertisementObject objects whose CDNI capability object is the superset of one of CDNI capability object in "cdni-fci-capabilities".
+
+        Specifically, that a CDNI capability object A is the superset of another CDNI capability object B means that these two CDNI capability objects have the same capability type and mandatory properties in capability value of A MUST include mandatory properties in capability value of B semantically. See <xref target="filtercdnifcimapexample"/> for a concrete example.
+      </t>
+<!--         For example, if a CDNI FCI capability in "cdni-fci-capabilities" is Delivery Protocol capability object with "http/1.1" in its field "delivery-protocols" and the original full CDNI FCI map has two CDNI FCI objects whose capabilities are Delivery Protocol capability objects with ["http/1.1"] and ["http/1.1", "https/1.1"] in their field "delivery-protocols" respectively, both of these two CDNI FCI objects MUST be returned. If the input parameters contain a CDNI capability object that is not currently defined, the ALTO server MUST behave as if the CDNI capability object did not appear in the input parameters.  -->
+    	<t>
+    		The version tag included in the "vtag" field of the response MUST correspond to the full CDNI FCI resource from which the filtered CDNI FCI resource is provided. This ensures that a single, canonical version tag is used independently of any filtering that is requested by an ALTO client.
+    	</t>
+    	</section>
+    	<section title="Examples">
+    		<section title="IRD Example">
+    		<t>
+    			We use the same IRD example by <xref target="IRDexample"/>.
+    		</t>
+    		</section>
+    		<section title="Basic Example" anchor="filtercdnifcimapexample">
+    			<t>
+    			    This example filters the full CDNI FCI resource in <xref target="fullcdnifcimap"/> by selecting only the http/1.1 delivery protocol capability. Only the first two BaseAdvertisementObjects in the full resource will be returned because the first object's capability is http/1.1 delivery protocol and the second object's capability is http/1.1 and https/1.1 delivery protocols which is the superset of http/1.1 delivery protocol.
+    			</t>
+		    <figure align="left">
+              <artwork align="left"><![CDATA[
+  POST /cdnifci/filtered HTTP/1.1
+  HOST: alto.example.com
+  Content-Type: application/cdnifilter+json
+  Accept: application/alto-cdnifci+json
+
+  {
+    "cdni-fci-capabilities": [
+      {
+        "capability-type": "FCI.DeliveryProtocol",
+        "capability-value": {
+          "delivery-protocols": [
+            "http/1.1"
+          ]
+        }
+      }
+    ]
+  }
+
+  HTTP/1.1 200 OK
+  Content-Length: XXX
+  Content-Type: application/alto-cdnifci+json
+  {
+    "meta" : {
+      "vtag": {
+        "resource-id": "my-default-cdnifci",
+        "tag": "da65eca2eb7a10ce8b059740b0b2e3f8eb1d4785"
+      }
+    },
+    "cdni-fci": {
+      "capabilities": [
+        {
+          "capability-type": "FCI.DeliveryProtocol",
+          "capability-value": {
+            "delivery-protocols": [
+              "http/1.1"
+            ]
+          },
+          "footprints": [
+            <Footprint objects>
+          ]
+        },
+        {
+          "capability-type": "FCI.DeliveryProtocol",
+          "capability-value": {
+            "delivery-protocols": [
+              "https/1.1",
+              "http/1.1"
+            ]
+          },
+          "footprints": [
+            <Footprint objects>
+          ]
+        }
+      ]
+    }
+  }
+]]></artwork>
+            </figure>
+    		</section>
+    		<section title="Incremental Updates Example">
+          <t>
+            In this example, the ALTO client only cares about the updates of one Delivery Protocol object whose value is "http/1.1". So it adds its limitation of capabilities in "input" field of the POST request.
+          </t>
+        <figure align="left">
+              <artwork align="left"><![CDATA[
+  POST /updates/cdnifci HTTP/1.1
+  Host: fcialtoupdate.example.com
+  Accept: text/event-stream,application/alto-error+json
+  Content-Type: application/alto-updatestreamparams+json
+  Content-Length: ###
+
+  { "add": {
+      "my-fci-stream": {
+          "resource-id": "my-filtered-cdnifci",
+          "input": {
+            "cdni-fci-capabilities": [
+            {
+              "capability-type": "FCI.DeliveryProtocol",
+              "capability-value": {
+                "delivery-protocols": [
+                  "http/1.1"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+
+  HTTP/1.1 200 OK
+  Connection: keep-alive
+  Content-Type: text/event-stream
+
+  event: application/alto-updatestreamcontrol+json
+  data: {"control-uri":
+  data: "http://alto.example.com/updates/streams/3141592653590"}
+
+  event: application/alto-cdnifci+json,my-fci-stream
+  data: { ... full filtered CDNI FCI resource ... }
+
+  event: application/merge-patch+json,my-fci-stream
+  data: {
+  data:   "meta": {
+  data:     "vtag": {
+  data:       "tag": "dasdfa10ce8b059740bddsfasd8eb1d47853716"
+  data:     }
+  data:   },
+  data:   {
+  data:     "capability-type": "FCI.DeliveryProtocol",
+  data:     "capability-value": {
+  data:       "delivery-protocols": [
+  data:         "http/1.1"
+  data:       ]
+  data:     },
+  data:     "footprints": [
+  data:       <All footprint objects in http/1.1>
+  data:     ]
+  data:   }
+  data: }
+
+  event: application/json-patch+json,my-fci-stream
+  data: [
+  data:   {
+  data:     "op": "replace",
+  data:     "path": "/meta/vtag/tag",
+  data:     "value": "a10ce8b059740b0b2e3f8eb1d4785acd42231bfe"
+  data:   },
+  data:   { "op": "add",
+  data:     "path": "/cdni-fci/capabilities/0/footprints/-",
+  data:     "value": "ipv4:192.0.2.0/24"
+  data:   }
+  data: ]
+                ]]></artwork>
+            </figure>
+    		</section>
+    	</section>
+    </section>

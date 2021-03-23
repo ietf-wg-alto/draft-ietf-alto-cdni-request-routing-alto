@@ -1,0 +1,108 @@
+ <section title="IANA Considerations" anchor="iana">
+      <section title="CDNI Metadata Footprint Type Registry" anchor="newfootprinttype">
+      <t>
+        As proposed in Section 7.2 of <xref target="RFC8006"/>, "CDNI Metadata Footprint Types" registry is requested. A new footprint type is to be registered, listed in <xref target="tbl:footprint-type"/>.
+      </t>
+    <texttable anchor="tbl:footprint-type" align="center" title="CDNI Metadata Footprint Type">
+
+            <ttcol align="left" width="16%">
+              Footprint Type
+            </ttcol>
+            <ttcol align="left" width="34%">
+              Description
+            </ttcol>
+            <ttcol align="left" width="34%">
+              Specification
+            </ttcol>
+
+            <c>
+              altopid
+            </c>
+            <c>
+              A list of PID-names
+            </c>
+            <c>
+              <xref target="cdnifcinetworkmap"/> of RFCthis
+            </c>
+    </texttable>
+      <t>
+        [RFC Editor: Please replace RFCthis with the published RFC number for this document.]
+      </t>
+      </section>
+
+      <section title="ALTO Entity Domain Type Registry">
+    <t>
+      As proposed in Section 11.2 of <xref target="I-D.ietf-alto-unified-props-new"/>,
+      "ALTO Entity Domain Type Registry" is requested. Two
+      new entity domain types are to be registered, listed in
+      <xref target="tbl:entity-domain"/>.
+    </t>
+    <texttable anchor="tbl:entity-domain" align="center" title="ALTO Entity Domain Types">
+
+            <ttcol align="left" width="16%">
+              Identifier
+            </ttcol>
+            <ttcol align="left" width="34%">
+              Entity Address Encoding
+            </ttcol>
+            <ttcol align="left" width="34%">
+              Hierarchy &amp; Inheritance
+            </ttcol>
+
+            <c>
+              asn
+            </c>
+            <c>
+              See <xref target="asn-entity-address"/>
+            </c>
+            <c>
+              None
+            </c>
+
+            <c>
+              countrycode
+            </c>
+            <c>
+              See <xref target="countrycode-entity-address"/>
+            </c>
+            <c>
+              None
+            </c>
+
+    </texttable>
+
+      </section>
+
+      <section title="ALTO Entity Property Type Registry">
+    <t>
+      As proposed in Section 11.3 of <xref target="I-D.ietf-alto-unified-props-new"/>,
+      "ALTO Entity Property Type Registry" is required. A new
+      entity property type is to be registered, listed in
+      <xref target="tbl:prop-type-register"/>.
+    </t>
+    <texttable anchor="tbl:prop-type-register" align="center" title="ALTO CDNI FCI Property Type">
+
+
+
+
+
+            <ttcol align="left" width="16%">
+              Identifier
+            </ttcol>
+            <ttcol align="left" width="29%">
+              Intended Semantics
+            </ttcol>
+
+            <c>
+              cdni-fci-capabilities
+            </c>
+            <c>
+              An array of CDNI FCI capability objects
+            </c>
+
+
+
+    </texttable>
+
+      </section>
+  </section>

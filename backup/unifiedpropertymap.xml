@@ -1,0 +1,262 @@
+    <section anchor="unifiedpropertymap" title="Query Footprint Properties using ALTO Property Map Service">
+        <t>
+          Besides retrieving footprints of given capabilities, another common requirement for uCDN is to query CDNI capabilities of given footprints.
+          <!-- Previous sections describe how a uCDN can get the whole capabilities and footprints from dCDNs and how a uCDN can get the footprints of given capabilities. But there is another important case which is how a uCDN can get properties (i.e., capabilities) of given footprints. -->
+        </t>
+        <t>
+          Considering each footprint as an entity with properties including CDNI capabilities, the most natural way to satisfy this requirement is to use the ALTO property map defined in <xref target="I-D.ietf-alto-unified-props-new"/>.
+          In this section, we describe how ALTO clients look up properties for individual footprints. First, we describe how to represent footprint objects as entities in the ALTO property map. Second, we provide examples of the full property map and the filtered property map supporting CDNI capabilities, and their incremental updates.
+        </t>
+<!--         <t>
+          A footprint is a group of entities, and CDNI capabilities can be regarded as properties of a footprint. Unified property map is used to provide properties for collections of entities such as CIDRs or PIDs. So every footprint can be presented as a set of entities, and we will describe it in details in <xref target="footprinttoentities"/>. In addition, two resource types Property Maps and Filtered Property Maps are already well-defined in <xref target="I-D.ietf-alto-unified-props-new"/>.
+        </t> -->
+<!--         <t>
+            A unified property map that includes "cdni-fci-capabilities" property registered in <xref target="iana"/> builds the inverted index of a CDNI FCI map. The building process consists of two steps: firstly, each footprint object is represented as a set of unified property map entities in a domain; secondly, each unified property map entity is mapped into a list of property objects including CDNI capabilities.
+        </t> -->
+  	    <section title="Representing Footprint Objects as Property Map Entities" anchor="footprinttoentities">
+            <t>
+              A footprint object has two properties: footprint-type and footprint-value. A footprint-value is an array of footprint values conforming to the specification associated with the registered footprint type ("ipv4cidr", "ipv6cidr", "asn", and "countrycode").
+              Considering each ALTO entity defined in <xref target="I-D.ietf-alto-unified-props-new"/> also has two properties: entity domain type and domain-specific identifier, a straightforward approach to represent a footprint as an ALTO entity is to regard its footprint-type as an entity domain type, and its footprint value as a domain-specific identifier. According to <xref target="I-D.ietf-alto-unified-props-new"/>, "ipv4" and "ipv6" are two predefined entity domain types, which can be used to represent "ipv4cidr" and "ipv6cidr" footprints respectively. However, no existing entity domain type can represent "asn" and "countrycode" footprints.
+              To represent footprint-type "asn" and "countrycode", this document registers two new domains in <xref target="iana"/> in addition to the ones in <xref target="I-D.ietf-alto-unified-props-new"/>.
+            </t>
+            <t>
+              Here is an example of representing a footprint object as a set of entities in the ALTO property map.
+            </t>
+            <t>
+              {"footprint-type": "ipv4cidr", "footprint-value": ["192.0.2.0/24", "198.51.100.0/24"]}
+              --> "ipv4:192.168.2.0/24", "ipv4:198.51.100.0/24"
+            </t>
+  		    <section title="ASN Domain">
+  			    <t>
+  			      The ASN domain associates property values with Autonomous Systems in the Internet.
+  		        </t>
+  		        <section title="Entity Domain Type">
+  		    	    <t>
+  		    		    asn
+  		    	    </t>
+  		        </section>
+  		        <section title="Domain-Specific Entity Identifiers" anchor="asn-entity-address">
+  		    	    <t>
+  		                 The entity identifier of an entity in an asn domain is encoded as a string consisting of the characters "as" (in lowercase) followed by the Autonomous System Number <xref target="RFC6793" pageno="false" format="default"/>.
+  		            </t>
+  		        </section>
+  		        <section title="Hierarchy and Inheritance">
+  		        	<t>
+  		        		There is no hierarchy or inheritance for properties associated with ASN.
+  		        	</t>
+  		        </section>
+            </section>
+            <section title="COUNTRYCODE Domain">
+        	    <t>
+        		    The COUNTRYCODE domain associates property values with countries.
+        	    </t>
+        	    <section title="Entity Domain Type">
+        		    <t>
+        			    countrycode
+        		    </t>
+        	    </section>
+        	    <section title="Domain-Specific Entity Identifiers" anchor="countrycode-entity-address">
+        		    <t>
+        			    The entity identifier of an entity in a countrycode domain is encoded as an ISO 3166-1 alpha-2 code <xref target="ISO3166-1"/> in lowercase.
+        		    </t>
+        	    </section>
+        	    <section title="Hierarchy and Inheritance">
+        	    	<t>
+                  There is no hierarchy or inheritance for properties associated with country codes.
+                </t>
+  		        </section>
+            </section>
+  	    </section>
+        <section title="Examples">
+    		<section title="IRD Example">
+    		<t>
+    			We use the same IRD example given by <xref target="IRDexample"/>.
+    		</t>
+    		</section>
+        	<section title="Property Map Example">
+            <t>
+              This example shows a full property map in which entities are footprints and entities' property is "cdni-fci-capabilities".
+            </t>
+   	        		    <figure align="left">
+              <artwork align="left"><![CDATA[
+    GET /propmap/full/cdnifci HTTP/1.1
+    HOST: alto.example.com
+    Accept: application/alto-propmap+json,application/alto-error+json
+
+    HTTP/1.1 200 OK
+    Content-Length: ###
+    Content-Type: application/alto-propmap+json
+
+    {
+      "property-map": {
+        "meta": {
+          "dependent-vtags": [
+            {"resource-id": "my-default-cdnifci",
+             "tag": "7915dc0290c2705481c491a2b4ffbec482b3cf62"}
+          ]
+        },
+        "countrycode:us": {
+          "my-default-cdnifci.cdni-fci-capabilities": [
+            {"capability-type": "FCI.DeliveryProtocol",
+             "capability-value": {"delivery-protocols": ["http/1.1"]}}]
+        },
+        "ipv4:192.0.2.0/24": {
+          "my-default-cdnifci.cdni-fci-capabilities": [
+            {"capability-type": "FCI.DeliveryProtocol",
+             "capability-value": {"delivery-protocols": ["http/1.1"]}}]
+        },
+        "ipv4:198.51.100.0/24": {
+          "my-default-cdnifci.cdni-fci-capabilities": [
+            {"capability-type": "FCI.DeliveryProtocol",
+             "capability-value": {"delivery-protocols": ["http/1.1"]}}]
+        },
+        "ipv6:2001:db8::/32": {
+          "my-default-cdnifci.cdni-fci-capabilities": [
+            {"capability-type": "FCI.DeliveryProtocol",
+             "capability-value": {"delivery-protocols": ["http/1.1"]}}]
+        },
+        "asn:as64496": {
+          "my-default-cdnifci.cdni-fci-capabilities": [
+            {"capability-type": "FCI.DeliveryProtocol",
+             "capability-value": {"delivery-protocols": ["http/1.1",
+                                                         "https/1.1"]}}]
+        }
+      }
+    }
+]]></artwork>
+            </figure>
+        	</section>
+        	<section title="Filtered Property Map Example">
+            <t>
+              In this example, we use filtered property map service to get "pid" and "cdni-fci-capabilities" properties for two footprints "ipv4:192.0.2.0/24" and "ipv6:2001:db8::/32".
+            </t>
+                  <figure align="left">
+              <artwork align="left"><![CDATA[
+   POST /propmap/lookup/cdnifci-pid HTTP/1.1
+   HOST: alto.example.com
+   Content-Type: application/alto-propmapparams+json
+   Accept: application/alto-propmap+json,application/alto-error+json
+   Content-Length:
+
+   {
+     "entities": [
+       "ipv4:192.0.2.0/24",
+       "ipv6:2001:db8::/32"
+     ],
+     "properties": [ "my-default-cdnifci.cdni-fci-capabilities",
+                     "my-default-networkmap.pid" ]
+   }
+]]></artwork>
+            </figure>
+
+        <figure align="left">
+              <artwork align="left"><![CDATA[
+   HTTP/1.1 200 OK
+   Content-Length: ###
+   Content-Type: application/alto-propmap+json
+
+   {
+     "property-map": {
+       "meta": {
+         "dependent-vtags": [
+            {"resource-id": "my-default-cdnifci",
+              "tag": "7915dc0290c2705481c491a2b4ffbec482b3cf62"},
+            {"resource-id": "my-default-networkmap",
+              "tag": "7915dc0290c2705481c491a2b4ffbec482b3cf63"}
+         ]
+       },
+       "ipv4:192.0.2.0/24": {
+         "my-default-cdnifci.cdni-fci-capabilities": [
+           {"capability-type": "FCI.DeliveryProtocol",
+            "capability-value": {"delivery-protocols": ["http/1.1"]}}],
+         "my-default-networkmap.pid": "pid1"
+       },
+       "ipv6:2001:db8::/32": {
+         "my-default-cdnifci.cdni-fci-capabilities": [
+           {"capability-type": "FCI.DeliveryProtocol",
+            "capability-value": {"delivery-protocols": ["http/1.1"]}}],
+         "my-default-networkmap.pid": "pid3"
+       }
+     }
+   }
+]]></artwork>
+            </figure>
+        	</section>
+        	<section title="Incremental Updates Example">
+            <t>
+              In this example, here is a client want to request updates for the properties "cdni-fci-capabilities" and "pid" for two footprints "ipv4:192.0.2.0/24" and "countrycode:fr".
+            </t>
+        <figure align="left">
+              <artwork align="left"><![CDATA[
+   POST /updates/properties HTTP/1.1
+   Host: alto.example.com
+   Accept: text/event-stream,application/alto-error+json
+   Content-Type: application/alto-updatestreamparams+json
+   Content-Length: ###
+
+   { "add": {
+     "property-map-including-capability-property": {
+       "resource-id": "filtered-cdnifci-property-map",
+         "input": {
+           "properties": [ "my-default-cdnifci.cdni-fci-capabilities",
+                           "my-default-networkmap.pid" ],
+           "entities": [
+             "ipv4:192.0.2.0/24",
+             "ipv6:2001:db8::/32"
+           ]
+         }
+       }
+   }
+
+   HTTP/1.1 200 OK
+   Connection: keep-alive
+   Content-Type: text/event-stream
+
+   event: application/alto-updatestreamcontrol+json
+   data: {"control-uri":
+   data: "http://alto.example.com/updates/streams/1414213562373"}
+
+   event: application/alto-cdnifci+json,my-fci-stream
+   data: { ... full filtered unified property map ... }
+
+   event: application/merge-patch+json,my-fci-stream
+   data: {
+   data:   "property-map":
+   data:   {
+   data:     "meta": {
+   data:       "dependent-vtags": [
+   data:         {"resource-id": "my-default-cdnifci",
+   data:          "tag": "2beeac8ee23c3dd1e98a73fd30df80ece9fa5627"},
+   data:         {"resource-id": "my-default-networkmap",
+   data:          "tag": "7915dc0290c2705481c491a2b4ffbec482b3cf63"}
+   data:       ]
+   data:     },
+   data:     "ipv4:192.0.2.0/24":
+   data:     {
+   data:     "my-default-cdnifci.cdni-fci-capabilities": [
+   data:       {"capability-type": "FCI.DeliveryProtocol",
+   data:        "capability-value": {
+   data:          "delivery-protocols": ["http/1.1", "https/1.1"]}}]
+   data:     }
+   data:   }
+   data: }
+
+   event: application/json-patch+json,my-fci-stream
+   data: {[
+   data: {
+   data:   { "op": "replace",
+   data:     "path": "/meta/dependent-vtags/0/tag",
+   data:     "value": "61b23185a50dc7b334577507e8f00ff8c3b409e4"
+   data:   },
+   data:   { "op": "replace",
+   data:     "path":
+   data:     "/property-map/countrycode:fr/my-default-networkmap.pid",
+   data:     "value": "pid5"
+   data:   }
+   data: }
+   data: ]}
+                ]]></artwork>
+            </figure>
+        	</section>
+        </section>
+    </section>
