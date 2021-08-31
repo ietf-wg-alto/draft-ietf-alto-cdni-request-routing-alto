@@ -5,14 +5,14 @@
 ALTO &amp; CDNI WGs                                           J. Seedorf
 Internet-Draft                 HFT Stuttgart - Univ. of Applied Sciences
 Intended status: Standards Track                                 Y. Yang
-Expires: 24 September 2021                               Yale University
+Expires: 4 March 2022                                    Yale University
                                                                    K. Ma
                                                                 Ericsson
                                                              J. Peterson
                                                                  NeuStar
                                                                 J. Zhang
                                                        Tongji University
-                                                           23 March 2021
+                                                          31 August 2021
 
 
  Content Delivery Network Interconnection (CDNI) Request Routing: CDNI
@@ -56,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 September 2021.
+   This Internet-Draft will expire on 4 March 2022.
 
 Copyright Notice
 
@@ -745,7 +745,7 @@ Table of Contents
    and the ALTO server returns the "control-uri" followed by the full
    CDNI Advertisement response.  Then when there is a change in the
    delivery-protocols in that http/1.1 is removed (from [http/1.1,
-   https/1.1] to only https/1.1) due to maintenance of the https/1.1
+   https/1.1] to only https/1.1) due to maintenance of the http/1.1
    clusters, the ALTO server regenerates the new CDNI Advertisement
    resource and pushes the full replacement to the ALTO client.  Later
    on, the ALTO server notifies the ALTO client that "192.0.2.0/24" is
@@ -1343,10 +1343,10 @@ Table of Contents
    element in a "cdni-capabilities" property MUST be an JSON object as
    format of CDNICapability (see Section 5.3).  The value of a "cdni-
    capabilities" property for an "ipv4", "ipv6", "asn", "countrycode" or
-   "altopid" entity MUST include all the CDNICapability objects that are
-   provided by the defining CDNI Advertisement resource and the
-   represented footprint object of this entity are in their footprint
-   restrictions.
+   "altopid" entity MUST include all the CDNICapability objects
+   satisfying the following conditions: (1) they are provided by the
+   defining CDNI Advertisement resource; and (2) the represented
+   footprint object of this entity is in their footprint restrictions.
 
 6.3.  Examples
 
@@ -1537,8 +1537,8 @@ Table of Contents
 
 7.1.  application/alto-* Media Types
 
-   This document registers two additional ALTO media types, listed in
-   Table 1.
+   This document updates the IANA Media Types Registry by registering
+   two additional ALTO media types, listed in Table 1.
 
           +=============+======================+===============+
           | Type        | Subtype              | Specification |
@@ -1608,8 +1608,8 @@ Table of Contents
 
 7.2.  CDNI Metadata Footprint Type Registry
 
-   As proposed in Section 7.2 of [RFC8006], "CDNI Metadata Footprint
-   Types" registry is requested.  A new footprint type is to be
+   This document updates the CDNI Metadata Footprint Types Registry
+   created by Section 7.2 of [RFC8006].  A new footprint type is to be
    registered, listed in Table 2.
 
       +================+=====================+======================+
@@ -1625,8 +1625,8 @@ Table of Contents
 
 7.3.  ALTO Entity Domain Type Registry
 
-   As proposed in Section 11.2 of [I-D.ietf-alto-unified-props-new],
-   "ALTO Entity Domain Type Registry" is requested.  Two new entity
+   This document updates the ALTO Entity Domain Type Registry created by
+   Section 11.2 of [I-D.ietf-alto-unified-props-new].  Two new entity
    domain types are to be registered, listed in Table 3.
 
     +=============+================+=============+===================+
@@ -1649,8 +1649,8 @@ Table of Contents
 
 7.4.  ALTO Entity Property Type Registry
 
-   As proposed in Section 11.3 of [I-D.ietf-alto-unified-props-new],
-   "ALTO Entity Property Type Registry" is required.  A new entity
+   This document updates the ALTO Entity Property Type Registry created
+   by Section 11.3 of [I-D.ietf-alto-unified-props-new].  A new entity
    property type is to be registered, listed in Table 4.
 
       +===================+====================+===================+
@@ -1755,11 +1755,11 @@ Table of Contents
 
    [I-D.ietf-alto-unified-props-new]
               Roome, W., Randriamasy, S., Yang, Y. R., Zhang, J. J., and
-              K. Gao, "ALTO extension: Entity Property Maps", Work in
+              K. Gao, "ALTO Extension: Entity Property Maps", Work in
               Progress, Internet-Draft, draft-ietf-alto-unified-props-
-              new-16, 22 February 2021,
+              new-18, 12 August 2021,
               <https://datatracker.ietf.org/doc/html/draft-ietf-alto-
-              unified-props-new-16.txt>.
+              unified-props-new-18>.
 
    [ISO3166-1]
               ISO (International Organization for Standardization), .,
@@ -1808,9 +1808,9 @@ Table of Contents
    [I-D.ietf-alto-path-vector]
               Gao, K., Lee, Y., Randriamasy, S., Yang, Y. R., and J. J.
               Zhang, "ALTO Extension: Path Vector", Work in Progress,
-              Internet-Draft, draft-ietf-alto-path-vector-14, 22
-              February 2021, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-alto-path-vector-14.txt>.
+              Internet-Draft, draft-ietf-alto-path-vector-17, 28 August
+              2021, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              alto-path-vector-17>.
 
    [RFC5693]  Seedorf, J. and E. Burger, "Application-Layer Traffic
               Optimization (ALTO) Problem Statement", RFC 5693,
