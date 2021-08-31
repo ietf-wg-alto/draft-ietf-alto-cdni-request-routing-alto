@@ -4,8 +4,8 @@
 
 ## application/alto-* Media Types
 
-This document registers two additional ALTO media types, listed in
-[](#TableMediaTypes).
+This document updates the IANA Media Types Registry by registering two
+additional ALTO media types, listed in [](#TableMediaTypes).
 
 | Type        | Subtype              | Specification        |
 |-------------|----------------------|----------------------|
@@ -74,9 +74,9 @@ Change controller:
 
 ## CDNI Metadata Footprint Type Registry
 
-As proposed in Section 7.2 of {{RFC8006}}, "CDNI Metadata Footprint
-Types" registry is requested. A new footprint type is to be registered, listed
-in [](#tbl:footprint-type).
+This document updates the CDNI Metadata Footprint Types Registry created by
+Section 7.2 of {{RFC8006}}. A new footprint type is to be registered, listed in
+[](#tbl:footprint-type).
 
 | Footprint Type | Description         | Specification                     |
 |----------------|---------------------|-----------------------------------|
@@ -88,9 +88,9 @@ document.\]
 
 ## ALTO Entity Domain Type Registry
 
-As proposed in Section 11.2 of {{I-D.ietf-alto-unified-props-new}}, "ALTO Entity
-Domain Type Registry" is requested. Two new entity domain types are to be
-registered, listed in [](#tbl:entity-domain).
+This document updates the ALTO Entity Domain Type Registry created by Section
+11.2 of {{I-D.ietf-alto-unified-props-new}}. Two new entity domain types are to
+be registered, listed in [](#tbl:entity-domain).
 
 | Identifier  | Entity Address Encoding                   | Hierarchy &amp; Inheritance | Media Type of Defining Resource |
 |-------------|-------------------------------------------|-----------------------------|---------------------------------|
@@ -103,9 +103,9 @@ document.\]
 
 ## ALTO Entity Property Type Registry
 
-As proposed in Section 11.3 of {{I-D.ietf-alto-unified-props-new}}, "ALTO Entity
-Property Type Registry" is required. A new entity property type is to be
-registered, listed in [](#tbl:prop-type-register).
+This document updates the ALTO Entity Property Type Registry created by Section
+11.3 of {{I-D.ietf-alto-unified-props-new}}. A new entity property type is to
+be registered, listed in [](#tbl:prop-type-register).
 
 | Identifier        | Intended Semantics                     | Media Type of Defining Resource |
 |-------------------|----------------------------------------|---------------------------------|

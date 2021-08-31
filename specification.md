@@ -385,7 +385,7 @@ At first, an ALTO client requests updates for "my-default-cdnifci", and the ALTO
 server returns the `control-uri` followed by the full CDNI Advertisement
 response. Then when there is a change in the delivery-protocols in that http/1.1
 is removed (from \[http/1.1, https/1.1\] to only https/1.1) due to maintenance of
-the https/1.1 clusters, the ALTO server regenerates the new CDNI Advertisement
+the http/1.1 clusters, the ALTO server regenerates the new CDNI Advertisement
 resource and pushes the full replacement to the ALTO client. Later on, the ALTO
 server notifies the ALTO client that "192.0.2.0/24" is added into the "ipv4"
 footprint object for delivery-protocol https/1.1 by sending the change encoded
@@ -975,9 +975,9 @@ property MUST be a JSON array. Each element in a "cdni-capabilities" property
 MUST be an JSON object as format of CDNICapability (see
 [](#filteredcdnifciinputs)). The value of a "cdni-capabilities" property for an
 "ipv4", "ipv6", "asn", "countrycode" or "altopid" entity MUST include all the
-CDNICapability objects that are provided by the defining CDNI Advertisement
-resource and the represented footprint object of this entity are in their
-footprint restrictions.
+CDNICapability objects satisfying the following conditions: (1) they are
+provided by the defining CDNI Advertisement resource; and (2) the represented
+footprint object of this entity is in their footprint restrictions.
 
 ## Examples
 
