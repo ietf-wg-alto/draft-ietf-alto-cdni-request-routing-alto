@@ -5,14 +5,14 @@
 ALTO &amp; CDNI WGs                                           J. Seedorf
 Internet-Draft                 HFT Stuttgart - Univ. of Applied Sciences
 Intended status: Standards Track                                 Y. Yang
-Expires: 4 March 2022                                    Yale University
+Expires: 11 March 2022                                   Yale University
                                                                    K. Ma
                                                                 Ericsson
                                                              J. Peterson
                                                                  NeuStar
                                                                 J. Zhang
                                                        Tongji University
-                                                          31 August 2021
+                                                        7 September 2021
 
 
  Content Delivery Network Interconnection (CDNI) Request Routing: CDNI
@@ -21,17 +21,16 @@ Expires: 4 March 2022                                    Yale University
 
 Abstract
 
-   The Content Delivery Networks Interconnection (CDNI) framework
-   defines a set of protocols to interconnect CDNs, to achieve multiple
-   goals such as extending the reach of a given CDN to areas that are
-   not covered by that particular CDN.  One component that is needed to
-   achieve the goal of CDNI described in CDNI framework is the CDNI
+   The Content Delivery Networks Interconnection (CDNI) framework in RFC
+   6707 defines a set of protocols to interconnect CDNs to achieve
+   multiple goals, including extending the reach of a given CDN.  A CDNI
    Request Routing Footprint & Capabilities Advertisement interface
-   (FCI).  RFC 8008 defines precisely the semantics of FCI and provides
-   guidelines on the FCI protocol, but the exact protocol is explicitly
-   outside the scope of that document.  This document defines an FCI
-   protocol using the Application-Layer Traffic Optimization (ALTO)
-   protocol, following the guidelines defined in RFC 8008.
+   (FCI) is needed to achieve the goals of a CDNI.  RFC 8008 defines
+   precisely the semantics of FCI and provides guidelines on the FCI
+   protocol, but the exact protocol is specified.  This document
+   specifies a FCI protocol as an extension to the Application-Layer
+   Traffic Optimization (ALTO) protocol, and it follows the guidelines
+   in RFC 8008.
 
 Requirements Language
 
@@ -56,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 March 2022.
+   This Internet-Draft will expire on 11 March 2022.
 
 Copyright Notice
 
@@ -172,10 +171,12 @@ Table of Contents
    A key component in defining CDNI FCI is defining objects describing
    the footprints and capabilities of a dCDN.  Such objects are already
    defined in [RFC8008].  A protocol to transport and update such
-   objects between a uCDN and a dCDN, however, is not defined.  Hence,
-   the scope of this document is to define such a protocol by
-   introducing a new Application-Layer Traffic Optimization (ALTO)
-   [RFC7285] service called "CDNI Advertisement Service".
+   objects between a uCDN and a dCDN, however, is not defined.
+
+   To define such a protocol, this document specifies an extension of
+   the Application-Layer Traffic Optimization (ALTO) [RFC7285] protocol
+   by introducing a new ALTO service called "CDNI Advertisement
+   Service".
 
    There are multiple benefits in using ALTO as a transport protocol, as
    discussed in Section 2.2.
@@ -240,8 +241,8 @@ Table of Contents
       limitations for delegating a request to the dCDN.  For IP prefixes
       or ASN(s), the footprint signals to the uCDN that it should
       consider the dCDN a candidate only if the IP address of the
-      request routing source falls within the prefix set (or ASN,
-      respectively).  The CDNI specifications do not define how a given
+      request routing source falls within the prefix set or ASN,
+      respectively.  The CDNI specifications do not define how a given
       uCDN determines what address ranges are in a particular ASN.
       Similarly, for country codes, a uCDN should only consider the dCDN
       a candidate if it covers the country of the request routing
@@ -260,10 +261,10 @@ Table of Contents
       to convey via the CDNI FCI.  Such information would provide
       updates on information previously agreed in contracts between the
       participating CDNs.  In other words, the CDNI FCI is a means for a
-      dCDN (downstream CDN) to provide changes/updates regarding a
-      footprint and/or capabilities that it has prior agreed to serve in
-      a contract with a uCDN (upstream CDN).  Hence, server push and
-      incremental encoding will be necessary techniques.
+      dCDN to provide changes/updates regarding a footprint and/or
+      capabilities that it has previously agreed to serve in a contract
+      with a uCDN.  Hence, server push and incremental encoding will be
+      necessary techniques.
 
 2.2.  ALTO Background and Benefits
 
@@ -283,8 +284,8 @@ Table of Contents
    Surrogate by Request-Routing systems".
 
    The following reasons make ALTO a suitable candidate protocol for
-   dCDN (downstream CDN) selection as part of CDNI request routing and,
-   in particular, for an FCI protocol:
+   dCDN selection as part of CDNI request routing and, in particular,
+   for an FCI protocol:
 
    *  Application Layer-oriented: ALTO is a protocol specifically
       designed to improve application layer traffic (and application
@@ -299,14 +300,16 @@ Table of Contents
       surrogates in a dCDN by ALTO cost maps.
 
    *  Security: The identification between uCDNs and dCDNs is an
-      important requirement.  ALTO maps can be signed and hence provide
-      inherent integrity protection.  Please see Section 8.
+      important requirement (see Section 8).  ALTO maps can signed and
+      hence provide inherent integrity protection.  Please see
+      Section 15.1.2 of [RFC7285] for detailed protection strategies.
 
    *  RESTful Design: The ALTO protocol has undergone extensive
       revisions in order to provide a RESTful design regarding the
-      client-server interaction specified by the protocol.  A CDNI FCI
-      interface based on ALTO would inherit this RESTful design.  Please
-      see Section 3.
+      client-server interaction specified by the protocol.  It is
+      flexible and extensible enough to handle existing and potential
+      future data formats defined by CDNI.  A CDNI FCI interface based
+      on ALTO would inherit this RESTful design.  Please see Section 3.
 
    *  Error-handling: The ALTO protocol provides extensive error-
       handling in the whole request and response process (see
@@ -322,7 +325,8 @@ Table of Contents
    *  Filtered Map Service: The ALTO map filtering service would allow a
       uCDN to query only for parts of an ALTO map.  For example, the
       ALTO filtered property map service can enable a uCDN to query
-      properties of a part of footprints efficiently (see Section 6).
+      properties of a part of footprints efficiently.  Please see
+      Section 6.
 
    *  Server-initiated Notifications and Incremental Updates: When the
       footprint or the capabilities of a dCDN change (i.e., unexpectedly
@@ -1028,7 +1032,7 @@ Table of Contents
       } CDNICapability;
 
       object {
-          [CDNIFCICapability cdni-capabilities<0..*>;]
+          [CDNICapability cdni-capabilities<0..*>;]
       } ReqFilteredCDNIAdvertisement;
 
    with fields:
@@ -1039,7 +1043,7 @@ Table of Contents
    capability-value:  The same as Base Advertisement Object's
       capability-value defined in Section 5.1 of [RFC8008].
 
-   cdni-fci-capabilities:  A list of CDNI capabilities defined in
+   cdni-capabilities:  A list of CDNI capabilities defined in
       Section 5.1 of [RFC8008] for which footprints are to be returned.
       If a list is empty or not appearing, the ALTO server MUST
       interpret it as a request for the full CDNI Advertisement

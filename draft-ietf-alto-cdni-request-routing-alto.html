@@ -12,17 +12,20 @@
 <meta content="Jingxuan Jensen Zhang" name="author">
 <meta content="
        
- The Content Delivery Networks Interconnection (CDNI) framework
-defines a set of protocols to interconnect CDNs, to achieve multiple
-goals such as extending the reach of a given CDN to areas that are
-not covered by that particular CDN. One component that is needed to
-achieve the goal of CDNI described in CDNI framework is the CDNI
-Request Routing Footprint &amp; Capabilities Advertisement interface
-(FCI). RFC 8008 defines precisely the semantics of FCI and provides
-guidelines on the FCI protocol, but the exact protocol is explicitly
-outside the scope of that document. This document defines an FCI
-protocol using the Application-Layer Traffic Optimization (ALTO)
-protocol, following the guidelines defined in RFC 8008. 
+
+ The Content Delivery Networks Interconnection (CDNI) framework in RFC 6707
+defines a set of protocols to interconnect CDNs to achieve multiple goals,
+including extending the reach of a given CDN. A CDNI Request Routing Footprint
+&amp; Capabilities Advertisement interface (FCI) is needed to achieve the goals
+of a CDNI. RFC 8008 defines precisely the semantics of FCI and provides
+guidelines on the FCI protocol, but the exact protocol is specified. This
+document specifies a FCI protocol as an extension to the Application-Layer
+Traffic Optimization (ALTO) protocol, and it follows the guidelines in RFC
+8008. 
+       
+
+
+
     " name="description">
 <meta content="xml2rfc 3.9.1" name="generator">
 <meta content="ALTO" name="keyword">
@@ -852,11 +855,11 @@ address div.right {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">CDNI FCI using ALTO</td>
-<td class="right">August 2021</td>
+<td class="right">September 2021</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Seedorf, et al.</td>
-<td class="center">Expires 4 March 2022</td>
+<td class="center">Expires 11 March 2022</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -869,12 +872,12 @@ address div.right {
 <dd class="internet-draft">draft-ietf-alto-cdni-request-routing-alto-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2021-08-31" class="published">31 August 2021</time>
+<time datetime="2021-09-07" class="published">7 September 2021</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2022-03-04">4 March 2022</time></dd>
+<dd class="expires"><time datetime="2022-03-11">11 March 2022</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -903,17 +906,15 @@ address div.right {
 <h1 id="title">Content Delivery Network Interconnection (CDNI) Request Routing: CDNI Footprint and Capabilities Advertisement using ALTO</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">The Content Delivery Networks Interconnection (CDNI) framework
-defines a set of protocols to interconnect CDNs, to achieve multiple
-goals such as extending the reach of a given CDN to areas that are
-not covered by that particular CDN. One component that is needed to
-achieve the goal of CDNI described in CDNI framework is the CDNI
-Request Routing Footprint &amp; Capabilities Advertisement interface
-(FCI). RFC 8008 defines precisely the semantics of FCI and provides
-guidelines on the FCI protocol, but the exact protocol is explicitly
-outside the scope of that document. This document defines an FCI
-protocol using the Application-Layer Traffic Optimization (ALTO)
-protocol, following the guidelines defined in RFC 8008.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">The Content Delivery Networks Interconnection (CDNI) framework in RFC 6707
+defines a set of protocols to interconnect CDNs to achieve multiple goals,
+including extending the reach of a given CDN. A CDNI Request Routing Footprint
+&amp; Capabilities Advertisement interface (FCI) is needed to achieve the goals
+of a CDNI. RFC 8008 defines precisely the semantics of FCI and provides
+guidelines on the FCI protocol, but the exact protocol is specified. This
+document specifies a FCI protocol as an extension to the Application-Layer
+Traffic Optimization (ALTO) protocol, and it follows the guidelines in RFC
+8008.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note" id="section-note.1">
       <h2 id="name-requirements-language">
@@ -943,7 +944,7 @@ when, and only when, they appear in all capitals, as shown here.<a href="#sectio
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 4 March 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 11 March 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -971,202 +972,202 @@ when, and only when, they appear in all capitals, as shown here.<a href="#sectio
         <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
 <a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
         </h2>
-<nav class="toc"><ul class="toc compact ulBare ulEmpty">
-<li class="toc compact ulBare ulEmpty" id="section-toc.1-1.1">
+<nav class="toc"><ul class="ulEmpty toc ulBare compact">
+<li class="ulEmpty toc ulBare compact" id="section-toc.1-1.1">
             <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="xref">1</a>.  <a href="#name-introduction" class="xref">Introduction</a></p>
 </li>
-          <li class="toc compact ulBare ulEmpty" id="section-toc.1-1.2">
+          <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.2">
             <p id="section-toc.1-1.2.1"><a href="#section-2" class="xref">2</a>.  <a href="#name-background" class="xref">Background</a></p>
-<ul class="toc ulBare ulEmpty compact">
-<li class="toc ulBare ulEmpty compact" id="section-toc.1-1.2.2.1">
+<ul class="ulEmpty toc ulBare compact">
+<li class="ulEmpty toc ulBare compact" id="section-toc.1-1.2.2.1">
                 <p id="section-toc.1-1.2.2.1.1" class="keepWithNext"><a href="#section-2.1" class="xref">2.1</a>.  <a href="#name-semantics-of-fci-advertisem" class="xref">Semantics of FCI Advertisement</a></p>
 </li>
-              <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.2.2.2">
+              <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.2.2.2">
                 <p id="section-toc.1-1.2.2.2.1" class="keepWithNext"><a href="#section-2.2" class="xref">2.2</a>.  <a href="#name-alto-background-and-benefit" class="xref">ALTO Background and Benefits</a></p>
 </li>
             </ul>
 </li>
-          <li class="toc compact ulBare ulEmpty" id="section-toc.1-1.3">
+          <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.3">
             <p id="section-toc.1-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-cdni-advertisement-service" class="xref">CDNI Advertisement Service</a></p>
-<ul class="toc ulBare ulEmpty compact">
-<li class="toc ulBare ulEmpty compact" id="section-toc.1-1.3.2.1">
+<ul class="ulEmpty toc ulBare compact">
+<li class="ulEmpty toc ulBare compact" id="section-toc.1-1.3.2.1">
                 <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="xref">3.1</a>.  <a href="#name-media-type" class="xref">Media Type</a></p>
 </li>
-              <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.3.2.2">
+              <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.3.2.2">
                 <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="xref">3.2</a>.  <a href="#name-http-method" class="xref">HTTP Method</a></p>
 </li>
-              <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.3.2.3">
+              <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.3.2.3">
                 <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="xref">3.3</a>.  <a href="#name-accept-input-parameters" class="xref">Accept Input Parameters</a></p>
 </li>
-              <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.3.2.4">
+              <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.3.2.4">
                 <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="xref">3.4</a>.  <a href="#name-capabilities" class="xref">Capabilities</a></p>
 </li>
-              <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.3.2.5">
+              <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.3.2.5">
                 <p id="section-toc.1-1.3.2.5.1"><a href="#section-3.5" class="xref">3.5</a>.  <a href="#name-uses" class="xref">Uses</a></p>
 </li>
-              <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.3.2.6">
+              <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.3.2.6">
                 <p id="section-toc.1-1.3.2.6.1"><a href="#section-3.6" class="xref">3.6</a>.  <a href="#name-response" class="xref">Response</a></p>
 </li>
-              <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.3.2.7">
+              <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.3.2.7">
                 <p id="section-toc.1-1.3.2.7.1"><a href="#section-3.7" class="xref">3.7</a>.  <a href="#name-examples" class="xref">Examples</a></p>
-<ul class="toc ulBare ulEmpty compact">
-<li class="toc ulBare ulEmpty compact" id="section-toc.1-1.3.2.7.2.1">
+<ul class="ulEmpty toc ulBare compact">
+<li class="ulEmpty toc ulBare compact" id="section-toc.1-1.3.2.7.2.1">
                     <p id="section-toc.1-1.3.2.7.2.1.1"><a href="#section-3.7.1" class="xref">3.7.1</a>.  <a href="#name-ird-example" class="xref">IRD Example</a></p>
 </li>
-                  <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.3.2.7.2.2">
+                  <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.3.2.7.2.2">
                     <p id="section-toc.1-1.3.2.7.2.2.1"><a href="#section-3.7.2" class="xref">3.7.2</a>.  <a href="#name-basic-example" class="xref">Basic Example</a></p>
 </li>
-                  <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.3.2.7.2.3">
+                  <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.3.2.7.2.3">
                     <p id="section-toc.1-1.3.2.7.2.3.1"><a href="#section-3.7.3" class="xref">3.7.3</a>.  <a href="#name-incremental-updates-example" class="xref">Incremental Updates Example</a></p>
 </li>
                 </ul>
 </li>
             </ul>
 </li>
-          <li class="toc compact ulBare ulEmpty" id="section-toc.1-1.4">
+          <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.4">
             <p id="section-toc.1-1.4.1"><a href="#section-4" class="xref">4</a>.  <a href="#name-cdni-advertisement-service-" class="xref">CDNI Advertisement Service using ALTO Network Map</a></p>
-<ul class="toc ulBare ulEmpty compact">
-<li class="toc ulBare ulEmpty compact" id="section-toc.1-1.4.2.1">
+<ul class="ulEmpty toc ulBare compact">
+<li class="ulEmpty toc ulBare compact" id="section-toc.1-1.4.2.1">
                 <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="xref">4.1</a>.  <a href="#name-network-map-footprint-type-" class="xref">Network Map Footprint Type: altopid</a></p>
 </li>
-              <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.4.2.2">
+              <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.4.2.2">
                 <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="xref">4.2</a>.  <a href="#name-examples-2" class="xref">Examples</a></p>
-<ul class="toc ulBare ulEmpty compact">
-<li class="toc ulBare ulEmpty compact" id="section-toc.1-1.4.2.2.2.1">
+<ul class="ulEmpty toc ulBare compact">
+<li class="ulEmpty toc ulBare compact" id="section-toc.1-1.4.2.2.2.1">
                     <p id="section-toc.1-1.4.2.2.2.1.1"><a href="#section-4.2.1" class="xref">4.2.1</a>.  <a href="#name-ird-example-2" class="xref">IRD Example</a></p>
 </li>
-                  <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.4.2.2.2.2">
+                  <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.4.2.2.2.2">
                     <p id="section-toc.1-1.4.2.2.2.2.1"><a href="#section-4.2.2" class="xref">4.2.2</a>.  <a href="#name-alto-network-map-for-cdni-a" class="xref">ALTO Network Map for CDNI Advertisement Example</a></p>
 </li>
-                  <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.4.2.2.2.3">
+                  <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.4.2.2.2.3">
                     <p id="section-toc.1-1.4.2.2.2.3.1"><a href="#section-4.2.3" class="xref">4.2.3</a>.  <a href="#name-alto-pid-footprints-in-cdni" class="xref">ALTO PID Footprints in CDNI Advertisement</a></p>
 </li>
-                  <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.4.2.2.2.4">
+                  <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.4.2.2.2.4">
                     <p id="section-toc.1-1.4.2.2.2.4.1"><a href="#section-4.2.4" class="xref">4.2.4</a>.  <a href="#name-incremental-updates-example-2" class="xref">Incremental Updates Example</a></p>
 </li>
                 </ul>
 </li>
             </ul>
 </li>
-          <li class="toc compact ulBare ulEmpty" id="section-toc.1-1.5">
+          <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.5">
             <p id="section-toc.1-1.5.1"><a href="#section-5" class="xref">5</a>.  <a href="#name-filtered-cdni-advertisement" class="xref">Filtered CDNI Advertisement using CDNI Capabilities</a></p>
-<ul class="toc ulBare ulEmpty compact">
-<li class="toc ulBare ulEmpty compact" id="section-toc.1-1.5.2.1">
+<ul class="ulEmpty toc ulBare compact">
+<li class="ulEmpty toc ulBare compact" id="section-toc.1-1.5.2.1">
                 <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="xref">5.1</a>.  <a href="#name-media-type-2" class="xref">Media Type</a></p>
 </li>
-              <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.5.2.2">
+              <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.5.2.2">
                 <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="xref">5.2</a>.  <a href="#name-http-method-2" class="xref">HTTP Method</a></p>
 </li>
-              <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.5.2.3">
+              <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.5.2.3">
                 <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="xref">5.3</a>.  <a href="#name-accept-input-parameters-2" class="xref">Accept Input Parameters</a></p>
 </li>
-              <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.5.2.4">
+              <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.5.2.4">
                 <p id="section-toc.1-1.5.2.4.1"><a href="#section-5.4" class="xref">5.4</a>.  <a href="#name-capabilities-2" class="xref">Capabilities</a></p>
 </li>
-              <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.5.2.5">
+              <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.5.2.5">
                 <p id="section-toc.1-1.5.2.5.1"><a href="#section-5.5" class="xref">5.5</a>.  <a href="#name-uses-2" class="xref">Uses</a></p>
 </li>
-              <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.5.2.6">
+              <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.5.2.6">
                 <p id="section-toc.1-1.5.2.6.1"><a href="#section-5.6" class="xref">5.6</a>.  <a href="#name-response-2" class="xref">Response</a></p>
 </li>
-              <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.5.2.7">
+              <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.5.2.7">
                 <p id="section-toc.1-1.5.2.7.1"><a href="#section-5.7" class="xref">5.7</a>.  <a href="#name-examples-3" class="xref">Examples</a></p>
-<ul class="toc ulBare ulEmpty compact">
-<li class="toc ulBare ulEmpty compact" id="section-toc.1-1.5.2.7.2.1">
+<ul class="ulEmpty toc ulBare compact">
+<li class="ulEmpty toc ulBare compact" id="section-toc.1-1.5.2.7.2.1">
                     <p id="section-toc.1-1.5.2.7.2.1.1"><a href="#section-5.7.1" class="xref">5.7.1</a>.  <a href="#name-ird-example-3" class="xref">IRD Example</a></p>
 </li>
-                  <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.5.2.7.2.2">
+                  <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.5.2.7.2.2">
                     <p id="section-toc.1-1.5.2.7.2.2.1"><a href="#section-5.7.2" class="xref">5.7.2</a>.  <a href="#name-basic-example-2" class="xref">Basic Example</a></p>
 </li>
-                  <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.5.2.7.2.3">
+                  <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.5.2.7.2.3">
                     <p id="section-toc.1-1.5.2.7.2.3.1"><a href="#section-5.7.3" class="xref">5.7.3</a>.  <a href="#name-incremental-updates-example-3" class="xref">Incremental Updates Example</a></p>
 </li>
                 </ul>
 </li>
             </ul>
 </li>
-          <li class="toc compact ulBare ulEmpty" id="section-toc.1-1.6">
+          <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.6">
             <p id="section-toc.1-1.6.1"><a href="#section-6" class="xref">6</a>.  <a href="#name-query-footprint-properties-" class="xref">Query Footprint Properties using ALTO Property Map Service</a></p>
-<ul class="toc ulBare ulEmpty compact">
-<li class="toc ulBare ulEmpty compact" id="section-toc.1-1.6.2.1">
+<ul class="ulEmpty toc ulBare compact">
+<li class="ulEmpty toc ulBare compact" id="section-toc.1-1.6.2.1">
                 <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="xref">6.1</a>.  <a href="#name-representing-footprint-obje" class="xref">Representing Footprint Objects as Property Map Entities</a></p>
-<ul class="toc ulBare ulEmpty compact">
-<li class="toc ulBare ulEmpty compact" id="section-toc.1-1.6.2.1.2.1">
+<ul class="ulEmpty toc ulBare compact">
+<li class="ulEmpty toc ulBare compact" id="section-toc.1-1.6.2.1.2.1">
                     <p id="section-toc.1-1.6.2.1.2.1.1"><a href="#section-6.1.1" class="xref">6.1.1</a>.  <a href="#name-asn-domain" class="xref">ASN Domain</a></p>
 </li>
-                  <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.6.2.1.2.2">
+                  <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.6.2.1.2.2">
                     <p id="section-toc.1-1.6.2.1.2.2.1"><a href="#section-6.1.2" class="xref">6.1.2</a>.  <a href="#name-countrycode-domain" class="xref">COUNTRYCODE Domain</a></p>
 </li>
                 </ul>
 </li>
-              <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.6.2.2">
+              <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.6.2.2">
                 <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="xref">6.2</a>.  <a href="#name-representing-cdni-capabilit" class="xref">Representing CDNI Capabilities as Property Map Entity Properties</a></p>
-<ul class="toc ulBare ulEmpty compact">
-<li class="toc ulBare ulEmpty compact" id="section-toc.1-1.6.2.2.2.1">
+<ul class="ulEmpty toc ulBare compact">
+<li class="ulEmpty toc ulBare compact" id="section-toc.1-1.6.2.2.2.1">
                     <p id="section-toc.1-1.6.2.2.2.1.1"><a href="#section-6.2.1" class="xref">6.2.1</a>.  <a href="#name-defining-information-resour" class="xref">Defining Information Resource Media Type for Property Type cdni-capabilities</a></p>
 </li>
-                  <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.6.2.2.2.2">
+                  <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.6.2.2.2.2">
                     <p id="section-toc.1-1.6.2.2.2.2.1"><a href="#section-6.2.2" class="xref">6.2.2</a>.  <a href="#name-intended-semantics-of-prope" class="xref">Intended Semantics of Property Type cdni-capabilities</a></p>
 </li>
                 </ul>
 </li>
-              <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.6.2.3">
+              <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.6.2.3">
                 <p id="section-toc.1-1.6.2.3.1"><a href="#section-6.3" class="xref">6.3</a>.  <a href="#name-examples-4" class="xref">Examples</a></p>
-<ul class="toc ulBare ulEmpty compact">
-<li class="toc ulBare ulEmpty compact" id="section-toc.1-1.6.2.3.2.1">
+<ul class="ulEmpty toc ulBare compact">
+<li class="ulEmpty toc ulBare compact" id="section-toc.1-1.6.2.3.2.1">
                     <p id="section-toc.1-1.6.2.3.2.1.1"><a href="#section-6.3.1" class="xref">6.3.1</a>.  <a href="#name-ird-example-4" class="xref">IRD Example</a></p>
 </li>
-                  <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.6.2.3.2.2">
+                  <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.6.2.3.2.2">
                     <p id="section-toc.1-1.6.2.3.2.2.1"><a href="#section-6.3.2" class="xref">6.3.2</a>.  <a href="#name-property-map-example" class="xref">Property Map Example</a></p>
 </li>
-                  <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.6.2.3.2.3">
+                  <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.6.2.3.2.3">
                     <p id="section-toc.1-1.6.2.3.2.3.1"><a href="#section-6.3.3" class="xref">6.3.3</a>.  <a href="#name-filtered-property-map-examp" class="xref">Filtered Property Map Example</a></p>
 </li>
-                  <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.6.2.3.2.4">
+                  <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.6.2.3.2.4">
                     <p id="section-toc.1-1.6.2.3.2.4.1"><a href="#section-6.3.4" class="xref">6.3.4</a>.  <a href="#name-incremental-updates-example-4" class="xref">Incremental Updates Example</a></p>
 </li>
                 </ul>
 </li>
             </ul>
 </li>
-          <li class="toc compact ulBare ulEmpty" id="section-toc.1-1.7">
+          <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.7">
             <p id="section-toc.1-1.7.1"><a href="#section-7" class="xref">7</a>.  <a href="#name-iana-considerations" class="xref">IANA Considerations</a></p>
-<ul class="toc ulBare ulEmpty compact">
-<li class="toc ulBare ulEmpty compact" id="section-toc.1-1.7.2.1">
+<ul class="ulEmpty toc ulBare compact">
+<li class="ulEmpty toc ulBare compact" id="section-toc.1-1.7.2.1">
                 <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="xref">7.1</a>.  <a href="#name-application-alto-media-type" class="xref">application/alto-* Media Types</a></p>
 </li>
-              <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.7.2.2">
+              <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.7.2.2">
                 <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="xref">7.2</a>.  <a href="#name-cdni-metadata-footprint-typ" class="xref">CDNI Metadata Footprint Type Registry</a></p>
 </li>
-              <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.7.2.3">
+              <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.7.2.3">
                 <p id="section-toc.1-1.7.2.3.1"><a href="#section-7.3" class="xref">7.3</a>.  <a href="#name-alto-entity-domain-type-reg" class="xref">ALTO Entity Domain Type Registry</a></p>
 </li>
-              <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.7.2.4">
+              <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.7.2.4">
                 <p id="section-toc.1-1.7.2.4.1"><a href="#section-7.4" class="xref">7.4</a>.  <a href="#name-alto-entity-property-type-r" class="xref">ALTO Entity Property Type Registry</a></p>
 </li>
             </ul>
 </li>
-          <li class="toc compact ulBare ulEmpty" id="section-toc.1-1.8">
+          <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.8">
             <p id="section-toc.1-1.8.1"><a href="#section-8" class="xref">8</a>.  <a href="#name-security-considerations" class="xref">Security Considerations</a></p>
 </li>
-          <li class="toc compact ulBare ulEmpty" id="section-toc.1-1.9">
+          <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.9">
             <p id="section-toc.1-1.9.1"><a href="#section-9" class="xref">9</a>.  <a href="#name-acknowledgments" class="xref">Acknowledgments</a></p>
 </li>
-          <li class="toc compact ulBare ulEmpty" id="section-toc.1-1.10">
+          <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.10">
             <p id="section-toc.1-1.10.1"><a href="#section-10" class="xref">10</a>. <a href="#name-contributors" class="xref">Contributors</a></p>
 </li>
-          <li class="toc compact ulBare ulEmpty" id="section-toc.1-1.11">
+          <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.11">
             <p id="section-toc.1-1.11.1"><a href="#section-11" class="xref">11</a>. <a href="#name-references" class="xref">References</a></p>
-<ul class="toc ulBare ulEmpty compact">
-<li class="toc ulBare ulEmpty compact" id="section-toc.1-1.11.2.1">
+<ul class="ulEmpty toc ulBare compact">
+<li class="ulEmpty toc ulBare compact" id="section-toc.1-1.11.2.1">
                 <p id="section-toc.1-1.11.2.1.1"><a href="#section-11.1" class="xref">11.1</a>.  <a href="#name-normative-references" class="xref">Normative References</a></p>
 </li>
-              <li class="toc ulBare ulEmpty compact" id="section-toc.1-1.11.2.2">
+              <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.11.2.2">
                 <p id="section-toc.1-1.11.2.2.1"><a href="#section-11.2" class="xref">11.2</a>.  <a href="#name-informative-references" class="xref">Informative References</a></p>
 </li>
             </ul>
 </li>
-          <li class="toc compact ulBare ulEmpty" id="section-toc.1-1.12">
+          <li class="ulEmpty toc ulBare compact" id="section-toc.1-1.12">
             <p id="section-toc.1-1.12.1"><a href="#appendix-A" class="xref"></a><a href="#name-authors-addresses" class="xref">Authors' Addresses</a></p>
 </li>
         </ul>
@@ -1210,12 +1211,13 @@ knows whether it can redirect a particular user request to that dCDN.<a href="#s
 <p id="section-1-5">A key component in defining CDNI FCI is defining objects describing the
 footprints and capabilities of a dCDN. Such objects are already defined in
 <span>[<a href="#RFC8008" class="xref">RFC8008</a>]</span>. A protocol to transport and update such objects between a uCDN and
-a dCDN, however, is not defined. Hence, the scope of this document is to define
-such a protocol by introducing a new Application-Layer Traffic Optimization
-(ALTO) <span>[<a href="#RFC7285" class="xref">RFC7285</a>]</span> service called "CDNI Advertisement Service".<a href="#section-1-5" class="pilcrow">¶</a></p>
-<p id="section-1-6">There are multiple benefits in using ALTO as a transport protocol, as discussed
-in <a href="#bgALTO" class="xref">Section 2.2</a>.<a href="#section-1-6" class="pilcrow">¶</a></p>
-<p id="section-1-7">The rest of this document is organized as follows. <a href="#background" class="xref">Section 2</a> provides
+a dCDN, however, is not defined.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-6">To define such a protocol, this document specifies an extension of the
+Application-Layer Traffic Optimization (ALTO) <span>[<a href="#RFC7285" class="xref">RFC7285</a>]</span> protocol by
+introducing a new ALTO service called "CDNI Advertisement Service".<a href="#section-1-6" class="pilcrow">¶</a></p>
+<p id="section-1-7">There are multiple benefits in using ALTO as a transport protocol, as discussed
+in <a href="#bgALTO" class="xref">Section 2.2</a>.<a href="#section-1-7" class="pilcrow">¶</a></p>
+<p id="section-1-8">The rest of this document is organized as follows. <a href="#background" class="xref">Section 2</a> provides
 non-normative background on both CDNI FCI and ALTO. <a href="#cdnifci" class="xref">Section 3</a> introduces the
 most basic service, called "CDNI Advertisement Service", to realize CDNI FCI
 using ALTO. <a href="#cdnifcinetworkmap" class="xref">Section 4</a> demonstrates a key benefit of using ALTO: the
@@ -1227,7 +1229,7 @@ given capabilities instead of getting the full resource, which can be large.
 to query footprint properties using ALTO entity property map extension. In this
 way, a uCDN can effectively fetch capabilities of footprints in which it is
 interested. IANA and security considerations are discussed in <a href="#iana" class="xref">Section 7</a> and
-<a href="#security" class="xref">Section 8</a> respectively.<a href="#section-1-7" class="pilcrow">¶</a></p>
+<a href="#security" class="xref">Section 8</a> respectively.<a href="#section-1-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="background">
@@ -1275,7 +1277,7 @@ be viewed as constraints for delegating requests to a dCDN: A dCDN footprint
 advertisement tells the uCDN the limitations for delegating a request to the
 dCDN. For IP prefixes or ASN(s), the footprint signals to the uCDN that it
 should consider the dCDN a candidate only if the IP address of the request
-routing source falls within the prefix set (or ASN, respectively). The CDNI
+routing source falls within the prefix set or ASN, respectively. The CDNI
 specifications do not define how a given uCDN determines what address ranges
 are in a particular ASN. Similarly, for country codes, a uCDN should only
 consider the dCDN a candidate if it covers the country of the request routing
@@ -1291,9 +1293,9 @@ exactly still needs to be advertised by the CDNI FCI? For instance, updates
 about temporal failures of part of a footprint can be useful information to
 convey via the CDNI FCI. Such information would provide updates on information
 previously agreed in contracts between the participating CDNs. In other words,
-the CDNI FCI is a means for a dCDN (downstream CDN) to provide changes/updates
-regarding a footprint and/or capabilities that it has prior agreed to serve in
-a contract with a uCDN (upstream CDN). Hence, server push and incremental
+the CDNI FCI is a means for a dCDN to provide changes/updates
+regarding a footprint and/or capabilities that it has previously agreed to serve in
+a contract with a uCDN. Hence, server push and incremental
 encoding will be necessary techniques.<a href="#section-2.1-2.5" class="pilcrow">¶</a>
 </li>
         </ul>
@@ -1316,7 +1318,7 @@ request routing in CDNs. In particular, the CDNI problem statement <span>[<a hre
 explicitly mentions ALTO as a candidate protocol for "actual algorithms for
 selection of CDN or Surrogate by Request-Routing systems".<a href="#section-2.2-2" class="pilcrow">¶</a></p>
 <p id="section-2.2-3">The following reasons make ALTO a suitable candidate protocol for dCDN
-(downstream CDN) selection as part of CDNI request routing and, in particular,
+selection as part of CDNI request routing and, in particular,
 for an FCI protocol:<a href="#section-2.2-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2.2-4.1">Application Layer-oriented: ALTO is a protocol specifically designed to
@@ -1330,13 +1332,15 @@ providing dCDNs' capabilities as well as footprints (see <a href="#cdnifci" clas
 then providing costs of surrogates in a dCDN by ALTO cost maps.<a href="#section-2.2-4.1" class="pilcrow">¶</a>
 </li>
           <li class="normal" id="section-2.2-4.2">Security: The identification between uCDNs and dCDNs is an important
-requirement. ALTO maps can be signed and hence provide inherent integrity
-protection. Please see <a href="#security" class="xref">Section 8</a>.<a href="#section-2.2-4.2" class="pilcrow">¶</a>
+requirement (see <a href="#security" class="xref">Section 8</a>). ALTO maps can signed and hence provide
+inherent integrity protection. Please see Section 15.1.2 of <span>[<a href="#RFC7285" class="xref">RFC7285</a>]</span> for
+detailed protection strategies.<a href="#section-2.2-4.2" class="pilcrow">¶</a>
 </li>
           <li class="normal" id="section-2.2-4.3">RESTful Design: The ALTO protocol has undergone extensive revisions in order
 to provide a RESTful design regarding the client-server interaction specified
-by the protocol. A CDNI FCI interface based on ALTO would inherit this RESTful
-design. Please see <a href="#cdnifci" class="xref">Section 3</a>.<a href="#section-2.2-4.3" class="pilcrow">¶</a>
+by the protocol. It is flexible and extensible enough to handle existing and
+potential future data formats defined by CDNI. A CDNI FCI interface based on
+ALTO would inherit this RESTful design. Please see <a href="#cdnifci" class="xref">Section 3</a>.<a href="#section-2.2-4.3" class="pilcrow">¶</a>
 </li>
           <li class="normal" id="section-2.2-4.4">Error-handling: The ALTO protocol provides extensive error-handling in the
 whole request and response process (see Section 8.5 of <span>[<a href="#RFC7285" class="xref">RFC7285</a>]</span>). A CDNI
@@ -1351,7 +1355,7 @@ ranges. Please see <a href="#cdnifcinetworkmap" class="xref">Section 4</a>.<a hr
           <li class="normal" id="section-2.2-4.6">Filtered Map Service: The ALTO map filtering service would allow a uCDN to
 query only for parts of an ALTO map. For example, the ALTO filtered property
 map service can enable a uCDN to query properties of a part of footprints
-efficiently (see <a href="#unifiedpropertymap" class="xref">Section 6</a>).<a href="#section-2.2-4.6" class="pilcrow">¶</a>
+efficiently. Please see <a href="#unifiedpropertymap" class="xref">Section 6</a>.<a href="#section-2.2-4.6" class="pilcrow">¶</a>
 </li>
           <li class="normal" id="section-2.2-4.7">Server-initiated Notifications and Incremental Updates: When the footprint or
 the capabilities of a dCDN change (i.e., unexpectedly from the perspective of
@@ -2142,7 +2146,7 @@ ReqFilteredCDNIAdvertisement, where:<a href="#section-5.3-1" class="pilcrow">¶<
    } CDNICapability;
 
    object {
-       [CDNIFCICapability cdni-capabilities&lt;0..*&gt;;]
+       [CDNICapability cdni-capabilities&lt;0..*&gt;;]
    } ReqFilteredCDNIAdvertisement;
 
 </pre><a href="#section-5.3-2" class="pilcrow">¶</a>
@@ -2164,7 +2168,7 @@ capability-value:  </dt>
 </dd>
           <dd class="break"></dd>
 <dt id="section-5.3-4.5">
-cdni-fci-capabilities:  </dt>
+cdni-capabilities:  </dt>
           <dd style="margin-left: 1.5em" id="section-5.3-4.6">
             <p id="section-5.3-4.6.1">A list of CDNI capabilities defined in Section 5.1 of <span>[<a href="#RFC8008" class="xref">RFC8008</a>]</span> for which
 footprints are to be returned. If a list is empty or not appearing, the ALTO
