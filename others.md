@@ -7,10 +7,10 @@
 This document updates the IANA Media Types Registry by registering two
 additional ALTO media types, listed in [](#TableMediaTypes).
 
-| Type        | Subtype              | Specification        |
-|-------------|----------------------|----------------------|
-| application | alto-cdni+json       | [](#cdnifci)         |
-| application | alto-cdnifilter+json | [](#filteredcdnifci) |
+| Type        | Subtype              | Specification                   |
+|-------------|----------------------|---------------------------------|
+| application | alto-cdni+json       | [](#cdnifci) of RFCthis         |
+| application | alto-cdnifilter+json | [](#filteredcdnifci) of RFCthis |
 {: #TableMediaTypes title="Additional ALTO Media Types."}
 
 {: newline="true"}
@@ -146,7 +146,7 @@ be included as follows:
   the ALTO server.
 
 Although protection strategies as described in Section 15 of {{RFC7285}} should
-be applied to address aforementioned security considerations, one additional
+be applied to address aforementioned security and privacy considerations, one additional
 information leakage risk introduced by this document could not be addressed by
 these strategies. In particular, if a dCDN signs agreements with multiple uCDNs
 without any isolation, this dCDN may disclose extra information of one uCDN to

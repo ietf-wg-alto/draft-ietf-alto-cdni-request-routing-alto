@@ -82,16 +82,17 @@ normative:
   RFC2119:
   RFC6793:
   RFC7285:
+  RFC7493:
   RFC8006:
   RFC8008:
   RFC8259:
   RFC8174:
+  RFC8895:
 informative:
   I-D.ietf-alto-path-vector:
   RFC5693:
   RFC6707:
   RFC7975:
-  RFC8895:
 
 --- abstract
 

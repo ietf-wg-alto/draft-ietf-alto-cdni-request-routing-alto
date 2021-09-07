@@ -42,9 +42,10 @@ RFCs.
   are in a particular ASN. Similarly, for country codes, a uCDN should only
   consider the dCDN a candidate if it covers the country of the request routing
   source. The CDNI specifications do not define how a given uCDN determines the
-  country of the request routing source. Multiple footprint constraints are
-  additive, i.e., the advertisement of different types of footprint narrows the
-  dCDN candidacy cumulatively.
+  country of the request routing source. Different types of footprint
+  constraints can be combined together to narrow the dCDN candidacy, i.e., the
+  uCDN should consider the dCDN a candidate only if the request routing source
+  satisfies all the types of footprint constraints in the advertisement.
 * Given that a large part of Footprint and Capabilities Advertisement may
   actually happen in contractual agreements, the semantics of CDNI Footprint and
   Capabilities advertisement refers to answering the following question: what
@@ -87,16 +88,20 @@ for an FCI protocol:
   then providing costs of surrogates in a dCDN by ALTO cost maps.
 - Security: The identification between uCDNs and dCDNs is an important
   requirement (see [](#security)). ALTO maps can signed and hence provide
-  inherent integrity protection. Please see Section 15.1.2 of {{RFC7285}} for
+  inherent origin protection. Please see Section 15.1.2 of {{RFC7285}} for
   detailed protection strategies.
 * RESTful Design: The ALTO protocol has undergone extensive revisions in order
   to provide a RESTful design regarding the client-server interaction specified
   by the protocol. It is flexible and extensible enough to handle existing and
-  potential future data formats defined by CDNI. A CDNI FCI interface based on
-  ALTO would inherit this RESTful design. Please see [](#cdnifci).
+  potential future data formats defined by CDNI. It can provide the consistent
+  client-server interaction model for other existing CDNI interfaces or
+  potential future extensions and therefore reduce the learning cost for both
+  users and developers, although they are not in the scope of this
+  document. A CDNI FCI interface based on ALTO would inherit this RESTful
+  design. Please see [](#cdnifci).
 * Error-handling: The ALTO protocol provides extensive error-handling in the
   whole request and response process (see Section 8.5 of {{RFC7285}}). A CDNI
-  FCI interface based on ALTO would inherit this this extensive error-handling
+  FCI interface based on ALTO would inherit this extensive error-handling
   framework. Please see [](#filteredcdnifci).
 * Map Service: The semantics of an ALTO network map is an exact match for the
   needed information to convey a footprint by a dCDN, in
@@ -119,11 +124,11 @@ for an FCI protocol:
   the uCDN. The newest design of ALTO supports server pushed incremental updates
   {{RFC8895}}.
 * Content Availability on Hosts: A dCDN might want to express CDN capabilities
-  in terms of certain content types (e.g., codecs/ formats, or content from
-  certain content providers). The new endpoint property for ALTO would enable a
-  dCDN to make such information available to a uCDN. This would enable a uCDN to
-  determine whether a dCDN actually has the capabilities for a given type of
-  content requested.
+in terms of certain content types (e.g., codecs/ formats, or content from
+certain content providers). ALTO Entity Property Map
+{{I-D.ietf-alto-unified-props-new}} would enable a dCDN to make such
+information available to a uCDN. This would enable a uCDN to determine whether
+a dCDN actually has the capabilities for a given type of content requested.
 * Resource Availability on Hosts or Links: The capabilities on links (e.g.,
   maximum bandwidth) or caches (e.g., average load) might be useful information
   for a uCDN for optimized dCDN selection. For instance, if a uCDN receives a
@@ -131,7 +136,8 @@ for an FCI protocol:
   is likely that a dCDN can fulfill such stringent application-level
   requirements (i.e., can be expected to have enough consistent bandwidth)
   before it redirects the request. In general, if ALTO could convey such
-  information via new endpoint properties, it would enable more sophisticated
-  means for dCDN selection with ALTO. ALTO Path Vector Extension
-  {{I-D.ietf-alto-path-vector}} is designed to allow ALTO clients to query
-  information such as capacity regions for a given set of flows.
+  information via ALTO Entity Property Map {{I-D.ietf-alto-unified-props-new}},
+  it would enable more sophisticated means for dCDN selection with ALTO. ALTO
+  Path Vector Extension {{I-D.ietf-alto-path-vector}} is designed to allow ALTO
+  clients to query information such as capacity regions for a given set of
+  flows.

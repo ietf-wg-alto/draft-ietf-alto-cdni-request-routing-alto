@@ -9,12 +9,16 @@ model" {{RFC7285}}. The ALTO protocol specification {{RFC7285}} defines multiple
 initial services, e.g., the ALTO network map service and cost map service.
 
 This document defines a new ALTO service called "CDNI Advertisement Service"
-which conveys JSON objects of media type "application/alto-cdni+json". These
+which conveys JSON {{RFC8259}} objects of media type "application/alto-cdni+json". These
 JSON objects are used to transport BaseAdvertisementObject objects defined in
 {{RFC8008}}; this document specifies how to transport such
 BaseAdvertisementObject objects via the ALTO protocol with the ALTO "CDNI
 Advertisement Service". Similar to other ALTO services, this document defines
 the ALTO information resource for the "CDNI Advertisement Service" as follows.
+
+Note that the encoding of BaseAdvertisementObject exactly reuses the one
+defined in {{RFC8008}} and therefore also follows the recommendations of I-JSON
+(Internet JSON) {{RFC7493}}, which is required by {{RFC8008}}.
 
 ## Media Type {#cdnifcimediatype}
 
@@ -35,7 +39,7 @@ None.
 
 ## Uses {#cdnifciuses}
 
-The `uses` field SHOULD NOT appear unless the CDNI Advertisement resource
+The `uses` field MUST NOT appear unless the CDNI Advertisement resource
 depends on other ALTO information resources. If the CDNI Advertisement
 resource has dependent resources, the resource IDs of its
 dependent resources MUST be included into the `uses` field. This
@@ -53,7 +57,7 @@ field provides the version of the retrieved CDNI FCI resource.
 If a CDNI Advertisement response depends on other ALTO information resources, it
 MUST include the `dependent-vtags` field, whose value is an array to indicate
 the version tags of the resources used, where each resource is specified in
-`uses` of its IRD entry.
+`uses` of its Information Resource Directory (IRD) entry.
 
 The data component of an ALTO CDNI Advertisement response is named
 `cdni-advertisement`, which is a JSON object of type CDNIAdvertisementData:
@@ -68,17 +72,21 @@ The data component of an ALTO CDNI Advertisement response is named
     } CDNIAdvertisementData;
 ~~~
 
-Specifically, a CDNIAdvertisementData object is a JSON object that includes only
-one property named `capabilities-with-footprints`, whose value is an array of
-BaseAdvertisementObject objects.
+Specifically, a CDNIAdvertisementData object is a JSON object that includes
+only one property named `capabilities-with-footprints`, whose value is an array
+of BaseAdvertisementObject objects. It provides capabilities with footprint
+restrictions for uCDN to decide the dCDN selection. If the value of this
+property is an empty array, it means the corresponding dCDN cannot provide any
+mandatory-to-implement CDNI capabilities for any footprints.
 
 The syntax and semantics of BaseAdvertisementObject are well defined in Section
 5.1 of {{RFC8008}}. A BaseAdvertisementObject object includes multiple
 properties, including capability-type, capability-value, and footprints, where
 footprints are defined in Section 4.2.2.2 of {{RFC8006}}.
 
-To be self-contained, below is a non-normative specification of
-BaseAdvertisementObject. As mentioned above, the normative specification of
+To be self-contained, below is an equivalent specification of
+BaseAdvertisementObject described in the ALTO-style notation (see Section 8.2
+of {{RFC7285}}). As mentioned above, the normative specification of
 BaseAdvertisementObject is in {{RFC8008}}.
 
 ~~~
@@ -98,7 +106,8 @@ For each BaseAdvertisementObject, the ALTO client MUST interpret footprints
 appearing multiple times as if they appeared only once. If footprints in a
 BaseAdvertisementObject is null or empty or not appearing, the ALTO client MUST
 understand that the capabilities in this BaseAdvertisementObject have the
-"global" coverage.
+"global" coverage, i.e., the corresponding dCDN can provide them for any
+request routing source.
 
 Note: Further optimization of BaseAdvertisement objects to effectively provide
 the advertisement of capabilities with footprint restrictions is certainly
@@ -175,7 +184,7 @@ document.
 
 ### IRD Example {#IRDexample}
 
-Below is the information resource directory (IRD) of a simple, example ALTO
+Below is the IRD of a simple, example ALTO
 server. The server provides both base ALTO information resources (e.g., network
 maps) and CDNI FCI related information resources (e.g., CDNI Advertisement
 resources), demonstrating a single, integrated environment.
@@ -377,9 +386,9 @@ respectively.
 ### Incremental Updates Example
 
 A benefit of using ALTO to provide CDNI Advertisement resources is that such
-resources can be updated using ALTO incremental updates. Below is an example
-that also shows the benefit of having both JSON merge patch and JSON patch to
-encode updates.
+resources can be updated using ALTO incremental updates {{RFC8895}}. Below is
+an example that also shows the benefit of having both JSON merge patch and JSON
+patch to encode updates.
 
 At first, an ALTO client requests updates for "my-default-cdnifci", and the ALTO
 server returns the `control-uri` followed by the full CDNI Advertisement
@@ -424,7 +433,7 @@ by JSON patch to the ALTO client.
  data:     }
  data:   },
  data:   "cdni-advertisement": {
- data:     "capabilities": [
+ data:     "capabilities-with-footprints": [
  data:       {
  data:         "capability-type": "FCI.DeliveryProtocol",
  data:         "capability-value": {
@@ -669,7 +678,7 @@ ReqFilteredCDNIAdvertisement, where:
    } CDNICapability;
 
    object {
-       [CDNICapability cdni-capabilities<0..*>;]
+       CDNICapability cdni-capabilities<0..*>;
    } ReqFilteredCDNIAdvertisement;
 
 ~~~
@@ -686,9 +695,9 @@ capability-value:
 
 cdni-capabilities:
 : A list of CDNI capabilities defined in Section 5.1 of {{RFC8008}} for which
-  footprints are to be returned. If a list is empty or not appearing, the ALTO
+  footprints are to be returned. If this list is empty, the ALTO
   server MUST interpret it as a request for the full CDNI Advertisement
-  resource. The ALTO server MUST interpret entries appearing in a list multiple
+  resource. The ALTO server MUST interpret entries appearing in this list multiple
   times as if they appeared only once. If the ALTO server does not define any
   footprints for a CDNI capability, it MUST omit this capability from the
   response.
@@ -704,9 +713,8 @@ Same to the `uses` field of the CDNI Advertisement resource (see
 
 ## Response
 
-The response MUST indicate an error, using ALTO protocol error handling
-specified in Section 8.5 of the ALTO protocol {{RFC7285}}, if the request is
-invalid.
+If the request is invalid, the response MUST indicate an error, using ALTO
+protocol error handling specified in Section 8.5 of {{RFC7285}}.
 
 Specifically, a filtered CDNI Advertisement request is invalid if:
 
@@ -722,14 +730,27 @@ The ALTO server returns a filtered CDNI Advertisement resource for a valid
 request. The format of a filtered CDNI Advertisement resource is the same as a
 full CDNI Advertisement resource (See [](#cdnifciencoding).)
 
+<!--
 The returned CDNI Advertisement resource MUST contain only
 BaseAdvertisementObject objects whose CDNI capability object is the superset of
 one of CDNI capability object in `cdni-fci-capabilities`. Specifically, that a
 CDNI capability object A is the superset of another CDNI capability object B
 means that these two CDNI capability objects have the same capability type and
 mandatory properties in capability value of A MUST include mandatory properties
-in capability value of B semantically. See [](#filteredcdnifciexample) for a
-concrete example.
+in capability value of B semantically.
+-->
+
+The returned filtered CDNI Advertisement resource MUST contain all the
+BaseAdvertisementObject objects satisfying the following condition: The CDNI
+capability object of each included BaseAdvertisementObject object MUST follow
+two constraints:
+
+- The "cdni-capabilities" field of the input includes a CDNI capability object
+  X having the same capability type as it.
+- All the mandatory properties in its capability value is a superset of
+  mandatory properties in capability value of X semantically.
+
+See [](#filteredcdnifciexample) for a concrete example.
 
 The version tag included in the `vtag` field of the response MUST correspond to
 the full CDNI Advertisement resource from which the filtered CDNI Advertisement
@@ -752,7 +773,7 @@ delivery protocols which is the superset of https/1.1 delivery protocol.
 
 ~~~
   POST /cdnifci/filtered HTTP/1.1
-  HOST: alto.example.com
+  Host: alto.example.com
   Accept: application/alto-cdni+json
   Content-Type: application/cdnifilter+json
   Content-Length: 176
@@ -890,7 +911,13 @@ follows:
 
 * According to {{I-D.ietf-alto-unified-props-new}}, "ipv4" and "ipv6" are two
   predefined entity domain types, which can be used to represent "ipv4cidr" and
-  "ipv6cidr" footprints respectively.
+  "ipv6cidr" footprints respectively. Note that both "ipv4" and "ipv6" domains
+  can include not only hierarchical addresses but also individual addresses.
+  Therefore, a "ipv4cidr" or "ipv6cidr" footprint with the longest prefix can
+  also be represented by an individual address entity. When the uCDN receives a
+  property map with individual addresses in an "ipv4" or "ipv6" domain, it can
+  translate them as corresponding "ipv4cidr" or "ipv6cidr" footprints with the
+  longest prefix.
 * "pid" is also a predefined entity domain type, which can be used to represent
   "altopid" footprints. Note that "pid" is a resource-specific entity domain. To
   represent an "altopid" footprint, the specifying information resource of the
@@ -909,6 +936,17 @@ footprint object of "ipv6cidr" type is similar.
 { "footprint-type": "ipv4cidr",
   "footprint-value": ["192.0.2.0/24", "198.51.100.0/24"]
 } --> "ipv4:192.0.2.0/24", "ipv4:198.51.100.0/24"
+~~~
+
+And here is an example of corresponding footprint object of "ipv4cidr" type
+represented by an individual address in an "ipv4" domain in the ALTO property
+map. The translation of the entities in an "ipv6" domain is similar.
+
+~~~
+"ipv4:203.0.113.100" --> {
+  "footprint-type": "ipv4cidr",
+  "footprint-value": ["203.0.113.100/32"]
+}
 ~~~
 
 ### ASN Domain
@@ -992,7 +1030,7 @@ entities' property is "cdni-capabilities".
 
 ~~~
  GET /propmap/full/cdnifci HTTP/1.1
- HOST: alto.example.com
+ Host: alto.example.com
  Accept: application/alto-propmap+json,application/alto-error+json
 
  HTTP/1.1 200 OK
@@ -1055,7 +1093,7 @@ This example uses the filtered property map service to get "pid" and
 
 ~~~
    POST /propmap/lookup/cdnifci-pid HTTP/1.1
-   HOST: alto.example.com
+   Host: alto.example.com
    Content-Type: application/alto-propmapparams+json
    Accept: application/alto-propmap+json,application/alto-error+json
    Content-Length: 181
