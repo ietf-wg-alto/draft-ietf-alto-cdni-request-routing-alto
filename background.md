@@ -37,7 +37,7 @@ RFCs.
   advertisement tells the uCDN the limitations for delegating a request to the
   dCDN. For IP prefixes or ASN(s), the footprint signals to the uCDN that it
   should consider the dCDN a candidate only if the IP address of the request
-  routing source falls within the prefix set (or ASN, respectively). The CDNI
+  routing source falls within the prefix set or ASN, respectively. The CDNI
   specifications do not define how a given uCDN determines what address ranges
   are in a particular ASN. Similarly, for country codes, a uCDN should only
   consider the dCDN a candidate if it covers the country of the request routing
@@ -52,9 +52,9 @@ RFCs.
   about temporal failures of part of a footprint can be useful information to
   convey via the CDNI FCI. Such information would provide updates on information
   previously agreed in contracts between the participating CDNs. In other words,
-  the CDNI FCI is a means for a dCDN (downstream CDN) to provide changes/updates
-  regarding a footprint and/or capabilities that it has prior agreed to serve in
-  a contract with a uCDN (upstream CDN). Hence, server push and incremental
+  the CDNI FCI is a means for a dCDN to provide changes/updates
+  regarding a footprint and/or capabilities that it has previously agreed to serve in
+  a contract with a uCDN. Hence, server push and incremental
   encoding will be necessary techniques.
 
 ## ALTO Background and Benefits {#bgALTO}
@@ -73,7 +73,7 @@ explicitly mentions ALTO as a candidate protocol for "actual algorithms for
 selection of CDN or Surrogate by Request-Routing systems".
 
 The following reasons make ALTO a suitable candidate protocol for dCDN
-(downstream CDN) selection as part of CDNI request routing and, in particular,
+selection as part of CDNI request routing and, in particular,
 for an FCI protocol:
 
 * Application Layer-oriented: ALTO is a protocol specifically designed to
@@ -85,13 +85,15 @@ for an FCI protocol:
   otherwise. Hence, ALTO can help a uCDN to select a proper dCDN by first
   providing dCDNs' capabilities as well as footprints (see [](#cdnifci)) and
   then providing costs of surrogates in a dCDN by ALTO cost maps.
-* Security: The identification between uCDNs and dCDNs is an important
-  requirement. ALTO maps can be signed and hence provide inherent integrity
-  protection. Please see [](#security).
+- Security: The identification between uCDNs and dCDNs is an important
+  requirement (see [](#security)). ALTO maps can signed and hence provide
+  inherent integrity protection. Please see Section 15.1.2 of {{RFC7285}} for
+  detailed protection strategies.
 * RESTful Design: The ALTO protocol has undergone extensive revisions in order
   to provide a RESTful design regarding the client-server interaction specified
-  by the protocol. A CDNI FCI interface based on ALTO would inherit this RESTful
-  design. Please see [](#cdnifci).
+  by the protocol. It is flexible and extensible enough to handle existing and
+  potential future data formats defined by CDNI. A CDNI FCI interface based on
+  ALTO would inherit this RESTful design. Please see [](#cdnifci).
 * Error-handling: The ALTO protocol provides extensive error-handling in the
   whole request and response process (see Section 8.5 of {{RFC7285}}). A CDNI
   FCI interface based on ALTO would inherit this this extensive error-handling
@@ -103,7 +105,7 @@ for an FCI protocol:
 * Filtered Map Service: The ALTO map filtering service would allow a uCDN to
   query only for parts of an ALTO map. For example, the ALTO filtered property
   map service can enable a uCDN to query properties of a part of footprints
-  efficiently (see [](#unifiedpropertymap)).
+  efficiently. Please see [](#unifiedpropertymap).
 * Server-initiated Notifications and Incremental Updates: When the footprint or
   the capabilities of a dCDN change (i.e., unexpectedly from the perspective of
   a uCDN), server-initiated notifications would enable a dCDN to inform a uCDN

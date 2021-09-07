@@ -38,9 +38,11 @@ knows whether it can redirect a particular user request to that dCDN.
 A key component in defining CDNI FCI is defining objects describing the
 footprints and capabilities of a dCDN. Such objects are already defined in
 {{RFC8008}}. A protocol to transport and update such objects between a uCDN and
-a dCDN, however, is not defined. Hence, the scope of this document is to define
-such a protocol by introducing a new Application-Layer Traffic Optimization
-(ALTO) {{RFC7285}} service called "CDNI Advertisement Service".
+a dCDN, however, is not defined.
+
+To define such a protocol, this document specifies an extension of the
+Application-Layer Traffic Optimization (ALTO) {{RFC7285}} protocol by
+introducing a new ALTO service called "CDNI Advertisement Service".
 
 There are multiple benefits in using ALTO as a transport protocol, as discussed
 in [](#bgALTO).

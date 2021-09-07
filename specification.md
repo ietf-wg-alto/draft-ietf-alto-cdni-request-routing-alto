@@ -669,7 +669,7 @@ ReqFilteredCDNIAdvertisement, where:
    } CDNICapability;
 
    object {
-       [CDNIFCICapability cdni-capabilities<0..*>;]
+       [CDNICapability cdni-capabilities<0..*>;]
    } ReqFilteredCDNIAdvertisement;
 
 ~~~
@@ -684,7 +684,7 @@ capability-value:
 : The same as Base Advertisement Object's capability-value defined in Section
   5.1 of {{RFC8008}}.
 
-cdni-fci-capabilities:
+cdni-capabilities:
 : A list of CDNI capabilities defined in Section 5.1 of {{RFC8008}} for which
   footprints are to be returned. If a list is empty or not appearing, the ALTO
   server MUST interpret it as a request for the full CDNI Advertisement
