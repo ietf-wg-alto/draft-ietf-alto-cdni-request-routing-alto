@@ -81,7 +81,7 @@ for an FCI protocol:
   improve application layer traffic (and application layer connections among
   hosts on the Internet) by providing additional information to applications
   that these applications could not easily retrieve themselves. This matches the
-  need of CDNI: a uCDN wants to improve application layer CDN request routing by
+  need of CDNI, where a uCDN wants to improve application layer CDN request routing by
   using information (provided by a dCDN) that the uCDN could not easily obtain
   otherwise. Hence, ALTO can help a uCDN to select a proper dCDN by first
   providing dCDNs' capabilities as well as footprints (see [](#cdnifci)) and

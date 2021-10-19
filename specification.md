@@ -16,7 +16,7 @@ BaseAdvertisementObject objects via the ALTO protocol with the ALTO "CDNI
 Advertisement Service". Similar to other ALTO services, this document defines
 the ALTO information resource for the "CDNI Advertisement Service" as follows.
 
-Note that the encoding of BaseAdvertisementObject exactly reuses the one
+Note that the encoding of BaseAdvertisementObject reuses the one
 defined in {{RFC8008}} and therefore also follows the recommendations of I-JSON
 (Internet JSON) {{RFC7493}}, which is required by {{RFC8008}}.
 
@@ -578,8 +578,9 @@ described in [](#networkmapexample).
 In this example, the ALTO client is interested in changes of
 "my-cdnifci-with-pid-footprints" and its dependent network map "my-eu-netmap".
 Considering two changes, the first one is to change footprints of the https/1.1
-delivery protocol capability, and the second one is to remove "south-france"
-from the footprints of the https/1.1 acquisition protocol capability.
+delivery protocol capability, and the second one is to remove the
+"south-france" PID from the footprints of the https/1.1 acquisition protocol
+capability.
 
 ~~~
   POST /updates/cdnifci HTTP/1.1
