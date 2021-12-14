@@ -71,6 +71,18 @@ author:
     country: China
     email: jingxuan.zhang@tongji.edu.cn
 
+contributor:
+  -
+    ins: X. Lin
+    name: Xiao Shawn Lin
+    org: Huawei
+    street: 2222 Newjinqiao Rd
+    city: Shanghai
+    code: 200125
+    country: China
+    phone: +86-15316812351
+    email: x.shawn.lin@gmail.com
+
 normative:
   ISO3166-1:
     title: "ISO 3166-1: Codes for the representation of names of countries and their subdivisions -- Part 1: Country codes"
@@ -113,3 +125,5 @@ when, and only when, they appear in all capitals, as shown here.
 {::include others.md}
 
 --- back
+
+{::include ack.md}

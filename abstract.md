@@ -5,7 +5,7 @@ defines a set of protocols to interconnect CDNs to achieve multiple goals,
 including extending the reach of a given CDN. A CDNI Request Routing Footprint
 &amp; Capabilities Advertisement interface (FCI) is needed to achieve the goals
 of a CDNI. RFC 8008 defines precisely the semantics of FCI and provides
-guidelines on the FCI protocol, but the exact protocol is specified. This
+guidelines on the FCI protocol, but the exact protocol is not specified. This
 document defines a new Application-Layer Traffic Optimization (ALTO) service
 called "CDNI Advertisement Service" that provides an implementation of the FCI,
 following the guidelines defined in RFC 8008.

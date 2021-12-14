@@ -28,7 +28,7 @@ Optional parameters:
 
 Encoding considerations:
 : Encoding considerations are identical to those specified for the
-  `application/json` media type. See {{RFC8259}}.
+  "application/json" media type. See {{RFC8259}}.
 
 Security considerations:
 : Security considerations related to the generation and consumption of ALTO
@@ -122,8 +122,8 @@ the architecture of the base protocol. And hence Security Considerations of the
 base protocol (Section 15 of {{RFC7285}}) fully apply when this extension is
 provided by an ALTO server.
 
-In the context of CDNI Advertisement, additional security considerations should
-be included as follows:
+In the context of CDNI Advertisement, the following security considerations should
+be considered:
 
 * For authenticity and integrity of ALTO information, an attacker may disguise
   itself as an ALTO server for a dCDN, and provide false capabilities and
@@ -146,43 +146,30 @@ be included as follows:
   the ALTO server.
 
 Although protection strategies as described in Section 15 of {{RFC7285}} should
-be applied to address aforementioned security and privacy considerations, one additional
-information leakage risk introduced by this document could not be addressed by
-these strategies. In particular, if a dCDN signs agreements with multiple uCDNs
-without any isolation, this dCDN may disclose extra information of one uCDN to
-another one. In that case, one uCDN may redirect requests which should not have
-to be served by this dCDN to it.
+be applied to address aforementioned security and privacy considerations,
+two special cases need to be included as follows:
 
-To reduce the risk, a dCDN should isolate full/filtered CDNI Advertisement
-resources for different uCDNs. It could consider generating URIs of different
-full/filtered CDNI Advertisement resources by hashing its company ID, a uCDN's
-company ID as well as their agreements. A dCDN should avoid exposing all
-full/filtered CDNI Advertisement resources in one of its IRDs.
+- As required by section 7 of {{RFC8008}},
 
-# Acknowledgments {#ack}
+      "All protocols that implement these capabilities and footprint
+      advertisement objects are REQUIRED to provide integrity and
+      authentication services."
 
-The authors thank Matt Caulfield, Danny Alex Lachos Perez, Daryl Malas and
-Sanjay Mishra for their timely reviews and invaluable comments.
+  Therefore, the uCDN (ALTO Client)
+  MUST be authenticated to the dCDN (ALTO Server). And the dCDN (ALTO Server)
+  MUST support HTTP Digest Authentication and MAY also support TLS mutual
+  authentication. The authentication method will need to be negotiated out of
+  band and is out of scope for this document, as is the approach for
+  provisioning and managing these credentials.
+- One specific information leakage risk introduced by this document could not
+  be addressed by these strategies. In particular, if a dCDN signs agreements
+  with multiple uCDNs without any isolation, this dCDN may disclose extra
+  information of one uCDN to another one. In that case, one uCDN may redirect
+  requests which should not have to be served by this dCDN to it.
 
-Jan Seedorf has been partially supported by the GreenICN project (GreenICN:
-Architecture and Applications of Green Information Centric Networking), a
-research project supported jointly by the European Commission under its 7th
-Framework Program (contract no. 608518) and the National Institute of
-Information and Communications Technology (NICT) in Japan (contract no. 167).
-The views and conclusions contained herein are those of the authors and should
-not be interpreted as necessarily representing the official policies or
-endorsements, either expressed or implied, of the GreenICN project, the European
-Commission, or NICT.
+  To reduce the risk, a dCDN SHOULD isolate full/filtered CDNI Advertisement
+  resources for different uCDNs. It could consider generating URIs of different
+  full/filtered CDNI Advertisement resources by hashing its company ID, a
+  uCDN's company ID as well as their agreements. A dCDN SHOULD avoid exposing
+  all full/filtered CDNI Advertisement resources in one of its IRDs.
 
-This document has also been supported by the Coordination Support Action
-entitled 'Supporting European Experts Presence in lnternational Standardisation
-Activities in ICT' ("StandlCT.eu") funded by the European Commission under the
-Horizon 2020 Programme with Grant Agreement no. 780439. The views and
-conclusions contained herein are those of the authors and should not be
-interpreted as necessarily representing the official policies or endorsements,
-either expressed or implied, of the European Commission.
-
-# Contributors
-
-Mr. Xiao Shawn Lin is an author of an early version of this document, with many
-contributions.

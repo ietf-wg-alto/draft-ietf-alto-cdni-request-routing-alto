@@ -31,18 +31,18 @@ A CDNI Advertisement resource is requested using the HTTP GET method.
 
 ## Accept Input Parameters {#cdnifciinput}
 
-None.
+There are no applicable Accept Input parameters.
 
 ## Capabilities {#cdnifcicap}
 
-None.
+There are no applicable capabilities.
 
 ## Uses {#cdnifciuses}
 
-The `uses` field MUST NOT appear unless the CDNI Advertisement resource
+The "uses" field MUST NOT appear unless the CDNI Advertisement resource
 depends on other ALTO information resources. If the CDNI Advertisement
 resource has dependent resources, the resource IDs of its
-dependent resources MUST be included into the `uses` field. This
+dependent resources MUST be included into the "uses" field. This
 document only defines one potential dependent resource for the CDNI
 Advertisement resource. See [](#cdnifcinetworkmap) for details
 of when and how to use it. Future documents may extend the CDNI Advertisement
@@ -50,17 +50,17 @@ resource and allow other dependent resources.
 
 ## Response {#cdnifciencoding}
 
-The `meta` field of a CDNI Advertisement response MUST include the `vtag`
+The "meta" field of a CDNI Advertisement response MUST include the "vtag"
 field defined in Section 10.3 of {{RFC7285}}. This
 field provides the version of the retrieved CDNI FCI resource.
 
 If a CDNI Advertisement response depends on other ALTO information resources, it
-MUST include the `dependent-vtags` field, whose value is an array to indicate
+MUST include the "dependent-vtags" field, whose value is an array to indicate
 the version tags of the resources used, where each resource is specified in
-`uses` of its Information Resource Directory (IRD) entry.
+"uses" of its Information Resource Directory (IRD) entry.
 
 The data component of an ALTO CDNI Advertisement response is named
-`cdni-advertisement`, which is a JSON object of type CDNIAdvertisementData:
+"cdni-advertisement", which is a JSON object of type CDNIAdvertisementData:
 
 ~~~
     object {
@@ -73,7 +73,7 @@ The data component of an ALTO CDNI Advertisement response is named
 ~~~
 
 Specifically, a CDNIAdvertisementData object is a JSON object that includes
-only one property named `capabilities-with-footprints`, whose value is an array
+only one property named "capabilities-with-footprints", whose value is an array
 of BaseAdvertisementObject objects. It provides capabilities with footprint
 restrictions for uCDN to decide the dCDN selection. If the value of this
 property is an empty array, it means the corresponding dCDN cannot provide any
@@ -118,7 +118,7 @@ the latter one is smaller in its size.
 ~~~
 EXAMPLE 1
     {
-      "meta" : {...},
+      "meta": {...},
       "cdni-advertisement": {
         "capabilities-with-footprints": [
           {
@@ -150,7 +150,7 @@ EXAMPLE 1
 
 EXAMPLE 2
     {
-      "meta" : {...},
+      "meta": {...},
       "cdni-advertisement": {
         "capabilities-with-footprints": [
           {
@@ -175,10 +175,14 @@ the specifics of such mechanisms are outside the scope of this document.
 
 This document only requires the ALTO server to provide the initial FCI-specific
 CDNI Payload Types defined in {{RFC8008}} as the mandatory-to-implement CDNI
-capabilities. There may be other documents extending BaseAdvertisementObject and
+capabilities.
+
+<!--
+There may be other documents extending BaseAdvertisementObject and
 additional CDNI capabilities. They are outside the scope of this document. To
 support them, future documents can extend the specification defined in this
 document.
+-->
 
 ## Examples {#cdnifciexamples}
 
@@ -189,13 +193,17 @@ server. The server provides both base ALTO information resources (e.g., network
 maps) and CDNI FCI related information resources (e.g., CDNI Advertisement
 resources), demonstrating a single, integrated environment.
 
-Specifically, the IRD announces two network maps, one CDNI Advertisement
-resource without dependency, one CDNI Advertisement resource depending on a
-network map, one filtered CDNI Advertisement resource to be defined in
-[](#filteredcdnifci), one property map including `cdni-capabilities` as its
-entity property, one filtered property map including `cdni-capabilities` and
-`pid` as its entity properties, and two update stream services (one for updating
-CDNI Advertisement resources, and the other for updating property maps).
+Specifically, the IRD announces nine information resources as follows:
+
+- two network maps
+- one CDNI Advertisement resource without dependency
+- one CDNI Advertisement resource depending on a network map
+- one filtered CDNI Advertisement resource to be defined in [](#filteredcdnifci)
+- one property map including "cdni-capabilities" as its entity property
+- one filtered property map including "cdni-capabilities" and "pid" as its entity properties
+- two update stream services
+  - one for updating CDNI Advertisement resources
+  - one for updating property maps
 
 ~~~
  GET /directory HTTP/1.1
@@ -203,41 +211,41 @@ CDNI Advertisement resources, and the other for updating property maps).
  Accept: application/alto-directory+json,application/alto-error+json
 
  HTTP/1.1 200 OK
- Content-Length: 3571
+ Content-Length: 3431
  Content-Type: application/alto-directory+json
 
  {
-   "meta" : {
+   "meta": {
      "default-alto-network-map": "my-default-network-map"
    },
    "resources": {
      "my-default-network-map": {
-       "uri" : "https://alto.example.com/networkmap",
-       "media-type" : "application/alto-networkmap+json"
+       "uri": "https://alto.example.com/networkmap",
+       "media-type": "application/alto-networkmap+json"
      },
-     "my-eu-netmap" : {
-       "uri" : "https://alto.example.com/myeunetmap",
-       "media-type" : "application/alto-networkmap+json"
+     "my-eu-netmap": {
+       "uri": "https://alto.example.com/myeunetmap",
+       "media-type": "application/alto-networkmap+json"
      },
      "my-default-cdnifci": {
-       "uri" : "https://alto.example.com/cdnifci",
+       "uri": "https://alto.example.com/cdnifci",
        "media-type": "application/alto-cdni+json"
      },
      "my-cdnifci-with-pid-footprints": {
-       "uri" : "https://alto.example.com/networkcdnifci",
-       "media-type" : "application/alto-cdni+json",
-       "uses" : [ "my-eu-netmap" ]
+       "uri": "https://alto.example.com/networkcdnifci",
+       "media-type": "application/alto-cdni+json",
+       "uses": [ "my-eu-netmap" ]
      },
-     "my-filtered-cdnifci" : {
-       "uri" : "https://alto.example.com/cdnifci/filtered",
-       "media-type" : "application/alto-cdni+json",
-       "accepts" : "application/alto-cdnifilter+json"
+     "my-filtered-cdnifci": {
+       "uri": "https://alto.example.com/cdnifci/filtered",
+       "media-type": "application/alto-cdni+json",
+       "accepts": "application/alto-cdnifilter+json"
      },
-     "cdnifci-property-map" : {
-       "uri" : "https://alto.example.com/propmap/full/cdnifci",
-       "media-type" : "application/alto-propmap+json",
+     "cdnifci-property-map": {
+       "uri": "https://alto.example.com/propmap/full/cdnifci",
+       "media-type": "application/alto-propmap+json",
        "uses": [ "my-default-cdni" ],
-       "capabilities" : {
+       "capabilities": {
          "mappings": {
            "ipv4": [ "my-default-cdni.cdni-capabilities" ],
            "ipv6": [ "my-default-cdni.cdni-capabilities" ],
@@ -247,12 +255,12 @@ CDNI Advertisement resources, and the other for updating property maps).
          }
        }
      },
-     "filtered-cdnifci-property-map" : {
-       "uri" : "https://alto.example.com/propmap/lookup/cdnifci-pid",
-       "media-type" : "application/alto-propmap+json",
-       "accepts" : "application/alto-propmapparams+json",
+     "filtered-cdnifci-property-map": {
+       "uri": "https://alto.example.com/propmap/lookup/cdnifci-pid",
+       "media-type": "application/alto-propmap+json",
+       "accepts": "application/alto-propmapparams+json",
        "uses": [ "my-default-cdni", "my-default-network-map" ],
-       "capabilities" : {
+       "capabilities": {
          "mappings": {
            "ipv4": [ "my-default-cdni.cdni-capabilities",
                      "my-default-network-map.pid" ],
@@ -264,40 +272,40 @@ CDNI Advertisement resources, and the other for updating property maps).
          }
        }
      },
-     "update-my-cdni-fci" : {
-       "uri": "https:///alto.example.com/updates/cdnifci",
-       "media-type" : "text/event-stream",
-       "accepts" : "application/alto-updatestreamparams+json",
-       "uses" : [
+     "update-my-cdni-fci": {
+       "uri": "https://alto.example.com/updates/cdnifci",
+       "media-type": "text/event-stream",
+       "accepts": "application/alto-updatestreamparams+json",
+       "uses": [
          "my-default-network-map",
          "my-eu-netmap",
          "my-default-cdnifci",
          "my-filtered-cdnifci",
          "my-cdnifci-with-pid-footprints"
        ],
-       "capabilities" : {
-         "incremental-change-media-types" : {
-          "my-default-network-map" : "application/json-patch+json",
-          "my-eu-netmap" : "application/json-patch+json",
-          "my-default-cdnifci" :
+       "capabilities": {
+         "incremental-change-media-types": {
+          "my-default-network-map": "application/json-patch+json",
+          "my-eu-netmap": "application/json-patch+json",
+          "my-default-cdnifci":
           "application/merge-patch+json,application/json-patch+json",
-          "my-filtered-cdnifci" :
+          "my-filtered-cdnifci":
           "application/merge-patch+json,application/json-patch+json",
-          "my-cdnifci-with-pid-footprints" :
+          "my-cdnifci-with-pid-footprints":
           "application/merge-patch+json,application/json-patch+json"
          }
        }
      },
      "update-my-props": {
-       "uri" : "https://alto.example.com/updates/properties",
-       "media-type" : "text/event-stream",
-       "uses" : [
+       "uri": "https://alto.example.com/updates/properties",
+       "media-type": "text/event-stream",
+       "uses": [
          "cdnifci-property-map",
          "filtered-cdnifci-property-map"
        ],
-       "capabilities" : {
+       "capabilities": {
          "incremental-change-media-types": {
-          "cdnifci-property-map" :
+          "cdnifci-property-map":
           "application/merge-patch+json,application/json-patch+json",
           "filtered-cdnifci-property-map":
           "application/merge-patch+json,application/json-patch+json"
@@ -323,11 +331,11 @@ respectively.
           application/alto-error+json
 
   HTTP/1.1 200 OK
-  Content-Length: 1235
+  Content-Length: 1352
   Content-Type: application/alto-cdni+json
 
   {
-    "meta" : {
+    "meta": {
       "vtag": {
         "resource-id": "my-default-cdnifci",
         "tag": "da65eca2eb7a10ce8b059740b0b2e3f8eb1d4785"
@@ -346,6 +354,10 @@ respectively.
             {
               "footprint-type": "ipv4cidr",
               "footprint-value": [ "192.0.2.0/24" ]
+            },
+            {
+              "footprint-type": "ipv6cidr",
+              "footprint-value": [ "2001:db8::/32" ]
             }
           ]
         },
@@ -391,7 +403,7 @@ an example that also shows the benefit of having both JSON merge patch and JSON
 patch to encode updates.
 
 At first, an ALTO client requests updates for "my-default-cdnifci", and the ALTO
-server returns the `control-uri` followed by the full CDNI Advertisement
+server returns the "control-uri" followed by the full CDNI Advertisement
 response. Then when there is a change in the delivery-protocols in that http/1.1
 is removed (from \[http/1.1, https/1.1\] to only https/1.1) due to maintenance of
 the http/1.1 clusters, the ALTO server regenerates the new CDNI Advertisement
@@ -405,7 +417,7 @@ by JSON patch to the ALTO client.
  Host: alto.example.com
  Accept: text/event-stream,application/alto-error+json
  Content-Type: application/alto-updatestreamparams+json
- Content-Length: 92
+ Content-Length: 86
 
  { "add": {
      "my-cdnifci-stream": {
@@ -470,10 +482,10 @@ by JSON patch to the ALTO client.
 
 ## Network Map Footprint Type: altopid
 
-The ALTO protocol defines a concept called PID to represent a group of IPv4 or
-IPv6 addresses which can be applied the same management policy. The PID is an
-alternative to the pre-defined CDNI footprint types (i.e., ipv4cidr, ipv6cidr,
-asn, and countrycode).
+The ALTO protocol defines a concept called Provider-defined Identifier (PID) to
+represent a group of IPv4 or IPv6 addresses which can be applied the same
+management policy. The PID is an alternative to the pre-defined CDNI footprint
+types (i.e., ipv4cidr, ipv6cidr, asn, and countrycode).
 
 To leverage this concept, this document defines a new CDNI Footprint Type called
 "altopid". A CDNI Advertisement resource can depend on an ALTO network map
@@ -484,7 +496,7 @@ footprint value is a list of PIDNames as defined in {{RFC7285}}.
 These PIDNames are references of PIDs in a network map resource. Hence a CDNI
 Advertisement resource using "altopid" footprints depends on a network map. For
 such a CDNI Advertisement resource, the resource id of its dependent network map
-MUST be included in the `uses` field of its IRD entry, and the `dependent-vtags`
+MUST be included in the "uses" field of its IRD entry, and the "dependent-vtags"
 field with a reference to this network map MUST be included in its response (see
 the example in [](#networkmapfootprint)).
 
@@ -505,7 +517,7 @@ map is referenced by the CDNI Advertisement example in [](#networkmapfootprint).
  Accept: application/alto-networkmap+json,application/alto-error+json
 
  HTTP/1.1 200 OK
- Content-Length: 309
+ Content-Length: 326
  Content-Type: application/alto-networkmap+json
 
  {
@@ -518,7 +530,8 @@ map is referenced by the CDNI Advertisement example in [](#networkmapfootprint).
    },
    "network-map": {
      "south-france" : {
-       "ipv4": [ "192.0.2.0/24", "198.51.100.0/25" ]
+       "ipv4": [ "192.0.2.0/24", "198.51.100.0/25" ],
+       "ipv6": [ "2001:db8::/32" ]
      },
      "germany": {
        "ipv4": [ "203.0.113.0/24" ]
@@ -538,12 +551,12 @@ described in [](#networkmapexample).
  Accept: application/alto-cdni+json,application/alto-error+json
 
  HTTP/1.1 200 OK
- Content-Length: 738
+ Content-Length: 706
  Content-Type: application/alto-cdni+json
 
  {
-   "meta" : {
-     "dependent-vtags" : [
+   "meta": {
+     "dependent-vtags": [
        {
          "resource-id": "my-eu-netmap",
          "tag": "3ee2cb7e8d63d9fab71b9b34cbf764436315542e"
@@ -587,7 +600,7 @@ capability.
   Host: alto.example.com
   Accept: text/event-stream,application/alto-error+json
   Content-Type: application/alto-updatestreamparams+json
-  Content-Length: 183
+  Content-Length: 174
 
   { "add": {
       "my-eu-netmap-stream": {
@@ -705,11 +718,11 @@ cdni-capabilities:
 
 ## Capabilities
 
-None.
+There are no applicable capabilities.
 
 ## Uses
 
-Same to the `uses` field of the CDNI Advertisement resource (see
+Same to the "uses" field of the CDNI Advertisement resource (see
 [](#cdnifciuses)).
 
 ## Response
@@ -719,13 +732,13 @@ protocol error handling specified in Section 8.5 of {{RFC7285}}.
 
 Specifically, a filtered CDNI Advertisement request is invalid if:
 
-* the value of `capability-type` is null;
-* the value of `capability-value` is null;
-* the value of `capability-value` is inconsistent with `capability-type`.
+* the value of "capability-type" is null;
+* the value of "capability-value" is null;
+* the value of "capability-value" is inconsistent with "capability-type".
 
 When a request is invalid, the ALTO server MUST return an
-`E_INVALID_FIELD_VALUE` error defined in Section 8.5.2 of {{RFC7285}}, and the
-`value` field of the error message SHOULD indicate this CDNI capability.
+"E_INVALID_FIELD_VALUE" error defined in Section 8.5.2 of {{RFC7285}}, and the
+"value" field of the error message SHOULD indicate this CDNI capability.
 
 The ALTO server returns a filtered CDNI Advertisement resource for a valid
 request. The format of a filtered CDNI Advertisement resource is the same as a
@@ -734,7 +747,7 @@ full CDNI Advertisement resource (See [](#cdnifciencoding).)
 <!--
 The returned CDNI Advertisement resource MUST contain only
 BaseAdvertisementObject objects whose CDNI capability object is the superset of
-one of CDNI capability object in `cdni-fci-capabilities`. Specifically, that a
+one of CDNI capability object in "cdni-fci-capabilities". Specifically, that a
 CDNI capability object A is the superset of another CDNI capability object B
 means that these two CDNI capability objects have the same capability type and
 mandatory properties in capability value of A MUST include mandatory properties
@@ -753,7 +766,7 @@ two constraints:
 
 See [](#filteredcdnifciexample) for a concrete example.
 
-The version tag included in the `vtag` field of the response MUST correspond to
+The version tag included in the "vtag" field of the response MUST correspond to
 the full CDNI Advertisement resource from which the filtered CDNI Advertisement
 resource is provided. This ensures that a single, canonical version tag is used
 independently of any filtering that is requested by an ALTO client.
@@ -777,7 +790,7 @@ delivery protocols which is the superset of https/1.1 delivery protocol.
   Host: alto.example.com
   Accept: application/alto-cdni+json
   Content-Type: application/cdnifilter+json
-  Content-Length: 176
+  Content-Length: 166
 
   {
     "cdni-capabilities": [
@@ -791,11 +804,11 @@ delivery protocols which is the superset of https/1.1 delivery protocol.
   }
 
   HTTP/1.1 200 OK
-  Content-Length: 571
+  Content-Length: 543
   Content-Type: application/alto-cdni+json
 
   {
-    "meta" : {
+    "meta": {
       "vtag": {
         "resource-id": "my-filtered-cdnifci",
         "tag": "da65eca2eb7a10ce8b059740b0b2e3f8eb1d4785"
@@ -827,7 +840,7 @@ delivery protocols which is the superset of https/1.1 delivery protocol.
 
 In this example, the ALTO client only cares about the updates of one
 advertisement object for delivery protocol capability whose value includes
-"https/1.1". So it adds its limitation of capabilities in `input` field of the
+"https/1.1". So it adds its limitation of capabilities in "input" field of the
 POST request.
 
 ~~~
@@ -835,7 +848,7 @@ POST request.
   Host: fcialtoupdate.example.com
   Accept: text/event-stream,application/alto-error+json
   Content-Type: application/alto-updatestreamparams+json
-  Content-Length: 346
+  Content-Length: 329
 
   {
     "add": {
@@ -874,6 +887,7 @@ POST request.
   data:     "value": "a10ce8b059740b0b2e3f8eb1d4785acd42231bfe"
   data:   },
   data:   { "op": "add",
+  data:     "path":
   data:     "/cdni-advertisement/capabilities-with-footprints
   /0/footprints/0/footprint-value/-",
   data:     "value": "192.0.2.0/24"
@@ -957,13 +971,13 @@ Internet.
 
 #### Entity Domain Type
 
-asn
+The entity domain type of the ASN domain is "asn" (in lowercase).
 
 #### Domain-Specific Entity Identifiers {#asn-entity-id}
 
-The entity identifier of an entity in an asn domain is encoded as a string
+The entity identifier of an entity in an ASN domain is encoded as a string
 consisting of the characters "as" (in lowercase) followed by the Autonomous
-System Number {{RFC6793}}.
+System Number {{RFC6793}} as a decimal number without leading zeros.
 
 #### Hierarchy and Inheritance
 
@@ -975,11 +989,11 @@ The COUNTRYCODE domain associates property values with countries.
 
 #### Entity Domain Type
 
-countrycode
+The entity domain type of the COUNTRYCODE domain is "countrycode" (in lowercase).
 
 #### Domain-Specific Entity Identifiers {#countrycode-entity-id}
 
-The entity identifier of an entity in a countrycode domain is encoded as an ISO
+The entity identifier of an entity in a COUNTRYCODE domain is encoded as an ISO
 3166-1 alpha-2 code {{ISO3166-1}} in lowercase.
 
 #### Hierarchy and Inheritance
@@ -996,7 +1010,7 @@ entity property type for a CDNI Advertisement resource that it provides to an
 
 ### Defining Information Resource Media Type for Property Type cdni-capabilities
 
-The entity property type "cdni-capabilities" allows to define resource-specific
+The entity property type "cdni-capabilities" allows defining resource-specific
 entity properties. When resource-specific entity properties are defined with
 entity property type "cdni-capabilities", the defining information resource for
 a "cdni-capabilities" property MUST be a CDNI Advertisement resource provided by
@@ -1035,7 +1049,7 @@ entities' property is "cdni-capabilities".
  Accept: application/alto-propmap+json,application/alto-error+json
 
  HTTP/1.1 200 OK
- Content-Length: 1522
+ Content-Length: 1476
  Content-Type: application/alto-propmap+json
 
  {
@@ -1097,7 +1111,7 @@ This example uses the filtered property map service to get "pid" and
    Host: alto.example.com
    Content-Type: application/alto-propmapparams+json
    Accept: application/alto-propmap+json,application/alto-error+json
-   Content-Length: 181
+   Content-Length: 173
 
    {
      "entities": [
@@ -1109,7 +1123,7 @@ This example uses the filtered property map service to get "pid" and
    }
 
  HTTP/1.1 200 OK
- Content-Length: 796
+ Content-Length: 772
  Content-Type: application/alto-propmap+json
 
  {
@@ -1149,7 +1163,7 @@ In this example, the client is interested in updates for the properties
   Host: alto.example.com
   Accept: text/event-stream,application/alto-error+json
   Content-Type: application/alto-updatestreamparams+json
-  Content-Length: 337
+  Content-Length: 325
 
   { "add": {
       "fci-propmap-stream": {

@@ -1,12 +1,27 @@
 <!-- Skip header line -->
 
-# Background {#background}
+# Terminology and Background {#background}
 
 The design of CDNI FCI transport using ALTO depends on the understanding of both
 FCI semantics and ALTO. Hence, this document starts with a non-normative review
-for both. The review uses the terminologies for CDNI as defined in {{RFC6707}},
-{{RFC8006}} and {{RFC8008}}; those for ALTO as defined in {{RFC7285}} and
-{{I-D.ietf-alto-unified-props-new}}.
+for both.
+
+## Terminology {#term}
+
+The document uses the terms for CDNI as defined in {{RFC6707}}, {{RFC8006}} and
+{{RFC8008}}; and those for ALTO as defined in {{RFC7285}} and
+{{I-D.ietf-alto-unified-props-new}}. For simplicity, this document uses
+abbreviations of those terms as follows:
+
+- CDN: Content Delivery Network
+- uCDN: Upstream CDN
+- dCDN: Downstream CDN
+- CDNI: CDN Interconnection
+- FCI: CDNI FCI, CDNI Request Routing Footprint & Capabilities Advertisement interface
+- ALTO: Application-Layer Traffic Optimization
+- PID: Provider-defined Identifier in ALTO
+- IRD: Information Resource Directory in ALTO
+- ASN: Autonomous System Number
 
 ## Semantics of FCI Advertisement {#bgSemantics}
 
@@ -87,7 +102,7 @@ for an FCI protocol:
   providing dCDNs' capabilities as well as footprints (see [](#cdnifci)) and
   then providing costs of surrogates in a dCDN by ALTO cost maps.
 - Security: The identification between uCDNs and dCDNs is an important
-  requirement (see [](#security)). ALTO maps can signed and hence provide
+  requirement (see [](#security)). ALTO maps can be signed and hence provide
   inherent origin protection. Please see Section 15.1.2 of {{RFC7285}} for
   detailed protection strategies.
 * RESTful Design: The ALTO protocol has undergone extensive revisions in order
