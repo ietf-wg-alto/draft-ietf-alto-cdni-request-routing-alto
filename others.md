@@ -35,8 +35,7 @@ Security considerations:
   Protocol messages are discussed in Section 15 of {{RFC7285}}.
 
 Interoperability considerations:
-: This document specifies formats of conforming messages and the interpretation
-  thereof.
+: n/a
 
 Published specification:
 : This document is the specification for these media types; see
