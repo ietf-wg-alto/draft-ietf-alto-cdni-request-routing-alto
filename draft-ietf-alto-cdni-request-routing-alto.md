@@ -104,6 +104,7 @@ informative:
   I-D.ietf-alto-path-vector:
   RFC5693:
   RFC6707:
+  RFC7971:
   RFC7975:
 
 --- abstract
