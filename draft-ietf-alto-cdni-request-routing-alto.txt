@@ -592,7 +592,7 @@ Table of Contents
     Accept: application/alto-directory+json,application/alto-error+json
 
     HTTP/1.1 200 OK
-    Content-Length: 3431
+    Content-Length: 3531
     Content-Type: application/alto-directory+json
 
     {
@@ -709,7 +709,7 @@ Table of Contents
      Accept: application/alto-cdni+json,application/alto-error+json
 
      HTTP/1.1 200 OK
-     Content-Length: 1352
+     Content-Length: 1411
      Content-Type: application/alto-cdni+json
 
      {
@@ -795,7 +795,7 @@ Table of Contents
     Host: alto.example.com
     Accept: text/event-stream,application/alto-error+json
     Content-Type: application/alto-updatestreamparams+json
-    Content-Length: 86
+    Content-Length: 94
 
     {
       "add": {
@@ -896,7 +896,7 @@ Table of Contents
     Accept: application/alto-networkmap+json,application/alto-error+json
 
     HTTP/1.1 200 OK
-    Content-Length: 326
+    Content-Length: 344
     Content-Type: application/alto-networkmap+json
 
     {
@@ -928,7 +928,7 @@ Table of Contents
     Accept: application/alto-cdni+json,application/alto-error+json
 
     HTTP/1.1 200 OK
-    Content-Length: 706
+    Content-Length: 736
     Content-Type: application/alto-cdni+json
 
     {
@@ -975,7 +975,7 @@ Table of Contents
      Host: alto.example.com
      Accept: text/event-stream,application/alto-error+json
      Content-Type: application/alto-updatestreamparams+json
-     Content-Length: 174
+     Content-Length: 185
 
      {
        "add": {
@@ -1158,7 +1158,7 @@ Table of Contents
      Host: alto.example.com
      Accept: application/alto-cdni+json
      Content-Type: application/cdnifilter+json
-     Content-Length: 166
+     Content-Length: 176
 
      {
        "cdni-capabilities": [
@@ -1172,7 +1172,7 @@ Table of Contents
      }
 
      HTTP/1.1 200 OK
-     Content-Length: 543
+     Content-Length: 570
      Content-Type: application/alto-cdni+json
 
      {
@@ -1214,7 +1214,7 @@ Table of Contents
      Host: fcialtoupdate.example.com
      Accept: text/event-stream,application/alto-error+json
      Content-Type: application/alto-updatestreamparams+json
-     Content-Length: 329
+     Content-Length: 346
 
      {
        "add": {
@@ -1425,7 +1425,7 @@ Table of Contents
     Accept: application/alto-propmap+json,application/alto-error+json
 
     HTTP/1.1 200 OK
-    Content-Length: 1476
+    Content-Length: 1522
     Content-Type: application/alto-propmap+json
 
     {
@@ -1485,7 +1485,7 @@ Table of Contents
       Host: alto.example.com
       Content-Type: application/alto-propmapparams+json
       Accept: application/alto-propmap+json,application/alto-error+json
-      Content-Length: 173
+      Content-Length: 181
 
       {
         "entities": [
@@ -1497,7 +1497,7 @@ Table of Contents
       }
 
     HTTP/1.1 200 OK
-    Content-Length: 772
+    Content-Length: 796
     Content-Type: application/alto-propmap+json
 
     {
@@ -1535,7 +1535,7 @@ Table of Contents
     Host: alto.example.com
     Accept: text/event-stream,application/alto-error+json
     Content-Type: application/alto-updatestreamparams+json
-    Content-Length: 325
+    Content-Length: 339
 
     {
       "add": {
