@@ -2,17 +2,17 @@
 
 
 
-ALTO &amp; CDNI WGs                                           J. Seedorf
+ALTO & CDNI WGs                                               J. Seedorf
 Internet-Draft                 HFT Stuttgart - Univ. of Applied Sciences
 Intended status: Standards Track                                 Y. Yang
-Expires: 17 June 2022                                    Yale University
+Expires: 12 July 2022                                    Yale University
                                                                    K. Ma
                                                                 Ericsson
                                                              J. Peterson
                                                                  NeuStar
                                                                 J. Zhang
                                                        Tongji University
-                                                        14 December 2021
+                                                          8 January 2022
 
 
  Content Delivery Network Interconnection (CDNI) Request Routing: CDNI
@@ -25,20 +25,12 @@ Abstract
    6707 defines a set of protocols to interconnect CDNs to achieve
    multiple goals, including extending the reach of a given CDN.  A CDNI
    Request Routing Footprint & Capabilities Advertisement interface
-   (FCI) is needed to achieve the goals of a CDNI.  RFC 8008 defines
-   precisely the semantics of FCI and provides guidelines on the FCI
-   protocol, but the exact protocol is not specified.  This document
-   defines a new Application-Layer Traffic Optimization (ALTO) service
-   called "CDNI Advertisement Service" that provides an implementation
-   of the FCI, following the guidelines defined in RFC 8008.
-
-Requirements Language
-
-   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
-   "OPTIONAL" in this document are to be interpreted as described in BCP
-   14 [RFC2119][RFC8174] when, and only when, they appear in all
-   capitals, as shown here.
+   (FCI) is needed to achieve the goals of a CDNI.  RFC 8008 defines the
+   FCI semantics and provides guidelines on the FCI protocol, but the
+   exact protocol is not specified.  This document defines a new
+   Application-Layer Traffic Optimization (ALTO) service, called "CDNI
+   Advertisement Service", that provides an implementation of the FCI,
+   following the guidelines defined in RFC 8008.
 
 Status of This Memo
 
@@ -55,11 +47,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 June 2022.
+   This Internet-Draft will expire on 12 July 2022.
 
 Copyright Notice
 
-   Copyright (c) 2021 IETF Trust and the persons identified as the
+   Copyright (c) 2022 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -86,16 +78,15 @@ Table of Contents
      3.5.  Uses
      3.6.  Response
      3.7.  Examples
-       3.7.1.  IRD Example
-       3.7.2.  Basic Example
-       3.7.3.  Incremental Updates Example
+       3.7.1.  IRD
+       3.7.2.  A Basic Example
+       3.7.3.  Incremental Updates
    4.  CDNI Advertisement Service using ALTO Network Map
      4.1.  Network Map Footprint Type: altopid
      4.2.  Examples
-       4.2.1.  IRD Example
-       4.2.2.  ALTO Network Map for CDNI Advertisement Example
-       4.2.3.  ALTO PID Footprints in CDNI Advertisement
-       4.2.4.  Incremental Updates Example
+       4.2.1.  ALTO Network Map for CDNI Advertisements
+       4.2.2.  ALTO PID Footprints in CDNI Advertisements
+       4.2.3.  Incremental Updates
    5.  Filtered CDNI Advertisement using CDNI Capabilities
      5.1.  Media Type
      5.2.  HTTP Method
@@ -104,9 +95,8 @@ Table of Contents
      5.5.  Uses
      5.6.  Response
      5.7.  Examples
-       5.7.1.  IRD Example
-       5.7.2.  Basic Example
-       5.7.3.  Incremental Updates Example
+       5.7.1.  A Basic Example
+       5.7.2.  Incremental Updates
    6.  Query Footprint Properties using ALTO Property Map Service
      6.1.  Representing Footprint Objects as Property Map Entities
        6.1.1.  ASN Domain
@@ -117,15 +107,15 @@ Table of Contents
                Type cdni-capabilities
        6.2.2.  Intended Semantics of Property Type cdni-capabilities
      6.3.  Examples
-       6.3.1.  IRD Example
-       6.3.2.  Property Map Example
-       6.3.3.  Filtered Property Map Example
-       6.3.4.  Incremental Updates Example
+       6.3.1.  Property Map
+       6.3.2.  Filtered Property Map
+       6.3.3.  Incremental Updates
    7.  IANA Considerations
-     7.1.  application/alto-* Media Types
-     7.2.  CDNI Metadata Footprint Type Registry
-     7.3.  ALTO Entity Domain Type Registry
-     7.4.  ALTO Entity Property Type Registry
+     7.1.  application/alto-cdni+json Media Type
+     7.2.  application/alto-cdnifilter+json Media Type
+     7.3.  CDNI Metadata Footprint Type Registry
+     7.4.  ALTO Entity Domain Type Registry
+     7.5.  ALTO Entity Property Type Registry
    8.  Security Considerations
    9.  References
      9.1.  Normative References
@@ -139,12 +129,11 @@ Table of Contents
    The ability to interconnect multiple content delivery networks (CDNs)
    has many benefits, including increased coverage, capability, and
    reliability.  The Content Delivery Networks Interconnection (CDNI)
-   framework [RFC6707] defines four interfaces to achieve the
-   interconnection of CDNs: (1) the CDNI Request Routing Interface; (2)
-   the CDNI Metadata Interface; (3) the CDNI Logging Interface; and (4)
-   the CDNI Control Interface.
+   framework [RFC6707] defines four interfaces to interconnect CDNs: (1)
+   the CDNI Request Routing Interface, (2) the CDNI Metadata Interface,
+   (3) the CDNI Logging Interface, and (4) the CDNI Control Interface.
 
-   Among the four interfaces, the CDNI Request Routing Interface
+   Among these four interfaces, the CDNI Request Routing Interface
    provides key functions, as specified in [RFC6707]: "The CDNI Request
    Routing interface enables a Request Routing function in an Upstream
    CDN to query a Request Routing function in a Downstream CDN to
@@ -158,12 +147,11 @@ Table of Contents
    the content request coming from a uCDN (upstream CDN) to the proper
    entry point or entity in the dCDN.
 
-   Correspondingly, the request routing interface is broadly divided
+   Correspondingly, the Request Routing Interface is broadly divided
    into two functionalities: (1) the CDNI Footprint & Capabilities
    Advertisement interface (FCI) defined in [RFC8008], and (2) the CDNI
    Request Routing Redirection interface (RI) defined in [RFC7975].
-   Since this document focuses on the first functionality (CDNI FCI),
-   below is more details about it.
+   This document focuses on the first functionality (CDNI FCI).
 
    Specifically, CDNI FCI allows both an advertisement from a dCDN to a
    uCDN (push) and a query from a uCDN to a dCDN (pull) so that the uCDN
@@ -171,86 +159,78 @@ Table of Contents
 
    A key component in defining CDNI FCI is defining objects describing
    the footprints and capabilities of a dCDN.  Such objects are already
-   defined in [RFC8008].  A protocol to transport and update such
-   objects between a uCDN and a dCDN, however, is not defined.
+   defined in Section 5 of [RFC8008].  However, no protocol is defined
+   to transport and update such objects between a uCDN and a dCDN.
 
    To define such a protocol, this document specifies an extension of
    the Application-Layer Traffic Optimization (ALTO) [RFC7285] protocol
    by introducing a new ALTO service called "CDNI Advertisement
    Service".
 
-   There are multiple benefits in using ALTO as a transport protocol, as
-   discussed in Section 2.3.
-
-   The rest of this document is organized as follows.  Section 2
-   provides non-normative background on both CDNI FCI and ALTO.
-   Section 3 introduces the most basic service, called "CDNI
-   Advertisement Service", to realize CDNI FCI using ALTO.  Section 4
-   demonstrates a key benefit of using ALTO: the ability to integrate
-   CDNI FCI with ALTO network maps.  Such integration provides new
-   granularity to describe footprints.  Section 5 introduces "Filtered
-   CDNI Advertisement Service" to allow a uCDN to get footprints with
-   given capabilities instead of getting the full resource, which can be
-   large.  Section 6 further shows another benefit of using ALTO: the
-   ability to query footprint properties using ALTO entity property map
-   extension.  In this way, a uCDN can effectively fetch capabilities of
-   footprints in which it is interested.  IANA and security
-   considerations are discussed in Section 7 and Section 8 respectively.
+   Section 2.3 discusses the benefits in using ALTO as a transport
+   protocol.
 
 2.  Terminology and Background
 
-   The design of CDNI FCI transport using ALTO depends on the
-   understanding of both FCI semantics and ALTO.  Hence, this document
-   starts with a non-normative review for both.
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in BCP
+   14 [RFC2119][RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+   The design of CDNI FCI transport using ALTO assumes an understanding
+   of both FCI semantics and ALTO.  Hence, this document starts with a
+   non-normative review for both.
 
 2.1.  Terminology
 
-   The document uses the terms for CDNI as defined in [RFC6707],
-   [RFC8006] and [RFC8008]; and those for ALTO as defined in [RFC7285]
-   and [I-D.ietf-alto-unified-props-new].  For simplicity, this document
-   uses abbreviations of those terms as follows:
+   The document uses the CDNI terms defined in [RFC6707], [RFC8006] and
+   [RFC8008].  Also, the document uses the ALTO terms defined in
+   [RFC7285] and [I-D.ietf-alto-unified-props-new].  This document uses
+   the following abbreviations:
+
+   *  ALTO: Application-Layer Traffic Optimization
+
+   *  ASN: Autonomous System Number
 
    *  CDN: Content Delivery Network
 
-   *  uCDN: Upstream CDN
+   *  CDNI: CDN Interconnection
 
    *  dCDN: Downstream CDN
-
-   *  CDNI: CDN Interconnection
 
    *  FCI: CDNI FCI, CDNI Request Routing Footprint & Capabilities
       Advertisement interface
 
-   *  ALTO: Application-Layer Traffic Optimization
+   *  IRD: Information Resource Directory in ALTO
 
    *  PID: Provider-defined Identifier in ALTO
 
-   *  IRD: Information Resource Directory in ALTO
-
-   *  ASN: Autonomous System Number
+   *  uCDN: Upstream CDN
 
 2.2.  Semantics of FCI Advertisement
 
-   [RFC8008] (CDNI "Footprint and Capabilities Semantics") defines the
-   semantics of CDNI FCI, provides guidance on what Footprint and
-   Capabilities mean in a CDNI context, and specifies the requirements
-   on the CDNI FCI transport protocol.  The definitions in [RFC8008]
-   depend on [RFC8006].  Below is a non-normative review of key related
-   points of [RFC8008] and [RFC8006].  For detailed information and
-   normative specification, the reader is referred to these two RFCs.
+   [RFC8008] defines the semantics of CDNI FCI, provides guidance on
+   what Footprint and Capabilities mean in a CDNI context, and specifies
+   the requirements on the CDNI FCI transport protocol.  The definitions
+   in [RFC8008] depend on [RFC8006].  Below is a non-normative review of
+   key related points of [RFC8008] and [RFC8006].  For detailed
+   information and normative specification, the reader should refer to
+   these two RFCs.
 
-   *  Multiple types of mandatory-to-implement footprints (ipv4cidr,
-      ipv6cidr, asn, and countrycode) are defined in [RFC8006].  A "Set
-      of IP-prefixes" can contain both full IP addresses (i.e., a /32
-      for IPv4 or a /128 for IPv6) and IP prefixes with an arbitrary
-      prefix length.  There must also be support for multiple IP address
-      versions, i.e., IPv4 and IPv6, in such a footprint.
+   *  Multiple types of mandatory-to-implement footprints (i.e.,
+      ipv4cidr, ipv6cidr, asn, and countrycode) are defined in
+      [RFC8006].  A "Set of IP-prefixes" can contain both full IP
+      addresses (i.e., a /32 for IPv4 or a /128 for IPv6) and IP
+      prefixes with an arbitrary prefix length.  There must also be
+      support for multiple IP address versions, i.e., IPv4 and IPv6, in
+      such a footprint.
 
    *  Multiple initial types of capabilities are defined in [RFC8008]
       including (1) Delivery Protocol, (2) Acquisition Protocol, (3)
       Redirection Mode, (4) Capabilities related to CDNI Logging, and
       (5) Capabilities related to CDNI Metadata.  They are required in
-      all cases and therefore considered as mandatory-to-implement
+      all cases and, therefore, considered as mandatory-to-implement
       capabilities for all CDNI FCI implementations.
 
    *  Footprint and capabilities are defined together and cannot be
@@ -263,11 +243,11 @@ Table of Contents
       footprints can be viewed as constraints for delegating requests to
       a dCDN: A dCDN footprint advertisement tells the uCDN the
       limitations for delegating a request to the dCDN.  For IP prefixes
-      or ASN(s), the footprint signals to the uCDN that it should
-      consider the dCDN a candidate only if the IP address of the
-      request routing source falls within the prefix set or ASN,
-      respectively.  The CDNI specifications do not define how a given
-      uCDN determines what address ranges are in a particular ASN.
+      or Autonomous System Numbers (ASNs), the footprint signals to the
+      uCDN that it should consider the dCDN a candidate only if the IP
+      address of the request routing source falls within the prefix set
+      or ASN, respectively.  The CDNI specifications do not define how a
+      given uCDN determines what address ranges are in a particular ASN.
       Similarly, for country codes, a uCDN should only consider the dCDN
       a candidate if it covers the country of the request routing
       source.  The CDNI specifications do not define how a given uCDN
@@ -278,13 +258,13 @@ Table of Contents
       types of footprint constraints in the advertisement.
 
    *  Given that a large part of Footprint and Capabilities
-      Advertisement may actually happen in contractual agreements, the
-      semantics of CDNI Footprint and Capabilities advertisement refers
-      to answering the following question: what exactly still needs to
-      be advertised by the CDNI FCI?  For instance, updates about
-      temporal failures of part of a footprint can be useful information
-      to convey via the CDNI FCI.  Such information would provide
-      updates on information previously agreed in contracts between the
+      Advertisement may happen in contractual agreements, the semantics
+      of CDNI Footprint and Capabilities advertisement refers to
+      answering the following question: what exactly still needs to be
+      advertised by the CDNI FCI?  For instance, updates about temporal
+      failures of part of a footprint can be useful information to
+      convey via the CDNI FCI.  Such information would provide updates
+      on information previously agreed in contracts between the
       participating CDNs.  In other words, the CDNI FCI is a means for a
       dCDN to provide changes/updates regarding a footprint and/or
       capabilities that it has previously agreed to serve in a contract
@@ -303,10 +283,9 @@ Table of Contents
 
    Originally, ALTO was motivated by optimizing cross-ISP traffic
    generated by P2P applications [RFC5693].  However, ALTO can also be
-   used for improving the request routing in CDNs.  In particular, the
-   CDNI problem statement [RFC6707] explicitly mentions ALTO as a
-   candidate protocol for "actual algorithms for selection of CDN or
-   Surrogate by Request-Routing systems".
+   used for improving the request routing in CDNs.  In particular,
+   Section 5 of [RFC7971] explicitly mentions ALTO as a candidate
+   protocol to improve the selection of a CDN surrogate or origin.
 
    The following reasons make ALTO a suitable candidate protocol for
    dCDN selection as part of CDNI request routing and, in particular,
@@ -329,7 +308,7 @@ Table of Contents
       and hence provide inherent origin protection.  Please see
       Section 15.1.2 of [RFC7285] for detailed protection strategies.
 
-   *  RESTful Design: The ALTO protocol has undergone extensive
+   *  RESTful design: The ALTO protocol has undergone extensive
       revisions in order to provide a RESTful design regarding the
       client-server interaction specified by the protocol.  It is
       flexible and extensible enough to handle existing and potential
@@ -357,7 +336,7 @@ Table of Contents
       properties of a part of footprints efficiently.  Please see
       Section 6.
 
-   *  Server-initiated Notifications and Incremental Updates: When the
+   *  Server-initiated notifications and incremental updates: When the
       footprint or the capabilities of a dCDN change (i.e., unexpectedly
       from the perspective of a uCDN), server-initiated notifications
       would enable a dCDN to inform a uCDN about such changes directly.
@@ -372,15 +351,15 @@ Table of Contents
       design of ALTO supports server pushed incremental updates
       [RFC8895].
 
-   *  Content Availability on Hosts: A dCDN might want to express CDN
+   *  Content availability on hosts: A dCDN might want to express CDN
       capabilities in terms of certain content types (e.g., codecs/
       formats, or content from certain content providers).  ALTO Entity
       Property Map [I-D.ietf-alto-unified-props-new] would enable a dCDN
       to make such information available to a uCDN.  This would enable a
-      uCDN to determine whether a dCDN actually has the capabilities for
-      a given type of content requested.
+      uCDN to access whether a dCDN has the capabilities for a given
+      type of content requested.
 
-   *  Resource Availability on Hosts or Links: The capabilities on links
+   *  Resource availability on hosts or links: The capabilities on links
       (e.g., maximum bandwidth) or caches (e.g., average load) might be
       useful information for a uCDN for optimized dCDN selection.  For
       instance, if a uCDN receives a streaming request for content with
@@ -397,17 +376,17 @@ Table of Contents
 
 3.  CDNI Advertisement Service
 
-   The ALTO protocol is based on the ALTO Information Service Framework
-   which consists of multiple services, where all ALTO services are
-   "provided through a common transport protocol, messaging structure
-   and encoding, and transaction model" [RFC7285].  The ALTO protocol
-   specification [RFC7285] defines multiple initial services, e.g., the
-   ALTO network map service and cost map service.
+   The ALTO protocol relies upon the ALTO Information Service framework
+   which consists of multiple services.  All ALTO services are "provided
+   through a common transport protocol, messaging structure and
+   encoding, and transaction model" [RFC7285].  The ALTO protocol
+   specification defines multiple initial services, e.g., the ALTO
+   network map service and cost map service.
 
-   This document defines a new ALTO service called "CDNI Advertisement
-   Service" which conveys JSON [RFC8259] objects of media type
+   This document defines a new ALTO service, called "CDNI Advertisement
+   Service", which conveys JSON [RFC8259] objects of media type
    "application/alto-cdni+json".  These JSON objects are used to
-   transport BaseAdvertisementObject objects defined in [RFC8008]; this
+   transport BaseAdvertisementObject objects defined in [RFC8008].  This
    document specifies how to transport such BaseAdvertisementObject
    objects via the ALTO protocol with the ALTO "CDNI Advertisement
    Service".  Similar to other ALTO services, this document defines the
@@ -421,7 +400,7 @@ Table of Contents
 3.1.  Media Type
 
    The media type of the CDNI Advertisement resource is "application/
-   alto-cdni+json".
+   alto-cdni+json" (see Section 7).
 
 3.2.  HTTP Method
 
@@ -577,7 +556,7 @@ Table of Contents
 
 3.7.  Examples
 
-3.7.1.  IRD Example
+3.7.1.  IRD
 
    Below is the IRD of a simple, example ALTO server.  The server
    provides both base ALTO information resources (e.g., network maps)
@@ -587,24 +566,24 @@ Table of Contents
    Specifically, the IRD announces nine information resources as
    follows:
 
-   *  two network maps
+   *  two network maps,
 
-   *  one CDNI Advertisement resource without dependency
+   *  one CDNI Advertisement resource without dependency,
 
-   *  one CDNI Advertisement resource depending on a network map
+   *  one CDNI Advertisement resource depending on a network map,
 
    *  one filtered CDNI Advertisement resource to be defined in
-      Section 5
+      Section 5,
 
    *  one property map including "cdni-capabilities" as its entity
-      property
+      property,
 
    *  one filtered property map including "cdni-capabilities" and "pid"
-      as its entity properties
+      as its entity properties, and
 
-   *  two update stream services
+   *  two update stream services:
 
-      -  one for updating CDNI Advertisement resources
+      -  one for updating CDNI Advertisement resources,
 
       -  one for updating property maps
 
@@ -717,7 +696,7 @@ Table of Contents
       }
     }
 
-3.7.2.  Basic Example
+3.7.2.  A Basic Example
 
    This basic example demonstrates a simple CDNI Advertisement resource,
    which does not depend on other resources.  There are three
@@ -727,8 +706,7 @@ Table of Contents
 
      GET /cdnifci HTTP/1.1
      Host: alto.example.com
-     Accept: application/alto-cdni+json,
-             application/alto-error+json
+     Accept: application/alto-cdni+json,application/alto-error+json
 
      HTTP/1.1 200 OK
      Content-Length: 1352
@@ -794,7 +772,7 @@ Table of Contents
        }
      }
 
-3.7.3.  Incremental Updates Example
+3.7.3.  Incremental Updates
 
    A benefit of using ALTO to provide CDNI Advertisement resources is
    that such resources can be updated using ALTO incremental updates
@@ -819,7 +797,8 @@ Table of Contents
     Content-Type: application/alto-updatestreamparams+json
     Content-Length: 86
 
-    { "add": {
+    {
+      "add": {
         "my-cdnifci-stream": {
           "resource-id": "my-default-cdnifci"
         }
@@ -900,19 +879,17 @@ Table of Contents
    resource, the resource id of its dependent network map MUST be
    included in the "uses" field of its IRD entry, and the "dependent-
    vtags" field with a reference to this network map MUST be included in
-   its response (see the example in Section 4.2.3).
+   its response (see the example in Section 4.2.2).
 
 4.2.  Examples
 
-4.2.1.  IRD Example
+   The following examples use the same IRD given in Section 3.7.1.
 
-   The examples below use the same IRD given in Section 3.7.1.
+4.2.1.  ALTO Network Map for CDNI Advertisements
 
-4.2.2.  ALTO Network Map for CDNI Advertisement Example
-
-   Below is an example network map whose resource id is "my-eu-netmap",
-   and this map is referenced by the CDNI Advertisement example in
-   Section 4.2.3.
+   Below provides a sample network map whose resource id is "my-eu-
+   netmap".  This map is referenced by the CDNI Advertisement example in
+   Section 4.2.2.
 
     GET /myeunetmap HTTP/1.1
     Host: alto.example.com
@@ -941,10 +918,10 @@ Table of Contents
       }
     }
 
-4.2.3.  ALTO PID Footprints in CDNI Advertisement
+4.2.2.  ALTO PID Footprints in CDNI Advertisements
 
    This example shows a CDNI Advertisement resource that depends on a
-   network map described in Section 4.2.2.
+   network map described in Section 4.2.1.
 
     GET /networkcdnifci HTTP/1.1
     Host: alto.example.com
@@ -985,7 +962,7 @@ Table of Contents
       }
     }
 
-4.2.4.  Incremental Updates Example
+4.2.3.  Incremental Updates
 
    In this example, the ALTO client is interested in changes of "my-
    cdnifci-with-pid-footprints" and its dependent network map "my-eu-
@@ -1000,7 +977,8 @@ Table of Contents
      Content-Type: application/alto-updatestreamparams+json
      Content-Length: 174
 
-     { "add": {
+     {
+       "add": {
          "my-eu-netmap-stream": {
            "resource-id": "my-eu-netmap"
          },
@@ -1053,23 +1031,25 @@ Table of Contents
 
 5.  Filtered CDNI Advertisement using CDNI Capabilities
 
-   Section 3 and Section 4 describe CDNI Advertisement Service which can
-   be used to enable a uCDN to get capabilities with footprint
-   restrictions from dCDNs.  However, since always getting full CDNI
-   Advertisement resources from dCDNs is inefficient, this document
-   introduces a new service named "Filtered CDNI Advertisement Service",
-   to allow a client to filter a CDNI Advertisement resource using a
-   client-given set of CDNI capabilities.  For each entry of the CDNI
-   Advertisement response, an entry will only be returned to the client
-   if it contains at least one of the client given CDNI capabilities.
-   The relationship between a filtered CDNI Advertisement resource and a
-   CDNI Advertisement resource is similar to the relationship between a
-   filtered network/cost map and a network/cost map.
+   Sections 3 (Section 3) and 4 (Section 4) describe CDNI Advertisement
+   Service which can be used to enable a uCDN to get capabilities with
+   footprint restrictions from dCDNs.  However, since always getting
+   full CDNI Advertisement resources from dCDNs is inefficient, this
+   document introduces a new service named "Filtered CDNI Advertisement
+   Service", to allow a client to filter a CDNI Advertisement resource
+   using a client-given set of CDNI capabilities.  For each entry of the
+   CDNI Advertisement response, an entry will only be returned to the
+   client if it contains at least one of the client given CDNI
+   capabilities.  The relationship between a filtered CDNI Advertisement
+   resource and a CDNI Advertisement resource is similar to the
+   relationship between a filtered network/cost map and a network/cost
+   map.
 
 5.1.  Media Type
 
    A filtered CDNI Advertisement resource uses the same media type
-   defined for the CDNI Advertisement resource in Section 3.1.
+   defined for the CDNI Advertisement resource in Section 3.1:
+   "application/alto-cdni+json".
 
 5.2.  HTTP Method
 
@@ -1153,7 +1133,7 @@ Table of Contents
    *  All the mandatory properties in its capability value is a superset
       of mandatory properties in capability value of X semantically.
 
-   See Section 5.7.2 for a concrete example.
+   See Section 5.7.1 for a concrete example.
 
    The version tag included in the "vtag" field of the response MUST
    correspond to the full CDNI Advertisement resource from which the
@@ -1163,11 +1143,9 @@ Table of Contents
 
 5.7.  Examples
 
-5.7.1.  IRD Example
+   The following examples use the same IRD example as in Section 3.7.1.
 
-   The examples below use the same IRD example as in Section 3.7.1.
-
-5.7.2.  Basic Example
+5.7.1.  A Basic Example
 
    This example filters the full CDNI Advertisement resource in
    Section 3.7.2 by selecting only the http/1.1 delivery protocol
@@ -1225,12 +1203,12 @@ Table of Contents
        }
      }
 
-5.7.3.  Incremental Updates Example
+5.7.2.  Incremental Updates
 
    In this example, the ALTO client only cares about the updates of one
    advertisement object for delivery protocol capability whose value
-   includes "https/1.1".  So it adds its limitation of capabilities in
-   "input" field of the POST request.
+   includes "https/1.1".  Thus, it adds its limitation of capabilities
+   in "input" field of the POST request.
 
      POST /updates/cdnifci HTTP/1.1
      Host: fcialtoupdate.example.com
@@ -1336,7 +1314,7 @@ Table of Contents
 
    *  However, no existing entity domain type can represent "asn" and
       "countrycode" footprints.  To represent footprint-type "asn" and
-      "countrycode", this document registers two new domains in
+      "countrycode", this document registers two new entity domains in
       Section 7 in addition to the ones in
       [I-D.ietf-alto-unified-props-new].
 
@@ -1369,10 +1347,9 @@ Table of Contents
 
 6.1.1.2.  Domain-Specific Entity Identifiers
 
-   The entity identifier of an entity in an ASN domain is encoded as a
-   string consisting of the characters "as" (in lowercase) followed by
-   the Autonomous System Number [RFC6793] as a decimal number without
-   leading zeros.
+   The entity identifier of an entity in an ASN domain MUST be encoded
+   as a string consisting of the characters "as" (in lowercase) followed
+   by the ASN [RFC6793] as a decimal number without leading zeros.
 
 6.1.1.3.  Hierarchy and Inheritance
 
@@ -1435,11 +1412,10 @@ Table of Contents
 
 6.3.  Examples
 
-6.3.1.  IRD Example
+   The following examples use the same IRD example given by
+   Section 3.7.1.
 
-   The examples use the same IRD example given by Section 3.7.1.
-
-6.3.2.  Property Map Example
+6.3.1.  Property Map
 
    This example shows a full property map in which entities are
    footprints and entities' property is "cdni-capabilities".
@@ -1499,7 +1475,7 @@ Table of Contents
       }
     }
 
-6.3.3.  Filtered Property Map Example
+6.3.2.  Filtered Property Map
 
    This example uses the filtered property map service to get "pid" and
    "cdni-capabilities" properties for two footprints "ipv4:192.0.2.0/24"
@@ -1549,9 +1525,9 @@ Table of Contents
       }
     }
 
-6.3.4.  Incremental Updates Example
+6.3.3.  Incremental Updates
 
-   In this example, the client is interested in updates for the
+   In this example, the ALTO client is interested in updates for the
    properties "cdni-capabilities" and "pid" of two footprints
    "ipv4:192.0.2.0/24" and "countrycode:fr".
 
@@ -1561,7 +1537,8 @@ Table of Contents
     Content-Type: application/alto-updatestreamparams+json
     Content-Length: 325
 
-    { "add": {
+    {
+      "add": {
         "fci-propmap-stream": {
           "resource-id": "filtered-cdnifci-property-map",
           "input": {
@@ -1620,32 +1597,26 @@ Table of Contents
 
 7.  IANA Considerations
 
-7.1.  application/alto-* Media Types
+   This document defines two new media types: "application/alto-
+   cdni+json", as described in Section 7.1, and "application/
+   cdnifilter+json", as described in Section 7.2.  It also defines a new
+   CDNI metadata footprint type (Section 7.3), two new ALTO entity
+   domain types (Section 7.4), and a new ALTO entity property type
+   (Section 7.5).
 
-   This document updates the IANA Media Types Registry by registering
-   two additional ALTO media types, listed in Table 1.
-
-       +=============+======================+======================+
-       | Type        | Subtype              | Specification        |
-       +=============+======================+======================+
-       | application | alto-cdni+json       | Section 3 of RFCthis |
-       +-------------+----------------------+----------------------+
-       | application | alto-cdnifilter+json | Section 5 of RFCthis |
-       +-------------+----------------------+----------------------+
-
-                   Table 1: Additional ALTO Media Types.
+7.1.  application/alto-cdni+json Media Type
 
    Type name:
       application
 
    Subtype name:
-      This document registers multiple subtypes, as listed in Table 1.
+      alto-cdni+json
 
    Required parameters:
-      n/a
+      N/A
 
    Optional parameters:
-      n/a
+      N/A
 
    Encoding considerations:
       Encoding considerations are identical to those specified for the
@@ -1657,23 +1628,22 @@ Table of Contents
       [RFC7285].
 
    Interoperability considerations:
-      n/a
+      N/A
 
    Published specification:
-      This document is the specification for these media types; see
-      Table 1 for the section documenting each media type.
+      Section 3 of RFCthis
 
    Applications that use this media type:
-      ALTO servers and ALTO clients either stand alone or are embedded
-      within other applications.
+      ALTO servers and ALTO clients [RFC7285] either stand alone or are
+      embedded within other applications that provides CDNI interfaces
+      for uCDNs or dCDNs.
 
    Additional information:
-      Magic number(s):  n/a
+      Magic number(s):  N/A
 
-      File extension(s):  This document uses the mime type to refer to
-         protocol messages and thus does not require a file extension.
+      File extension(s):  N/A
 
-      Macintosh file type code(s):  n/a
+      Macintosh file type code(s):  N/A
 
    Person & email address to contact for further information:
       See Authors' Addresses section.
@@ -1682,7 +1652,7 @@ Table of Contents
       COMMON
 
    Restrictions on usage:
-      n/a
+      N/A
 
    Author:
       See Authors' Addresses section.
@@ -1690,11 +1660,67 @@ Table of Contents
    Change controller:
       Internet Engineering Task Force (mailto:iesg@ietf.org).
 
-7.2.  CDNI Metadata Footprint Type Registry
+7.2.  application/alto-cdnifilter+json Media Type
+
+   Type name:
+      application
+
+   Subtype name:
+      alto-cdnifilter+json
+
+   Required parameters:
+      N/A
+
+   Optional parameters:
+      N/A
+
+   Encoding considerations:
+      Encoding considerations are identical to those specified for the
+      "application/json" media type.  See [RFC8259].
+
+   Security considerations:
+      Security considerations related to the generation and consumption
+      of ALTO Protocol messages are discussed in Section 15 of
+      [RFC7285].
+
+   Interoperability considerations:
+      N/A
+
+   Published specification:
+      Section 5 of RFCthis
+
+   Applications that use this media type:
+      ALTO servers and ALTO clients [RFC7285] either stand alone or are
+      embedded within other applications that provides CDNI interfaces
+      for uCDNs or dCDNs.
+
+   Additional information:
+      Magic number(s):  N/A
+
+      File extension(s):  N/A
+
+      Macintosh file type code(s):  N/A
+
+   Person & email address to contact for further information:
+      See Authors' Addresses section.
+
+   Intended usage:
+      COMMON
+
+   Restrictions on usage:
+      N/A
+
+   Author:
+      See Authors' Addresses section.
+
+   Change controller:
+      Internet Engineering Task Force (mailto:iesg@ietf.org).
+
+7.3.  CDNI Metadata Footprint Type Registry
 
    This document updates the CDNI Metadata Footprint Types Registry
    created by Section 7.2 of [RFC8006].  A new footprint type is to be
-   registered, listed in Table 2.
+   registered, listed in Table 1.
 
       +================+=====================+======================+
       | Footprint Type | Description         | Specification        |
@@ -1702,16 +1728,16 @@ Table of Contents
       | altopid        | A list of PID names | Section 4 of RFCthis |
       +----------------+---------------------+----------------------+
 
-                   Table 2: CDNI Metadata Footprint Type
+                   Table 1: CDNI Metadata Footprint Type
 
    [RFC Editor: Please replace RFCthis with the published RFC number for
    this document.]
 
-7.3.  ALTO Entity Domain Type Registry
+7.4.  ALTO Entity Domain Type Registry
 
    This document updates the ALTO Entity Domain Type Registry created by
    Section 11.2 of [I-D.ietf-alto-unified-props-new].  Two new entity
-   domain types are to be registered, listed in Table 3.
+   domain types are to be registered, listed in Table 2.
 
     +=============+================+=============+===================+
     | Identifier  | Entity Address | Hierarchy & | Media Type of     |
@@ -1726,16 +1752,16 @@ Table of Contents
     |             | RFCthis        |             |                   |
     +-------------+----------------+-------------+-------------------+
 
-               Table 3: Additional ALTO Entity Domain Types
+               Table 2: Additional ALTO Entity Domain Types
 
    [RFC Editor: Please replace RFCthis with the published RFC number for
    this document.]
 
-7.4.  ALTO Entity Property Type Registry
+7.5.  ALTO Entity Property Type Registry
 
    This document updates the ALTO Entity Property Type Registry created
    by Section 11.3 of [I-D.ietf-alto-unified-props-new].  A new entity
-   property type is to be registered, listed in Table 4.
+   property type is to be registered, listed in Table 3.
 
       +===================+====================+===================+
       | Identifier        | Intended Semantics | Media Type of     |
@@ -1745,14 +1771,14 @@ Table of Contents
       |                   | RFCthis            | cdni+json         |
       +-------------------+--------------------+-------------------+
 
-              Table 4: Additional ALTO Entity Property Type
+              Table 3: Additional ALTO Entity Property Type
 
    [RFC Editor: Please replace RFCthis with the published RFC number for
    this document.]
 
 8.  Security Considerations
 
-   As an extension of the base ALTO protocol ([RFC7285]), this document
+   As an extension of the base ALTO protocol [RFC7285], this document
    fits into the architecture of the base protocol.  And hence Security
    Considerations of the base protocol (Section 15 of [RFC7285]) fully
    apply when this extension is provided by an ALTO server.
@@ -1885,10 +1911,10 @@ Table of Contents
 
    [I-D.ietf-alto-path-vector]
               Gao, K., Lee, Y., Randriamasy, S., Yang, Y. R., and J. J.
-              Zhang, "ALTO Extension: Path Vector", Work in Progress,
-              Internet-Draft, draft-ietf-alto-path-vector-19, 25 October
-              2021, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              alto-path-vector-19>.
+              Zhang, "An ALTO Extension: Path Vector", Work in Progress,
+              Internet-Draft, draft-ietf-alto-path-vector-20, 20
+              December 2021, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-alto-path-vector-20>.
 
    [RFC5693]  Seedorf, J. and E. Burger, "Application-Layer Traffic
               Optimization (ALTO) Problem Statement", RFC 5693,
@@ -1900,6 +1926,12 @@ Table of Contents
               Statement", RFC 6707, DOI 10.17487/RFC6707, September
               2012, <https://datatracker.ietf.org/doc/html/rfc6707>.
 
+   [RFC7971]  Stiemerling, M., Kiesel, S., Scharf, M., Seidel, H., and
+              S. Previdi, "Application-Layer Traffic Optimization (ALTO)
+              Deployment Considerations", RFC 7971,
+              DOI 10.17487/RFC7971, October 2016,
+              <https://datatracker.ietf.org/doc/html/rfc7971>.
+
    [RFC7975]  Niven-Jenkins, B., Ed. and R. van Brandenburg, Ed.,
               "Request Routing Redirection Interface for Content
               Delivery Network (CDN) Interconnection", RFC 7975,
@@ -1910,7 +1942,12 @@ Acknowledgments
 
    The authors thank Matt Caulfield, Danny Alex Lachos Perez, Daryl
    Malas and Sanjay Mishra for their timely reviews and invaluable
-   comments.
+   comments.  Big thanks also to ALTO WG Chairs (Qin Wu and Vijay
+   Gurbani), and all the directorate reviewers and IESG reviewers
+   (Martin Duke, Erik Kline, Martin Vigoureux, Murray Kucherawy, Roman
+   Danyliw, Zaheduzzaman Sarker, Eric Vyncke, and Francesca Palombini),
+   for their thorough reviews, discussions, guidance and shepherding,
+   that further improve this document.
 
    Jan Seedorf has been partially supported by the GreenICN project
    (GreenICN: Architecture and Applications of Green Information Centric
