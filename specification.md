@@ -211,7 +211,7 @@ Specifically, the IRD announces nine information resources as follows:
  Accept: application/alto-directory+json,application/alto-error+json
 
  HTTP/1.1 200 OK
- Content-Length: 3431
+ Content-Length: 3531
  Content-Type: application/alto-directory+json
 
  {
@@ -330,7 +330,7 @@ respectively.
   Accept: application/alto-cdni+json,application/alto-error+json
 
   HTTP/1.1 200 OK
-  Content-Length: 1352
+  Content-Length: 1411
   Content-Type: application/alto-cdni+json
 
   {
@@ -416,7 +416,7 @@ by JSON patch to the ALTO client.
  Host: alto.example.com
  Accept: text/event-stream,application/alto-error+json
  Content-Type: application/alto-updatestreamparams+json
- Content-Length: 86
+ Content-Length: 94
 
  {
    "add": {
@@ -515,7 +515,7 @@ map is referenced by the CDNI Advertisement example in [](#networkmapfootprint).
  Accept: application/alto-networkmap+json,application/alto-error+json
 
  HTTP/1.1 200 OK
- Content-Length: 326
+ Content-Length: 344
  Content-Type: application/alto-networkmap+json
 
  {
@@ -549,7 +549,7 @@ described in [](#networkmapexample).
  Accept: application/alto-cdni+json,application/alto-error+json
 
  HTTP/1.1 200 OK
- Content-Length: 706
+ Content-Length: 736
  Content-Type: application/alto-cdni+json
 
  {
@@ -598,7 +598,7 @@ capability.
   Host: alto.example.com
   Accept: text/event-stream,application/alto-error+json
   Content-Type: application/alto-updatestreamparams+json
-  Content-Length: 174
+  Content-Length: 185
 
   {
     "add": {
@@ -787,7 +787,7 @@ delivery protocols which is the superset of https/1.1 delivery protocol.
   Host: alto.example.com
   Accept: application/alto-cdni+json
   Content-Type: application/cdnifilter+json
-  Content-Length: 166
+  Content-Length: 176
 
   {
     "cdni-capabilities": [
@@ -801,7 +801,7 @@ delivery protocols which is the superset of https/1.1 delivery protocol.
   }
 
   HTTP/1.1 200 OK
-  Content-Length: 543
+  Content-Length: 570
   Content-Type: application/alto-cdni+json
 
   {
@@ -845,7 +845,7 @@ POST request.
   Host: fcialtoupdate.example.com
   Accept: text/event-stream,application/alto-error+json
   Content-Type: application/alto-updatestreamparams+json
-  Content-Length: 329
+  Content-Length: 346
 
   {
     "add": {
@@ -1044,7 +1044,7 @@ entities' property is "cdni-capabilities".
  Accept: application/alto-propmap+json,application/alto-error+json
 
  HTTP/1.1 200 OK
- Content-Length: 1476
+ Content-Length: 1522
  Content-Type: application/alto-propmap+json
 
  {
@@ -1106,7 +1106,7 @@ This example uses the filtered property map service to get "pid" and
    Host: alto.example.com
    Content-Type: application/alto-propmapparams+json
    Accept: application/alto-propmap+json,application/alto-error+json
-   Content-Length: 173
+   Content-Length: 181
 
    {
      "entities": [
@@ -1118,7 +1118,7 @@ This example uses the filtered property map service to get "pid" and
    }
 
  HTTP/1.1 200 OK
- Content-Length: 772
+ Content-Length: 796
  Content-Type: application/alto-propmap+json
 
  {
@@ -1158,7 +1158,7 @@ In this example, the ALTO client is interested in updates for the properties
   Host: alto.example.com
   Accept: text/event-stream,application/alto-error+json
   Content-Type: application/alto-updatestreamparams+json
-  Content-Length: 325
+  Content-Length: 339
 
   {
     "add": {
