@@ -2,16 +2,16 @@
 
 # CDNI Advertisement Service {#cdnifci}
 
-The ALTO protocol is based on the ALTO Information Service Framework which
-consists of multiple services, where all ALTO services are "provided through a
+The ALTO protocol relies upon the ALTO Information Service framework which
+consists of multiple services. All ALTO services are "provided through a
 common transport protocol, messaging structure and encoding, and transaction
-model" {{RFC7285}}. The ALTO protocol specification {{RFC7285}} defines multiple
+model" {{RFC7285}}. The ALTO protocol specification defines multiple
 initial services, e.g., the ALTO network map service and cost map service.
 
-This document defines a new ALTO service called "CDNI Advertisement Service"
+This document defines a new ALTO service, called "CDNI Advertisement Service",
 which conveys JSON {{RFC8259}} objects of media type "application/alto-cdni+json". These
 JSON objects are used to transport BaseAdvertisementObject objects defined in
-{{RFC8008}}; this document specifies how to transport such
+{{RFC8008}}. This document specifies how to transport such
 BaseAdvertisementObject objects via the ALTO protocol with the ALTO "CDNI
 Advertisement Service". Similar to other ALTO services, this document defines
 the ALTO information resource for the "CDNI Advertisement Service" as follows.
@@ -23,7 +23,7 @@ defined in {{RFC8008}} and therefore also follows the recommendations of I-JSON
 ## Media Type {#cdnifcimediatype}
 
 The media type of the CDNI Advertisement resource is
-"application/alto-cdni+json".
+"application/alto-cdni+json" (see [](#iana)).
 
 ## HTTP Method {#cdnifcimethod}
 
@@ -186,7 +186,7 @@ document.
 
 ## Examples {#cdnifciexamples}
 
-### IRD Example {#IRDexample}
+### IRD {#IRDexample}
 
 Below is the IRD of a simple, example ALTO
 server. The server provides both base ALTO information resources (e.g., network
@@ -195,14 +195,14 @@ resources), demonstrating a single, integrated environment.
 
 Specifically, the IRD announces nine information resources as follows:
 
-- two network maps
-- one CDNI Advertisement resource without dependency
-- one CDNI Advertisement resource depending on a network map
-- one filtered CDNI Advertisement resource to be defined in [](#filteredcdnifci)
-- one property map including "cdni-capabilities" as its entity property
-- one filtered property map including "cdni-capabilities" and "pid" as its entity properties
-- two update stream services
-  - one for updating CDNI Advertisement resources
+- two network maps,
+- one CDNI Advertisement resource without dependency,
+- one CDNI Advertisement resource depending on a network map,
+- one filtered CDNI Advertisement resource to be defined in [](#filteredcdnifci),
+- one property map including "cdni-capabilities" as its entity property,
+- one filtered property map including "cdni-capabilities" and "pid" as its entity properties, and
+- two update stream services:
+  - one for updating CDNI Advertisement resources,
   - one for updating property maps
 
 ~~~
@@ -316,7 +316,7 @@ Specifically, the IRD announces nine information resources as follows:
  }
 ~~~
 
-### Basic Example {#fullcdnifciexample}
+### A Basic Example {#fullcdnifciexample}
 
 This basic example demonstrates a simple CDNI Advertisement resource, which does
 not depend on other resources. There are three BaseAdvertisementObjects in this
@@ -327,8 +327,7 @@ respectively.
 ~~~
   GET /cdnifci HTTP/1.1
   Host: alto.example.com
-  Accept: application/alto-cdni+json,
-          application/alto-error+json
+  Accept: application/alto-cdni+json,application/alto-error+json
 
   HTTP/1.1 200 OK
   Content-Length: 1352
@@ -395,7 +394,7 @@ respectively.
   }
 ~~~
 
-### Incremental Updates Example
+### Incremental Updates
 
 A benefit of using ALTO to provide CDNI Advertisement resources is that such
 resources can be updated using ALTO incremental updates {{RFC8895}}. Below is
@@ -419,7 +418,8 @@ by JSON patch to the ALTO client.
  Content-Type: application/alto-updatestreamparams+json
  Content-Length: 86
 
- { "add": {
+ {
+   "add": {
      "my-cdnifci-stream": {
        "resource-id": "my-default-cdnifci"
      }
@@ -502,13 +502,11 @@ the example in [](#networkmapfootprint)).
 
 ## Examples
 
-### IRD Example
+The following examples use the same IRD given in [](#IRDexample).
 
-The examples below use the same IRD given in [](#IRDexample).
+### ALTO Network Map for CDNI Advertisements {#networkmapexample}
 
-### ALTO Network Map for CDNI Advertisement Example {#networkmapexample}
-
-Below is an example network map whose resource id is "my-eu-netmap", and this
+Below provides a sample network map whose resource id is "my-eu-netmap". This
 map is referenced by the CDNI Advertisement example in [](#networkmapfootprint).
 
 ~~~
@@ -540,7 +538,7 @@ map is referenced by the CDNI Advertisement example in [](#networkmapfootprint).
  }
 ~~~
 
-### ALTO PID Footprints in CDNI Advertisement {#networkmapfootprint}
+### ALTO PID Footprints in CDNI Advertisements {#networkmapfootprint}
 
 This example shows a CDNI Advertisement resource that depends on a network map
 described in [](#networkmapexample).
@@ -586,7 +584,7 @@ described in [](#networkmapexample).
  }
 ~~~
 
-### Incremental Updates Example
+### Incremental Updates
 
 In this example, the ALTO client is interested in changes of
 "my-cdnifci-with-pid-footprints" and its dependent network map "my-eu-netmap".
@@ -602,7 +600,8 @@ capability.
   Content-Type: application/alto-updatestreamparams+json
   Content-Length: 174
 
-  { "add": {
+  {
+    "add": {
       "my-eu-netmap-stream": {
         "resource-id": "my-eu-netmap"
       },
@@ -656,7 +655,7 @@ capability.
 
 # Filtered CDNI Advertisement using CDNI Capabilities {#filteredcdnifci}
 
-[](#cdnifci) and [](#cdnifcinetworkmap) describe CDNI Advertisement Service
+[Sections 3](#cdnifci) and [4](#cdnifcinetworkmap) describe CDNI Advertisement Service
 which can be used to enable a uCDN to get capabilities with footprint
 restrictions from dCDNs. However, since always getting full CDNI Advertisement
 resources from dCDNs is inefficient, this document introduces a new service
@@ -671,7 +670,7 @@ network/cost map and a network/cost map.
 ## Media Type
 
 A filtered CDNI Advertisement resource uses the same media type defined for the
-CDNI Advertisement resource in [](#cdnifcimediatype).
+CDNI Advertisement resource in [](#cdnifcimediatype): "application/alto-cdni+json".
 
 ## HTTP Method
 
@@ -773,11 +772,9 @@ independently of any filtering that is requested by an ALTO client.
 
 ## Examples
 
-### IRD Example
+The following examples use the same IRD example as in [](#IRDexample).
 
-The examples below use the same IRD example as in [](#IRDexample).
-
-### Basic Example {#filteredcdnifciexample}
+### A Basic Example {#filteredcdnifciexample}
 
 This example filters the full CDNI Advertisement resource in
 [](#fullcdnifciexample) by selecting only the http/1.1 delivery protocol
@@ -836,11 +833,11 @@ delivery protocols which is the superset of https/1.1 delivery protocol.
   }
 ~~~
 
-### Incremental Updates Example
+### Incremental Updates
 
 In this example, the ALTO client only cares about the updates of one
 advertisement object for delivery protocol capability whose value includes
-"https/1.1". So it adds its limitation of capabilities in "input" field of the
+"https/1.1". Thus, it adds its limitation of capabilities in "input" field of the
 POST request.
 
 ~~~
@@ -940,7 +937,7 @@ follows:
   the CDNI Advertisement resource providing this "altopid" footprint.
 * However, no existing entity domain type can represent "asn" and "countrycode"
   footprints. To represent footprint-type "asn" and "countrycode", this document
-  registers two new domains in [](#iana) in addition to the ones in
+  registers two new entity domains in [](#iana) in addition to the ones in
   {{I-D.ietf-alto-unified-props-new}}.
 
 Here is an example of representing a footprint object of "ipv4cidr" type as a
@@ -975,9 +972,9 @@ The entity domain type of the ASN domain is "asn" (in lowercase).
 
 #### Domain-Specific Entity Identifiers {#asn-entity-id}
 
-The entity identifier of an entity in an ASN domain is encoded as a string
-consisting of the characters "as" (in lowercase) followed by the Autonomous
-System Number {{RFC6793}} as a decimal number without leading zeros.
+The entity identifier of an entity in an ASN domain MUST be encoded as a string
+consisting of the characters "as" (in lowercase) followed by the ASN
+{{RFC6793}} as a decimal number without leading zeros.
 
 #### Hierarchy and Inheritance
 
@@ -1034,11 +1031,9 @@ footprint object of this entity is in their footprint restrictions.
 
 ## Examples
 
-### IRD Example
+The following examples use the same IRD example given by [](#IRDexample).
 
-The examples use the same IRD example given by [](#IRDexample).
-
-### Property Map Example
+### Property Map
 
 This example shows a full property map in which entities are footprints and
 entities' property is "cdni-capabilities".
@@ -1100,7 +1095,7 @@ entities' property is "cdni-capabilities".
  }
 ~~~
 
-### Filtered Property Map Example
+### Filtered Property Map
 
 This example uses the filtered property map service to get "pid" and
 "cdni-capabilities" properties for two footprints "ipv4:192.0.2.0/24" and
@@ -1152,9 +1147,9 @@ This example uses the filtered property map service to get "pid" and
  }
 ~~~
 
-### Incremental Updates Example
+### Incremental Updates
 
-In this example, the client is interested in updates for the properties
+In this example, the ALTO client is interested in updates for the properties
 "cdni-capabilities" and "pid" of two footprints "ipv4:192.0.2.0/24" and
 "countrycode:fr".
 
@@ -1165,7 +1160,8 @@ In this example, the client is interested in updates for the properties
   Content-Type: application/alto-updatestreamparams+json
   Content-Length: 325
 
-  { "add": {
+  {
+    "add": {
       "fci-propmap-stream": {
         "resource-id": "filtered-cdnifci-property-map",
         "input": {

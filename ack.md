@@ -5,7 +5,12 @@ Acknowledgments
 {: anchor="ack" numbered="false"}
 
 The authors thank Matt Caulfield, Danny Alex Lachos Perez, Daryl Malas and
-Sanjay Mishra for their timely reviews and invaluable comments.
+Sanjay Mishra for their timely reviews and invaluable comments. Big thanks also
+to ALTO WG Chairs (Qin Wu and Vijay Gurbani), and all the directorate reviewers
+and IESG reviewers (Martin Duke, Erik Kline, Martin Vigoureux, Murray
+Kucherawy, Roman Danyliw, Zaheduzzaman Sarker, Eric Vyncke, and Francesca
+Palombini), for their thorough reviews, discussions, guidance and shepherding,
+that further improve this document.
 
 Jan Seedorf has been partially supported by the GreenICN project (GreenICN:
 Architecture and Applications of Green Information Centric Networking), a

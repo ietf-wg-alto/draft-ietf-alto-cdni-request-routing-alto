@@ -2,29 +2,27 @@
 
 # IANA Considerations {#iana}
 
-## application/alto-* Media Types
+This document defines two new media types: "application/alto-cdni+json", as
+described in [](#iana-cdni), and "application/cdnifilter+json", as described in
+[](#iana-cdnifilter). It also defines a new CDNI metadata footprint type
+([](#iana-footprint-type)), two new ALTO entity domain types
+([](#iana-entity-domain-type)), and a new ALTO entity property type
+([](#iana-entity-prop-type)).
 
-This document updates the IANA Media Types Registry by registering two
-additional ALTO media types, listed in [](#TableMediaTypes).
-
-| Type        | Subtype              | Specification                   |
-|-------------|----------------------|---------------------------------|
-| application | alto-cdni+json       | [](#cdnifci) of RFCthis         |
-| application | alto-cdnifilter+json | [](#filteredcdnifci) of RFCthis |
-{: #TableMediaTypes title="Additional ALTO Media Types."}
+## application/alto-cdni+json Media Type {#iana-cdni}
 
 {: newline="true"}
 Type name:
 : application
 
 Subtype name:
-: This document registers multiple subtypes, as listed in [](#TableMediaTypes).
+: alto-cdni+json
 
 Required parameters:
-: n/a
+: N/A
 
 Optional parameters:
-: n/a
+: N/A
 
 Encoding considerations:
 : Encoding considerations are identical to those specified for the
@@ -35,26 +33,24 @@ Security considerations:
   Protocol messages are discussed in Section 15 of {{RFC7285}}.
 
 Interoperability considerations:
-: n/a
+: N/A
 
 Published specification:
-: This document is the specification for these media types; see
-  [](#TableMediaTypes) for the section documenting each media type.
+: [](#cdnifci) of RFCthis
 
 Applications that use this media type:
-: ALTO servers and ALTO clients either stand alone or are embedded within other
-  applications.
+: ALTO servers and ALTO clients {{RFC7285}} either stand alone or are embedded within other
+  applications that provides CDNI interfaces for uCDNs or dCDNs.
 
 Additional information:
 : Magic number(s):
-  : n/a
+  : N/A
 
   File extension(s):
-  : This document uses the mime type to refer to protocol messages and thus does
-  not require a file extension.
+  : N/A
 
   Macintosh file type code(s):
-  : n/a
+  : N/A
 
 Person &amp; email address to contact for further information:
 : See Authors' Addresses section.
@@ -63,7 +59,7 @@ Intended usage:
 : COMMON
 
 Restrictions on usage:
-: n/a
+: N/A
 
 Author:
 : See Authors' Addresses section.
@@ -71,7 +67,65 @@ Author:
 Change controller:
 : Internet Engineering Task Force (mailto:iesg@ietf.org).
 
-## CDNI Metadata Footprint Type Registry
+## application/alto-cdnifilter+json Media Type {#iana-cdnifilter}
+
+{: newline="true"}
+Type name:
+: application
+
+Subtype name:
+: alto-cdnifilter+json
+
+Required parameters:
+: N/A
+
+Optional parameters:
+: N/A
+
+Encoding considerations:
+: Encoding considerations are identical to those specified for the
+  "application/json" media type. See {{RFC8259}}.
+
+Security considerations:
+: Security considerations related to the generation and consumption of ALTO
+  Protocol messages are discussed in Section 15 of {{RFC7285}}.
+
+Interoperability considerations:
+: N/A
+
+Published specification:
+: [](#filteredcdnifci) of RFCthis
+
+Applications that use this media type:
+: ALTO servers and ALTO clients {{RFC7285}} either stand alone or are embedded within other
+  applications that provides CDNI interfaces for uCDNs or dCDNs.
+
+Additional information:
+: Magic number(s):
+  : N/A
+
+  File extension(s):
+  : N/A
+
+  Macintosh file type code(s):
+  : N/A
+
+Person &amp; email address to contact for further information:
+: See Authors' Addresses section.
+
+Intended usage:
+: COMMON
+
+Restrictions on usage:
+: N/A
+
+Author:
+: See Authors' Addresses section.
+
+Change controller:
+: Internet Engineering Task Force (mailto:iesg@ietf.org).
+
+## CDNI Metadata Footprint Type Registry {#iana-footprint-type}
 
 This document updates the CDNI Metadata Footprint Types Registry created by
 Section 7.2 of {{RFC8006}}. A new footprint type is to be registered, listed in
@@ -85,7 +139,7 @@ Section 7.2 of {{RFC8006}}. A new footprint type is to be registered, listed in
 \[RFC Editor: Please replace RFCthis with the published RFC number for this
 document.\]
 
-## ALTO Entity Domain Type Registry
+## ALTO Entity Domain Type Registry {#iana-entity-domain-type}
 
 This document updates the ALTO Entity Domain Type Registry created by Section
 11.2 of {{I-D.ietf-alto-unified-props-new}}. Two new entity domain types are to
@@ -100,7 +154,7 @@ be registered, listed in [](#tbl:entity-domain).
 \[RFC Editor: Please replace RFCthis with the published RFC number for this
 document.\]
 
-## ALTO Entity Property Type Registry
+## ALTO Entity Property Type Registry {#iana-entity-prop-type}
 
 This document updates the ALTO Entity Property Type Registry created by Section
 11.3 of {{I-D.ietf-alto-unified-props-new}}. A new entity property type is to
@@ -116,7 +170,7 @@ document.\]
 
 # Security Considerations {#security}
 
-As an extension of the base ALTO protocol ({{RFC7285}}), this document fits into
+As an extension of the base ALTO protocol {{RFC7285}}, this document fits into
 the architecture of the base protocol. And hence Security Considerations of the
 base protocol (Section 15 of {{RFC7285}}) fully apply when this extension is
 provided by an ALTO server.

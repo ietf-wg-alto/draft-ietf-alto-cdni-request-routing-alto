@@ -6,11 +6,11 @@ The ability to interconnect multiple content delivery networks (CDNs)
 has many benefits, including increased coverage, capability, and
 reliability. The Content Delivery Networks Interconnection (CDNI)
 framework {{RFC6707}} defines four interfaces to
-achieve the interconnection of CDNs: (1) the CDNI Request Routing
-Interface; (2) the CDNI Metadata Interface; (3) the CDNI Logging
-Interface; and (4) the CDNI Control Interface.
+interconnect CDNs: (1) the CDNI Request Routing
+Interface, (2) the CDNI Metadata Interface, (3) the CDNI Logging
+Interface, and (4) the CDNI Control Interface.
 
-Among the four interfaces, the CDNI Request Routing Interface
+Among these four interfaces, the CDNI Request Routing Interface
 provides key functions, as specified in {{RFC6707}}:
 "The CDNI Request Routing interface enables a Request Routing
 function in an Upstream CDN to query a Request Routing function in a
@@ -24,12 +24,12 @@ therefore, contains two main tasks: (1) determining if the dCDN
 and (2) redirecting the content request coming from a uCDN (upstream
 CDN) to the proper entry point or entity in the dCDN.
 
-Correspondingly, the request routing interface is broadly divided
+Correspondingly, the Request Routing Interface is broadly divided
 into two functionalities: (1) the CDNI Footprint &amp; Capabilities
 Advertisement interface (FCI) defined in {{RFC8008}},
 and (2) the CDNI Request Routing Redirection interface (RI) defined
-in {{RFC7975}}. Since this document focuses on the
-first functionality (CDNI FCI), below is more details about it.
+in {{RFC7975}}. This document focuses on the
+first functionality (CDNI FCI).
 
 Specifically, CDNI FCI allows both an advertisement from a dCDN to a
 uCDN (push) and a query from a uCDN to a dCDN (pull) so that the uCDN
@@ -37,16 +37,16 @@ knows whether it can redirect a particular user request to that dCDN.
 
 A key component in defining CDNI FCI is defining objects describing the
 footprints and capabilities of a dCDN. Such objects are already defined in
-{{RFC8008}}. A protocol to transport and update such objects between a uCDN and
-a dCDN, however, is not defined.
+Section 5 of {{RFC8008}}. However, no protocol is defined to transport and
+update such objects between a uCDN and a dCDN.
 
 To define such a protocol, this document specifies an extension of the
 Application-Layer Traffic Optimization (ALTO) {{RFC7285}} protocol by
 introducing a new ALTO service called "CDNI Advertisement Service".
 
-There are multiple benefits in using ALTO as a transport protocol, as discussed
-in [](#bgALTO).
+[](#bgALTO) discusses the benefits in using ALTO as a transport protocol.
 
+<!--
 The rest of this document is organized as follows. [](#background) provides
 non-normative background on both CDNI FCI and ALTO. [](#cdnifci) introduces the
 most basic service, called "CDNI Advertisement Service", to realize CDNI FCI
@@ -60,3 +60,5 @@ to query footprint properties using ALTO entity property map extension. In this
 way, a uCDN can effectively fetch capabilities of footprints in which it is
 interested. IANA and security considerations are discussed in [](#iana) and
 [](#security) respectively.
+-->
+
