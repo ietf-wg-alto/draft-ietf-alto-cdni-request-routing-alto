@@ -42,6 +42,9 @@ Applications that use this media type:
 : ALTO servers and ALTO clients {{RFC7285}} either stand alone or are embedded within other
   applications that provides CDNI interfaces for uCDNs or dCDNs.
 
+Fragment identifier considerations:
+: N/A
+
 Additional information:
 : Magic number(s):
   : N/A
@@ -97,8 +100,12 @@ Published specification:
 : [](#filteredcdnifci) of RFCthis
 
 Applications that use this media type:
-: ALTO servers and ALTO clients {{RFC7285}} either stand alone or are embedded within other
-  applications that provides CDNI interfaces for uCDNs or dCDNs.
+: ALTO servers and ALTO clients {{RFC7285}} either stand alone or are embedded
+  within other applications that provides CDNI interfaces for uCDNs or dCDNs
+  and supports CDNI capability-based filtering.
+
+Fragment identifier considerations:
+: N/A
 
 Additional information:
 : Magic number(s):
