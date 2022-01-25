@@ -5,14 +5,14 @@
 ALTO & CDNI WGs                                               J. Seedorf
 Internet-Draft                 HFT Stuttgart - Univ. of Applied Sciences
 Intended status: Standards Track                                 Y. Yang
-Expires: 12 July 2022                                    Yale University
+Expires: 29 July 2022                                    Yale University
                                                                    K. Ma
                                                                 Ericsson
                                                              J. Peterson
                                                                  NeuStar
                                                                 J. Zhang
                                                        Tongji University
-                                                          8 January 2022
+                                                         25 January 2022
 
 
  Content Delivery Network Interconnection (CDNI) Request Routing: CDNI
@@ -47,7 +47,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 July 2022.
+   This Internet-Draft will expire on 29 July 2022.
 
 Copyright Notice
 
@@ -1638,6 +1638,9 @@ Table of Contents
       embedded within other applications that provides CDNI interfaces
       for uCDNs or dCDNs.
 
+   Fragment identifier considerations:
+      N/A
+
    Additional information:
       Magic number(s):  N/A
 
@@ -1692,7 +1695,10 @@ Table of Contents
    Applications that use this media type:
       ALTO servers and ALTO clients [RFC7285] either stand alone or are
       embedded within other applications that provides CDNI interfaces
-      for uCDNs or dCDNs.
+      for uCDNs or dCDNs and supports CDNI capability-based filtering.
+
+   Fragment identifier considerations:
+      N/A
 
    Additional information:
       Magic number(s):  N/A
